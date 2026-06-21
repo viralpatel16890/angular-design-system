@@ -1,0 +1,697 @@
+<div class="showcase">
+  <!-- Header -->
+  <header class="showcase__header">
+    <div class="showcase__header-inner">
+      <div class="showcase__brand">
+        <span class="showcase__logo">DS</span>
+        <span class="showcase__brand-name">Angular Design System</span>
+      </div>
+      <div class="showcase__header-actions">
+        <app-theme-customizer />
+        <ds-button variant="ghost" size="sm" (pressed)="toggleTheme()">
+          {{ isDark() ? '☀️ Light' : '🌙 Dark' }}
+        </ds-button>
+      </div>
+    </div>
+  </header>
+
+  <main class="showcase__main">
+
+    <!-- ─── Navbar ──────────────────────────────────────────────────── -->
+    <section class="showcase__section">
+      <h2 class="showcase__section-title">Navbar</h2>
+
+      <div class="showcase__group">
+        <h3 class="showcase__group-label">Default</h3>
+        <div class="showcase__frame">
+          <ds-navbar [items]="navItems" [sticky]="false">
+            <div slot="brand" class="showcase__demo-brand">
+              <span class="showcase__logo">DS</span>
+              <span class="showcase__brand-name">Angular Design System</span>
+            </div>
+            <div slot="actions">
+              <ds-button variant="ghost" size="sm">Sign in</ds-button>
+              <ds-button variant="primary" size="sm">Get started</ds-button>
+            </div>
+          </ds-navbar>
+        </div>
+      </div>
+
+      <div class="showcase__group">
+        <h3 class="showcase__group-label">With badges + disabled item</h3>
+        <div class="showcase__frame">
+          <ds-navbar [items]="navItemsWithBadge" [sticky]="false">
+            <div slot="brand" class="showcase__demo-brand">
+              <span class="showcase__logo" style="background: var(--color-teal-500);">A</span>
+              <span class="showcase__brand-name">Acme Corp</span>
+            </div>
+            <div slot="actions">
+              <ds-badge variant="success" shape="pill" [dot]="true">Online</ds-badge>
+              <ds-button variant="secondary" size="sm">Account</ds-button>
+            </div>
+          </ds-navbar>
+        </div>
+      </div>
+
+      <div class="showcase__group">
+        <h3 class="showcase__group-label">Mobile (resize window to see hamburger)</h3>
+        <p class="showcase__hint">On viewports ≤ 768 px, the nav links collapse into a hamburger drawer.</p>
+      </div>
+    </section>
+
+    <!-- ─── Sidebar ─────────────────────────────────────────────────── -->
+    <section class="showcase__section">
+      <h2 class="showcase__section-title">Sidebar</h2>
+
+      <div class="showcase__group">
+        <h3 class="showcase__group-label">App shell preview</h3>
+        <p class="showcase__hint">
+          Click items to navigate (toasts confirm selection). Toggle collapse with the chevron.
+          On mobile, open via the button below.
+        </p>
+
+        <div class="showcase__frame showcase__frame--shell">
+
+          <!-- Mobile open button (only visible when shell is narrow) -->
+          <div class="showcase__shell-mobile-bar">
+            <ds-button variant="ghost" size="sm"
+              (pressed)="sidebarMobileOpen.set(!sidebarMobileOpen())">
+              ☰ Menu
+            </ds-button>
+          </div>
+
+          <div class="showcase__shell">
+            <!-- Sidebar -->
+            <ds-sidebar
+              [groups]="sidebarGroups"
+              [collapsed]="sidebarCollapsed()"
+              [mobileOpen]="sidebarMobileOpen()"
+              [activeId]="activeSidebarId()"
+              (collapsedChange)="sidebarCollapsed.set($event)"
+              (mobileClose)="sidebarMobileOpen.set(false)"
+              (itemClick)="onSidebarItemClick($event)"
+            >
+              <div slot="header" class="showcase__sidebar-brand"
+                [class.showcase__sidebar-brand--collapsed]="sidebarCollapsed()">
+                <span class="showcase__logo">DS</span>
+                @if (!sidebarCollapsed()) {
+                  <span class="showcase__brand-name">Angular Design System</span>
+                }
+              </div>
+
+              <div slot="footer" class="showcase__sidebar-footer"
+                [class.showcase__sidebar-footer--collapsed]="sidebarCollapsed()">
+                <div class="showcase__avatar">VS</div>
+                @if (!sidebarCollapsed()) {
+                  <div class="showcase__user-info">
+                    <p class="showcase__user-name">Viral Patel</p>
+                    <p class="showcase__user-email">viral&#64;example.com</p>
+                  </div>
+                }
+              </div>
+            </ds-sidebar>
+
+            <!-- Shell content area -->
+            <div class="showcase__shell-content">
+              <p class="showcase__shell-page-title">
+                {{ activeSidebarId() | titlecase }}
+              </p>
+              <p style="color: var(--color-text-secondary); font-size: var(--font-size-sm);">
+                Active page: <code>{{ activeSidebarId() }}</code>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Checkbox ───────────────────────────────────────────────── -->
+    <section class="showcase__section">
+      <h2 class="showcase__section-title">Checkbox</h2>
+
+      <div class="showcase__group">
+        <h3 class="showcase__group-label">States</h3>
+        <div class="showcase__col">
+          <ds-checkbox label="Unchecked" />
+          <ds-checkbox label="Checked" [checked]="true" />
+          <ds-checkbox label="Indeterminate" [indeterminate]="true" />
+          <ds-checkbox label="Disabled" [disabled]="true" />
+          <ds-checkbox label="Disabled + checked" [disabled]="true" [checked]="true" />
+        </div>
+      </div>
+
+      <div class="showcase__group">
+        <h3 class="showcase__group-label">Sizes</h3>
+        <div class="showcase__col">
+          <ds-checkbox label="Small (sm)" size="sm" />
+          <ds-checkbox label="Medium (md) — default" size="md" />
+          <ds-checkbox label="Large (lg)" size="lg" />
+        </div>
+      </div>
+
+      <div class="showcase__group">
+        <h3 class="showcase__group-label">With helper text</h3>
+        <div class="showcase__col">
+          <ds-checkbox
+            label="Email notifications"
+            helperText="We'll send you updates about your account."
+            [(ngModel)]="cbNotifications"
+          />
+          <ds-checkbox
+            label="I agree to the Terms and Conditions"
+            helperText="You must accept before continuing."
+            [(ngModel)]="cbTerms"
+          />
+        </div>
+      </div>
+
+      <div class="showcase__group">
+        <h3 class="showcase__group-label">Label on left</h3>
+        <div class="showcase__col">
+          <ds-checkbox label="Label on left" labelPosition="left" [checked]="true" />
+        </div>
+      </div>
+
+      <div class="showcase__group">
+        <h3 class="showcase__group-label">Interactive — select all pattern</h3>
+        <div class="showcase__col">
+          <ds-checkbox
+            label="Select all"
+            [indeterminate]="cbBasic() && !cbNotifications()"
+            [checked]="cbBasic() && cbNotifications()"
+            (checkedChange)="cbBasic.set($event); cbNotifications.set($event)"
+          />
+          <div style="padding-left: var(--space-8); display: flex; flex-direction: column; gap: var(--space-2);">
+            <ds-checkbox label="Email updates" [(ngModel)]="cbBasic" />
+            <ds-checkbox label="SMS alerts" [(ngModel)]="cbNotifications" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Toggle ───────────────────────────────────────────────────── -->
+    <section class="showcase__section">
+      <h2 class="showcase__section-title">Toggle</h2>
+
+      <div class="showcase__group">
+        <h3 class="showcase__group-label">States</h3>
+        <div class="showcase__col">
+          <ds-toggle label="Off by default" />
+          <ds-toggle label="On by default" [checked]="true" />
+          <ds-toggle label="Disabled (off)" [disabled]="true" />
+          <ds-toggle label="Disabled (on)"  [disabled]="true" [checked]="true" />
+        </div>
+      </div>
+
+      <div class="showcase__group">
+        <h3 class="showcase__group-label">Sizes</h3>
+        <div class="showcase__col">
+          <ds-toggle label="Small (sm)"          size="sm" [checked]="true" />
+          <ds-toggle label="Medium (md) — default" size="md" [checked]="true" />
+          <ds-toggle label="Large (lg)"           size="lg" [checked]="true" />
+        </div>
+      </div>
+
+      <div class="showcase__group">
+        <h3 class="showcase__group-label">With helper text</h3>
+        <div class="showcase__col">
+          <ds-toggle
+            label="Dark mode"
+            helperText="Applies to all pages in your account."
+            [(ngModel)]="tgDarkMode"
+          />
+          <ds-toggle
+            label="Auto-save"
+            helperText="Saves your work every 30 seconds."
+            [(ngModel)]="tgAutoSave"
+          />
+          <ds-toggle
+            label="Marketing emails"
+            helperText="Receive product updates and offers."
+            [(ngModel)]="tgMarketing"
+          />
+        </div>
+      </div>
+
+      <div class="showcase__group">
+        <h3 class="showcase__group-label">Label on left</h3>
+        <div class="showcase__col">
+          <ds-toggle label="Wi-Fi"       labelPosition="left" [checked]="true" />
+          <ds-toggle label="Bluetooth"   labelPosition="left" />
+          <ds-toggle label="Aeroplane mode" labelPosition="left" />
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Buttons ─────────────────────────────────────────────────── -->
+    <section class="showcase__section">
+      <h2 class="showcase__section-title">Button</h2>
+
+      <div class="showcase__group">
+        <h3 class="showcase__group-label">Variants</h3>
+        <div class="showcase__row">
+          <ds-button variant="primary">Primary</ds-button>
+          <ds-button variant="secondary">Secondary</ds-button>
+          <ds-button variant="danger">Danger</ds-button>
+          <ds-button variant="ghost">Ghost</ds-button>
+          <ds-button variant="link">Link</ds-button>
+        </div>
+      </div>
+
+      <div class="showcase__group">
+        <h3 class="showcase__group-label">Sizes</h3>
+        <div class="showcase__row showcase__row--align-center">
+          <ds-button size="sm">Small</ds-button>
+          <ds-button size="md">Medium</ds-button>
+          <ds-button size="lg">Large</ds-button>
+        </div>
+      </div>
+
+      <div class="showcase__group">
+        <h3 class="showcase__group-label">States</h3>
+        <div class="showcase__row">
+          <ds-button [disabled]="true">Disabled</ds-button>
+          <ds-button [loading]="true">Loading</ds-button>
+        </div>
+        <div class="showcase__row" style="max-width: 320px; margin-top: 12px;">
+          <ds-button variant="primary" [fullWidth]="true">Full Width</ds-button>
+        </div>
+      </div>
+
+      <div class="showcase__group">
+        <h3 class="showcase__group-label">Actions</h3>
+        <div class="showcase__row">
+          <ds-button variant="primary" (pressed)="modalOpen.set(true)">
+            Open Modal
+          </ds-button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Inputs ──────────────────────────────────────────────────── -->
+    <section class="showcase__section">
+      <h2 class="showcase__section-title">Input</h2>
+
+      <form class="showcase__grid" aria-label="Input examples" (submit)="$event.preventDefault()">
+        <ds-input
+          label="Email address"
+          type="email"
+          placeholder="you@example.com"
+          helperText="We'll never share your email."
+          [required]="true"
+        />
+        <ds-input
+          label="Password"
+          type="password"
+          placeholder="••••••••"
+        />
+        <ds-input
+          label="Error state"
+          type="text"
+          placeholder="Invalid input"
+          status="error"
+          helperText="This field is required."
+        />
+        <ds-input
+          label="Success state"
+          type="text"
+          placeholder="Great value"
+          status="success"
+          helperText="Looks good!"
+        />
+        <ds-input
+          label="Small size"
+          placeholder="Small input"
+          size="sm"
+        />
+        <ds-input
+          label="Large size"
+          placeholder="Large input"
+          size="lg"
+        />
+        <ds-input
+          label="Disabled"
+          placeholder="Cannot edit"
+          [disabled]="true"
+          helperText="This field is disabled."
+        />
+      </form>
+    </section>
+
+    <!-- ─── Cards ───────────────────────────────────────────────────── -->
+    <section class="showcase__section">
+      <h2 class="showcase__section-title">Card</h2>
+
+      <div class="showcase__card-grid">
+        <ds-card variant="elevated">
+          <ds-card-header subtitle="Default elevated card">
+            <h3 slot="title" class="showcase__card-title">Elevated Card</h3>
+          </ds-card-header>
+          <ds-card-body>
+            This card uses the default elevated style with a subtle drop shadow.
+            Great for content that needs to stand out from the page background.
+          </ds-card-body>
+          <ds-card-footer justify="end">
+            <ds-button variant="ghost" size="sm">Cancel</ds-button>
+            <ds-button variant="primary" size="sm">Save</ds-button>
+          </ds-card-footer>
+        </ds-card>
+
+        <ds-card variant="outlined">
+          <ds-card-header subtitle="Border instead of shadow">
+            <h3 slot="title" class="showcase__card-title">Outlined Card</h3>
+          </ds-card-header>
+          <ds-card-body>
+            A clean outlined card with no elevation. Works well in already-elevated
+            surfaces or when you want a flatter visual hierarchy.
+          </ds-card-body>
+          <ds-card-footer justify="between">
+            <ds-button variant="link" size="sm">Learn more</ds-button>
+            <ds-button variant="secondary" size="sm">Action</ds-button>
+          </ds-card-footer>
+        </ds-card>
+
+        <ds-card variant="filled" [interactive]="true">
+          <ds-card-header subtitle="Click to interact">
+            <h3 slot="title" class="showcase__card-title">Interactive Card</h3>
+          </ds-card-header>
+          <ds-card-body>
+            This card is focusable and hoverable — perfect for navigation links,
+            product listings, or any clickable surface. Try hovering!
+          </ds-card-body>
+        </ds-card>
+      </div>
+    </section>
+
+    <!-- ─── Badge ──────────────────────────────────────────────────── -->
+    <section class="showcase__section">
+      <h2 class="showcase__section-title">Badge</h2>
+
+      <div class="showcase__group">
+        <h3 class="showcase__group-label">Variants</h3>
+        <div class="showcase__row">
+          <ds-badge variant="default">Default</ds-badge>
+          <ds-badge variant="primary">Primary</ds-badge>
+          <ds-badge variant="success">Success</ds-badge>
+          <ds-badge variant="warning">Warning</ds-badge>
+          <ds-badge variant="danger">Danger</ds-badge>
+          <ds-badge variant="info">Info</ds-badge>
+        </div>
+      </div>
+
+      <div class="showcase__group">
+        <h3 class="showcase__group-label">Sizes</h3>
+        <div class="showcase__row showcase__row--align-center">
+          <ds-badge variant="primary" size="sm">Small</ds-badge>
+          <ds-badge variant="primary" size="md">Medium</ds-badge>
+          <ds-badge variant="primary" size="lg">Large</ds-badge>
+        </div>
+      </div>
+
+      <div class="showcase__group">
+        <h3 class="showcase__group-label">Pill shape + dot indicator</h3>
+        <div class="showcase__row showcase__row--align-center">
+          <ds-badge variant="success" shape="pill">Stable</ds-badge>
+          <ds-badge variant="warning" shape="pill">Beta</ds-badge>
+          <ds-badge variant="danger"  shape="pill">Deprecated</ds-badge>
+          <ds-badge variant="success" shape="pill" [dot]="true">Online</ds-badge>
+          <ds-badge variant="danger"  shape="pill" [dot]="true">Offline</ds-badge>
+          <ds-badge variant="warning" shape="pill" [dot]="true">Away</ds-badge>
+        </div>
+      </div>
+
+      <div class="showcase__group">
+        <h3 class="showcase__group-label">In context</h3>
+        <div class="showcase__row showcase__row--align-center">
+          <span style="font-size: var(--font-size-lg); font-weight: var(--font-weight-semibold); color: var(--color-text-primary);">
+            Design Tokens
+          </span>
+          <ds-badge variant="primary" shape="pill">New</ds-badge>
+
+          <span style="font-size: var(--font-size-md); color: var(--color-text-primary); margin-left: var(--space-4);">
+            ButtonComponent
+          </span>
+          <ds-badge variant="success" size="sm">stable</ds-badge>
+
+          <span style="font-size: var(--font-size-md); color: var(--color-text-primary); margin-left: var(--space-4);">
+            SelectComponent
+          </span>
+          <ds-badge variant="warning" size="sm">beta</ds-badge>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Select ──────────────────────────────────────────────────── -->
+    <section class="showcase__section">
+      <h2 class="showcase__section-title">Select</h2>
+
+      <div class="showcase__grid">
+        <ds-select
+          label="Framework"
+          placeholder="Choose a framework"
+          [options]="frameworkOptions"
+          helperText="Pick your favourite front-end framework."
+        />
+        <ds-select
+          label="Role"
+          placeholder="Assign a role"
+          [options]="roleOptions"
+          helperText="Guest accounts are disabled."
+          [required]="true"
+        />
+        <ds-select
+          label="Size (error state)"
+          placeholder="Select size"
+          [options]="sizeOptions"
+          status="error"
+          helperText="Size is required."
+        />
+        <ds-select
+          label="Small select"
+          placeholder="Select…"
+          [options]="frameworkOptions"
+          size="sm"
+        />
+        <ds-select
+          label="Large select"
+          placeholder="Select…"
+          [options]="frameworkOptions"
+          size="lg"
+        />
+        <ds-select
+          label="Disabled"
+          placeholder="Cannot change"
+          [options]="frameworkOptions"
+          [disabled]="true"
+          helperText="This field is locked."
+        />
+      </div>
+    </section>
+
+    <!-- ─── Toast ───────────────────────────────────────────────────── -->
+    <section class="showcase__section">
+      <h2 class="showcase__section-title">Toast</h2>
+
+      <div class="showcase__group">
+        <h3 class="showcase__group-label">Fire a notification</h3>
+        <div class="showcase__row">
+          <ds-button variant="secondary" (pressed)="fireToast('info')">
+            Info toast
+          </ds-button>
+          <ds-button variant="secondary" (pressed)="fireToast('success')">
+            Success toast
+          </ds-button>
+          <ds-button variant="secondary" (pressed)="fireToast('warning')">
+            Warning toast
+          </ds-button>
+          <ds-button variant="danger" (pressed)="fireToast('error')">
+            Error toast
+          </ds-button>
+        </div>
+        <p class="showcase__hint">Toasts auto-dismiss after 4 s. Click × to dismiss early.</p>
+      </div>
+    </section>
+
+    <!-- ─── Tabs ─────────────────────────────────────────────────────────── -->
+  <section class="showcase__section">
+    <h2 class="showcase__section-title">Tabs</h2>
+
+    <div class="showcase__group">
+      <h3 class="showcase__group-label">Line variant</h3>
+      <ds-tabs [tabs]="demoTabs" [activeId]="activeTab()" (tabChange)="activeTab.set($event)" />
+      <div class="showcase__tab-panel">
+        @if (activeTab() === 'overview')  { <p class="showcase__hint">Overview — key metrics and recent activity at a glance.</p> }
+        @if (activeTab() === 'analytics') { <p class="showcase__hint">Analytics — deeper data insights and trend charts.</p> }
+        @if (activeTab() === 'settings')  { <p class="showcase__hint">Settings — configure notifications, privacy, and integrations.</p> }
+        @if (activeTab() === 'disabled')  { <p class="showcase__hint">This panel is unreachable (tab is disabled).</p> }
+      </div>
+    </div>
+
+    <div class="showcase__group">
+      <h3 class="showcase__group-label">Pill variant</h3>
+      <ds-tabs [tabs]="demoTabs" variant="pill" [activeId]="activeTab()" (tabChange)="activeTab.set($event)" />
+      <div class="showcase__tab-panel">
+        @if (activeTab() === 'overview')  { <p class="showcase__hint">Overview content.</p> }
+        @if (activeTab() === 'analytics') { <p class="showcase__hint">Analytics content with new data insights.</p> }
+        @if (activeTab() === 'settings')  { <p class="showcase__hint">Settings panel content.</p> }
+      </div>
+    </div>
+
+    <div class="showcase__group">
+      <h3 class="showcase__group-label">Full width — pill</h3>
+      <ds-tabs [tabs]="demoTabs" variant="pill" [fullWidth]="true" [activeId]="activeTab()" (tabChange)="activeTab.set($event)" />
+    </div>
+  </section>
+
+  <!-- ─── Accordion ────────────────────────────────────────────────────── -->
+  <section class="showcase__section">
+    <h2 class="showcase__section-title">Accordion</h2>
+
+    <div class="showcase__group">
+      <h3 class="showcase__group-label">Single expand (default)</h3>
+      <ds-accordion [items]="accordionItems" />
+    </div>
+
+    <div class="showcase__group">
+      <h3 class="showcase__group-label">Multiple expand</h3>
+      <ds-accordion [items]="accordionItems" [multiple]="true" />
+    </div>
+  </section>
+
+  <!-- ─── Avatar ───────────────────────────────────────────────────────── -->
+  <section class="showcase__section">
+    <h2 class="showcase__section-title">Avatar</h2>
+
+    <div class="showcase__group">
+      <h3 class="showcase__group-label">Sizes</h3>
+      <div class="showcase__row showcase__row--align-center">
+        <ds-avatar name="Alice Martin" size="xs" />
+        <ds-avatar name="Alice Martin" size="sm" />
+        <ds-avatar name="Alice Martin" size="md" />
+        <ds-avatar name="Alice Martin" size="lg" />
+        <ds-avatar name="Alice Martin" size="xl" />
+      </div>
+    </div>
+
+    <div class="showcase__group">
+      <h3 class="showcase__group-label">Colors &amp; Shapes</h3>
+      <div class="showcase__row showcase__row--align-center">
+        <ds-avatar name="Tom Baker"  color="violet" />
+        <ds-avatar name="Sara King"  color="teal" />
+        <ds-avatar name="Jake Lee"   color="red" />
+        <ds-avatar name="Dana Cruz"  color="amber" />
+        <ds-avatar name="Mia Fox"    color="green" />
+        <ds-avatar name="Ray Stone"  color="neutral" shape="square" />
+      </div>
+    </div>
+
+    <div class="showcase__group">
+      <h3 class="showcase__group-label">Status indicators</h3>
+      <div class="showcase__row showcase__row--align-center">
+        <ds-avatar name="Online"  color="violet" status="online"  />
+        <ds-avatar name="Away"    color="teal"   status="away"    />
+        <ds-avatar name="Busy"    color="red"    status="busy"    />
+        <ds-avatar name="Offline" color="neutral" status="offline" />
+      </div>
+    </div>
+
+    <div class="showcase__group">
+      <h3 class="showcase__group-label">Image with fallback</h3>
+      <div class="showcase__row showcase__row--align-center">
+        <ds-avatar src="https://i.pravatar.cc/80?img=12" name="John Doe" size="lg" status="online" />
+        <ds-avatar src="data:image/png,broken" name="Jane Smith" size="lg" color="teal" />
+        <ds-avatar size="lg" color="neutral" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Tooltip ──────────────────────────────────────────────────────── -->
+  <section class="showcase__section">
+    <h2 class="showcase__section-title">Tooltip</h2>
+
+    <div class="showcase__group">
+      <h3 class="showcase__group-label">Positions</h3>
+      <div class="showcase__tooltip-row">
+        <ds-tooltip text="Appears above" position="top">
+          <ds-button variant="secondary" size="sm">Top</ds-button>
+        </ds-tooltip>
+        <ds-tooltip text="Appears below" position="bottom">
+          <ds-button variant="secondary" size="sm">Bottom</ds-button>
+        </ds-tooltip>
+        <ds-tooltip text="Appears to the left" position="left">
+          <ds-button variant="secondary" size="sm">Left</ds-button>
+        </ds-tooltip>
+        <ds-tooltip text="Appears to the right" position="right">
+          <ds-button variant="secondary" size="sm">Right</ds-button>
+        </ds-tooltip>
+        <ds-tooltip text="This won't show" [disabled]="true">
+          <ds-button variant="ghost" size="sm">Disabled</ds-button>
+        </ds-tooltip>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Progress ─────────────────────────────────────────────────────── -->
+  <section class="showcase__section">
+    <h2 class="showcase__section-title">Progress</h2>
+
+    <div class="showcase__group">
+      <h3 class="showcase__group-label">Variants</h3>
+      <div class="showcase__progress-stack">
+        <ds-progress label="Uploading…"    [value]="progressValue()" [showValue]="true" />
+        <ds-progress label="Storage used"  [value]="82"  variant="warning" [showValue]="true" />
+        <ds-progress label="Build passed"  [value]="100" variant="success" [showValue]="true" />
+        <ds-progress label="Tests failed"  [value]="43"  variant="error"   [showValue]="true" />
+      </div>
+    </div>
+
+    <div class="showcase__group">
+      <h3 class="showcase__group-label">Animated stripe</h3>
+      <div class="showcase__progress-stack">
+        <ds-progress label="Striped animated" [value]="progressValue()" [striped]="true" [animated]="true" />
+        <div class="showcase__row showcase__row--align-center">
+          <ds-button size="sm" variant="secondary" (pressed)="progressValue.set(Math.max(0, progressValue() - 10))">−10</ds-button>
+          <ds-button size="sm" variant="secondary" (pressed)="progressValue.set(Math.min(100, progressValue() + 10))">+10</ds-button>
+          <span class="showcase__progress-pct">{{ progressValue() }}%</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="showcase__group">
+      <h3 class="showcase__group-label">Sizes</h3>
+      <div class="showcase__progress-stack">
+        <ds-progress [value]="65" size="sm" label="Small" />
+        <ds-progress [value]="65" size="md" label="Medium" />
+        <ds-progress [value]="65" size="lg" label="Large" />
+      </div>
+    </div>
+  </section>
+
+  </main>
+
+  <!-- Toast container — renders fixed, outside flow -->
+  <ds-toast-container position="top-right" />
+
+  <!-- ─── Modal ─────────────────────────────────────────────────────── -->
+  <ds-modal
+    [open]="modalOpen()"
+    title="Confirm action"
+    size="md"
+    (closed)="modalOpen.set(false)"
+  >
+    <p style="margin-top:0; color: var(--color-text-secondary);">
+      Are you sure you want to continue? This action cannot be undone.
+    </p>
+    <ds-input
+      label="Reason (optional)"
+      placeholder="Describe why…"
+      helperText="This will be logged for audit purposes."
+    />
+
+    <div slot="footer" class="showcase__modal-footer">
+      <ds-button variant="secondary" (pressed)="modalOpen.set(false)">Cancel</ds-button>
+      <ds-button variant="danger" (pressed)="modalOpen.set(false)">Confirm</ds-button>
+    </div>
+  </ds-modal>
+
+</div>

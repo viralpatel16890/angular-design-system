@@ -1,0 +1,23 @@
+{
+  "plugins": ["./tools/stylelint-plugin-gds/index.js"],
+  "rules": {
+    "gds/no-primitive-token-in-component": true,
+    "color-no-invalid-hex": true,
+    "color-named": "never",
+    "unit-allowed-list": ["rem", "em", "px", "vh", "vw", "dvh", "dvw", "%", "fr", "deg", "ms", "s", "turn", "vmin", "vmax"],
+    "declaration-block-no-duplicate-properties": true,
+    "no-duplicate-selectors": true,
+    "scss/no-duplicate-dollar-variables": true,
+    "scss/dollar-variable-pattern": "^[a-z][a-z0-9-]*$"
+  },
+  "overrides": [
+    {
+      "files": [
+        "projects/angular-ds/src/lib/tokens/**/*.scss"
+      ],
+      "rules": {
+        "gds/no-primitive-token-in-component": null
+      }
+    }
+  ]
+}

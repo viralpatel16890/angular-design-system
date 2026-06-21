@@ -1,0 +1,83 @@
+<header
+  class="ds-navbar"
+  [class.ds-navbar--sticky]="sticky()"
+  [class.ds-navbar--bordered]="bordered()"
+  role="banner"
+>
+  <div class="ds-navbar__inner">
+
+    <!-- Brand slot -->
+    <div class="ds-navbar__brand">
+      <ng-content select="[slot=brand]" />
+    </div>
+
+    <!-- Desktop nav links -->
+    <nav class="ds-navbar__nav" aria-label="Main navigation">
+      @for (item of items(); track item.label) {
+        <a
+          class="ds-navbar__link"
+          [class.ds-navbar__link--active]="item.active"
+          [class.ds-navbar__link--disabled]="item.disabled"
+          [href]="item.disabled ? null : (item.href ?? '#')"
+          [attr.aria-current]="item.active ? 'page' : null"
+          [attr.aria-disabled]="item.disabled ? 'true' : null"
+          [attr.tabindex]="item.disabled ? '-1' : null"
+          (click)="$event.preventDefault(); onItemClick(item)"
+        >
+          {{ item.label }}
+          @if (item.badge) {
+            <span class="ds-navbar__badge">{{ item.badge }}</span>
+          }
+        </a>
+      }
+    </nav>
+
+    <!-- Actions slot (buttons, avatar, etc.) -->
+    <div class="ds-navbar__actions">
+      <ng-content select="[slot=actions]" />
+    </div>
+
+    <!-- Mobile hamburger -->
+    <button
+      class="ds-navbar__burger"
+      type="button"
+      [attr.aria-expanded]="mobileOpen()"
+      aria-controls="ds-navbar-mobile"
+      aria-label="Toggle navigation menu"
+      (click)="toggleMobile()"
+    >
+      <span class="ds-navbar__burger-bar" [class.ds-navbar__burger-bar--open]="mobileOpen()"></span>
+      <span class="ds-navbar__burger-bar" [class.ds-navbar__burger-bar--open]="mobileOpen()"></span>
+      <span class="ds-navbar__burger-bar" [class.ds-navbar__burger-bar--open]="mobileOpen()"></span>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  @if (mobileOpen()) {
+    <nav
+      id="ds-navbar-mobile"
+      class="ds-navbar__mobile"
+      aria-label="Mobile navigation"
+    >
+      @for (item of items(); track item.label) {
+        <a
+          class="ds-navbar__mobile-link"
+          [class.ds-navbar__mobile-link--active]="item.active"
+          [class.ds-navbar__mobile-link--disabled]="item.disabled"
+          [href]="item.disabled ? null : (item.href ?? '#')"
+          [attr.aria-current]="item.active ? 'page' : null"
+          [attr.aria-disabled]="item.disabled ? 'true' : null"
+          (click)="$event.preventDefault(); onItemClick(item)"
+        >
+          {{ item.label }}
+          @if (item.badge) {
+            <span class="ds-navbar__badge">{{ item.badge }}</span>
+          }
+        </a>
+      }
+      <div class="ds-navbar__mobile-actions">
+        <ng-content select="[slot=mobile-actions]" />
+      </div>
+    </nav>
+  }
+</header>

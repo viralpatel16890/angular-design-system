@@ -1,0 +1,73 @@
+:host {
+  display: block;
+
+  --card-bg:          var(--color-surface-base);
+  --card-border:      var(--color-border-default);
+  --card-radius:      var(--radius-xl);
+  --card-shadow:      var(--elevation-2);
+  --card-padding:     var(--space-6);
+  --card-transition:  box-shadow var(--motion-duration-normal) var(--motion-easing-ease-out),
+                      transform var(--motion-duration-normal) var(--motion-easing-ease-out);
+}
+
+.ds-card {
+  background: var(--card-bg);
+  border-radius: var(--card-radius);
+  overflow: hidden;
+  position: relative;
+  transition: var(--card-transition);
+
+  // ─── Variant ───────────────────────────────────────────────────────────────
+  &--elevated {
+    box-shadow: var(--card-shadow);
+    border: var(--border-1) solid transparent;
+  }
+
+  &--outlined {
+    box-shadow: none;
+    border: var(--border-1) solid var(--card-border);
+    --card-shadow: none;
+  }
+
+  &--filled {
+    box-shadow: none;
+    border: var(--border-1) solid transparent;
+    --card-bg: var(--color-surface-subtle);
+  }
+
+  // ─── Interactive state ─────────────────────────────────────────────────────
+  &--interactive {
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: var(--elevation-3);
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      box-shadow: var(--elevation-1);
+      transform: translateY(0);
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow:
+        var(--elevation-2),
+        0 0 0 var(--focus-ring-offset) var(--color-surface-base),
+        0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--focus-ring-color);
+    }
+  }
+
+  &--full-height { height: 100%; }
+
+  // ─── Padding variants ──────────────────────────────────────────────────────
+  &--p-none { --card-padding: 0; }
+  &--p-sm   { --card-padding: var(--space-4); }
+  &--p-md   { --card-padding: var(--space-6); }
+  &--p-lg   { --card-padding: var(--space-8); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-card { transition: none; }
+  .ds-card--interactive:hover { transform: none; }
+}

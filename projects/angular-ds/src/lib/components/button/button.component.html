@@ -1,0 +1,23 @@
+<button
+  [class]="classes()"
+  [type]="type()"
+  [disabled]="isDisabled()"
+  [attr.aria-busy]="loading() ? 'true' : null"
+  [attr.aria-label]="ariaLabel() ?? null"
+  [attr.aria-disabled]="isDisabled() ? 'true' : null"
+  (click)="onClick($event)"
+>
+  @if (loading()) {
+    <span class="ds-btn__spinner" aria-hidden="true">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="28" stroke-dashoffset="10"/>
+      </svg>
+    </span>
+    <span class="ds-sr-only">Loading…</span>
+  }
+  <span class="ds-btn__content" [attr.aria-hidden]="loading() ? 'true' : null">
+    <ng-content select="[slot=prefix]" />
+    <ng-content />
+    <ng-content select="[slot=suffix]" />
+  </span>
+</button>

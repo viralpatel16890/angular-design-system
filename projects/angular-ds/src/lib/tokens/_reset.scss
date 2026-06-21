@@ -1,0 +1,21 @@
+// Minimal reset — only what a design system component library needs.
+// Does not impose opinionated document-level resets on consumers.
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+// Ensure font smoothing in supported browsers
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-size-adjust: 100%;
+}
+
+// Remove default button/input browser styles within GDS components
+.ds-reset-button {
+  all: unset;
+  cursor: pointer;
+}

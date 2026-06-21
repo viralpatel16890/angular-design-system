@@ -1,0 +1,23 @@
+<div [class]="listClasses()" role="tablist" [attr.aria-label]="uid + '-tablist'">
+  @for (tab of tabs(); track tab.id; let i = $index) {
+    <button
+      #tabBtn
+      [id]="tabId(tab.id)"
+      role="tab"
+      [class]="tabClasses(tab)"
+      [attr.aria-selected]="tab.id === effectiveActiveId()"
+      [attr.aria-disabled]="tab.disabled ? 'true' : null"
+      [tabindex]="tab.id === effectiveActiveId() ? 0 : -1"
+      (click)="select(tab)"
+      (keydown)="onKeydown($event, i)"
+    >
+      @if (tab.icon) {
+        <span class="ds-tabs__tab-icon" aria-hidden="true" [innerHTML]="safeIcon(tab.icon)"></span>
+      }
+      <span class="ds-tabs__tab-label">{{ tab.label }}</span>
+      @if (tab.badge != null) {
+        <span class="ds-tabs__tab-badge">{{ tab.badge }}</span>
+      }
+    </button>
+  }
+</div>

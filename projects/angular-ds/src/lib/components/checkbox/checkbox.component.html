@@ -1,0 +1,51 @@
+<div class="ds-checkbox-field">
+  <label [class]="hostClasses()" [for]="uid">
+
+    <!-- Native input first in DOM — focus ring targets it, box styled via :has() -->
+    <input
+      #inputEl
+      class="ds-checkbox__input"
+      type="checkbox"
+      [id]="uid"
+      [checked]="checked()"
+      [disabled]="disabled()"
+      [required]="required()"
+      [attr.aria-describedby]="helperText() ? helperId : null"
+      [attr.aria-required]="required() ? 'true' : null"
+      (change)="onInputChange($event)"
+      (blur)="onBlur()"
+    />
+
+    <!-- Visual box — state driven by signal class bindings -->
+    <span
+      class="ds-checkbox__box"
+      [class.ds-checkbox__box--checked]="checked() && !indeterminate()"
+      [class.ds-checkbox__box--indeterminate]="indeterminate()"
+      aria-hidden="true"
+    >
+      @if (indeterminate()) {
+        <svg class="ds-checkbox__mark" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 5h6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+        </svg>
+      } @else if (checked()) {
+        <svg class="ds-checkbox__mark" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1.5 5l2.5 2.5 4.5-4.5" stroke="currentColor" stroke-width="1.75"
+            stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      }
+    </span>
+
+    <!-- Label text -->
+    @if (label()) {
+      <span class="ds-checkbox__label">{{ label() }}</span>
+    } @else {
+      <ng-content />
+    }
+  </label>
+
+  @if (helperText()) {
+    <p class="ds-checkbox__helper" [id]="helperId">{{ helperText() }}</p>
+  }
+
+  <ds-form-error [message]="hasError() ? resolvedError() : ''" />
+</div>

@@ -1,0 +1,55 @@
+// GDS Design Tokens
+@use '../../angular-ds/src/lib/tokens/primitives';
+@use '../../angular-ds/src/lib/tokens/semantic';
+@use '../../angular-ds/src/lib/tokens/reset';
+@use '../../angular-ds/src/lib/tokens/typography';
+
+// Inter font via Google Fonts
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+// View Transition — circular reveal from toggle button
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 400ms;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+::view-transition-old(root) {
+  animation-name: vt-fade-out;
+}
+
+::view-transition-new(root) {
+  animation-name: vt-fade-in;
+}
+
+@keyframes vt-fade-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+@keyframes vt-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+// Clip-path ripple from top-right (where the toggle button lives)
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-new(root) {
+    animation-name: vt-clip-reveal;
+    clip-path: inset(0 0 0 0);
+  }
+
+  ::view-transition-old(root) {
+    animation: none;
+    z-index: -1;
+  }
+
+  @keyframes vt-clip-reveal {
+    from {
+      clip-path: circle(0% at calc(100% - 3rem) 2rem);
+    }
+    to {
+      clip-path: circle(150% at calc(100% - 3rem) 2rem);
+    }
+  }
+}

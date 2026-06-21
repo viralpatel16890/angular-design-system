@@ -1,0 +1,150 @@
+:host {
+  display: block;
+
+  --input-bg:             var(--color-surface-base);
+  --input-border:         var(--color-border-default);
+  --input-border-hover:   var(--color-border-strong);
+  --input-border-focus:   var(--color-border-interactive);
+  --input-text:           var(--color-text-primary);
+  --input-placeholder:    var(--color-text-tertiary);
+  --input-radius:         var(--radius-md);
+  --input-font-size:      var(--font-size-md);
+  --input-padding-x:      var(--space-3);
+  --input-padding-y:      var(--space-2-5);
+  --input-height:         2.5rem; // 40px
+  --input-transition:     border-color var(--motion-duration-fast) var(--motion-easing-ease-out),
+                          box-shadow var(--motion-duration-fast) var(--motion-easing-ease-out);
+}
+
+// ─── Field layout ────────────────────────────────────────────────────────────
+.ds-input-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1-5);
+}
+
+// ─── Label ───────────────────────────────────────────────────────────────────
+.ds-input-label {
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+  cursor: pointer;
+
+  &--required::after {
+    content: ' *';
+    color: var(--color-danger-default);
+    margin-left: var(--space-0-5);
+  }
+}
+
+// ─── Wrapper ─────────────────────────────────────────────────────────────────
+.ds-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: var(--input-bg);
+  border: var(--border-1) solid var(--input-border);
+  border-radius: var(--input-radius);
+  padding: 0 var(--input-padding-x);
+  height: var(--input-height);
+  transition: var(--input-transition);
+
+  &:hover:not(.ds-input-wrapper--disabled) {
+    border-color: var(--input-border-hover);
+  }
+
+  &--focused:not(.ds-input-wrapper--disabled) {
+    border-color: var(--input-border-focus);
+    box-shadow:
+      0 0 0 var(--focus-ring-offset) var(--color-surface-base),
+      0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--focus-ring-color);
+  }
+
+  // Status variants
+  &--error {
+    --input-border:       var(--color-border-danger);
+    --input-border-hover: var(--color-danger-hover);
+    --input-border-focus: var(--color-danger-default);
+
+    &.ds-input-wrapper--focused {
+      box-shadow:
+        0 0 0 var(--focus-ring-offset) var(--color-surface-base),
+        0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--color-danger-default);
+    }
+  }
+
+  &--success {
+    --input-border:       var(--color-border-success);
+    --input-border-hover: var(--color-success-default);
+    --input-border-focus: var(--color-success-default);
+  }
+
+  &--warning {
+    --input-border:       var(--color-warning-default);
+    --input-border-hover: var(--color-amber-600);
+    --input-border-focus: var(--color-warning-default);
+  }
+
+  &--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: var(--color-surface-muted);
+  }
+
+  // Size variants
+  &--sm {
+    --input-height:     2rem;    // 32px
+    --input-padding-x:  var(--space-2);
+    --input-padding-y:  var(--space-1-5);
+    --input-font-size:  var(--font-size-sm);
+    --input-radius:     var(--radius-sm);
+  }
+
+  &--md {
+    --input-height:     2.5rem;  // 40px
+  }
+
+  &--lg {
+    --input-height:     3rem;    // 48px
+    --input-padding-x:  var(--space-4);
+    --input-font-size:  var(--font-size-lg);
+    --input-radius:     var(--radius-lg);
+  }
+}
+
+// ─── Native input ────────────────────────────────────────────────────────────
+.ds-input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: var(--font-family-sans);
+  font-size: var(--input-font-size);
+  font-weight: var(--font-weight-regular);
+  color: var(--input-text);
+  caret-color: var(--color-brand-primary);
+
+  &::placeholder { color: var(--input-placeholder); }
+
+  &:disabled { cursor: not-allowed; }
+}
+
+// ─── Helper text ─────────────────────────────────────────────────────────────
+.ds-input-helper {
+  margin: 0;
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-text-secondary);
+
+  &--error   { color: var(--color-text-danger); }
+  &--success { color: var(--color-text-success); }
+  &--warning { color: var(--color-text-warning); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-input-wrapper { transition: none; }
+}

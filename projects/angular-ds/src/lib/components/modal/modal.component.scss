@@ -1,0 +1,150 @@
+:host {
+  --modal-width:    32rem;
+  --modal-radius:   var(--radius-xl);
+  --modal-bg:       var(--color-surface-overlay);
+  --modal-shadow:   var(--elevation-5);
+  --modal-padding:  var(--space-6);
+}
+
+// ─── <dialog> backdrop ───────────────────────────────────────────────────────
+.ds-modal {
+  background: var(--modal-bg);
+  border: none;
+  border-radius: var(--modal-radius);
+  box-shadow: var(--modal-shadow);
+  padding: 0;
+  width: min(var(--modal-width), calc(100vw - var(--space-8)));
+  max-height: calc(100dvh - var(--space-16));
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  // Browser-native backdrop
+  &::backdrop {
+    background: var(--color-scrim);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    animation: ds-backdrop-in var(--motion-duration-normal) var(--motion-easing-ease-out);
+  }
+
+  // Entry animation
+  animation: ds-modal-in var(--motion-duration-normal) var(--motion-easing-spring);
+
+  // Size variants
+  &--sm  { --modal-width: 22rem; }
+  &--md  { --modal-width: 32rem; }
+  &--lg  { --modal-width: 44rem; }
+  &--xl  { --modal-width: 56rem; }
+  &--full {
+    --modal-width: 100%;
+    --modal-radius: 0;
+    margin: 0;
+    width: 100vw;
+    max-height: 100dvh;
+  }
+}
+
+// ─── Panel ───────────────────────────────────────────────────────────────────
+.ds-modal__panel {
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100dvh - var(--space-16));
+  overflow: hidden;
+}
+
+// ─── Header ──────────────────────────────────────────────────────────────────
+.ds-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--modal-padding);
+  padding-bottom: var(--space-4);
+  border-bottom: var(--border-1) solid var(--color-border-default);
+  flex-shrink: 0;
+}
+
+.ds-modal__title {
+  margin: 0;
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  color: var(--color-text-primary);
+}
+
+// ─── Close button ────────────────────────────────────────────────────────────
+.ds-modal__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  background: transparent;
+  border: var(--border-1) solid transparent;
+  border-radius: var(--radius-sm);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background var(--motion-duration-fast) var(--motion-easing-ease-out),
+              color var(--motion-duration-fast) var(--motion-easing-ease-out);
+
+  &:hover {
+    background: var(--color-surface-muted);
+    color: var(--color-text-primary);
+  }
+
+  &:focus-visible {
+    outline: none;
+    border-color: var(--focus-ring-color);
+    box-shadow: 0 0 0 var(--focus-ring-offset) var(--color-surface-base),
+                0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--focus-ring-color);
+  }
+}
+
+// ─── Body ────────────────────────────────────────────────────────────────────
+.ds-modal__body {
+  padding: var(--modal-padding);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  flex: 1;
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-md);
+  color: var(--color-text-primary);
+  line-height: var(--line-height-relaxed);
+}
+
+// ─── Animations ──────────────────────────────────────────────────────────────
+@keyframes ds-modal-in {
+  from { opacity: 0; transform: scale(0.95) translateY(8px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes ds-backdrop-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-modal { animation: none; }
+  .ds-modal::backdrop { animation: none; }
+  .ds-modal__close { transition: none; }
+}
+
+// ─── Mobile ──────────────────────────────────────────────────────────────────
+@media (max-width: 640px) {
+  .ds-modal:not(.ds-modal--full) {
+    --modal-width: 100%;
+    --modal-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    margin: auto 0 0 0;
+    max-height: 90dvh;
+    align-self: flex-end;
+    animation: ds-modal-slide-up var(--motion-duration-normal) var(--motion-easing-spring);
+  }
+}
+
+@keyframes ds-modal-slide-up {
+  from { opacity: 0; transform: translateY(100%); }
+  to   { opacity: 1; transform: translateY(0); }
+}

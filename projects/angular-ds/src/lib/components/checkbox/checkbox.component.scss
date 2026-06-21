@@ -1,0 +1,128 @@
+:host {
+  display: block;
+  --cb-size:        1.125rem; // 18px
+  --cb-radius:      var(--radius-sm);
+  --cb-border:      var(--color-border-strong);
+  --cb-bg:          var(--color-surface-base);
+  --cb-checked-bg:  var(--color-brand-primary);
+  --cb-checked-border: var(--color-brand-primary);
+  --cb-mark:        var(--color-on-interactive);
+  --cb-transition:  background var(--motion-duration-fast) var(--motion-easing-ease-out),
+                    border-color var(--motion-duration-fast) var(--motion-easing-ease-out),
+                    box-shadow   var(--motion-duration-fast) var(--motion-easing-ease-out);
+}
+
+// ─── Field ───────────────────────────────────────────────────────────────────
+.ds-checkbox-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+// ─── Wrapper / label row ─────────────────────────────────────────────────────
+.ds-checkbox-wrapper {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--space-2-5);
+  // flex-direction handles label position; gap uses logical gap
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+
+  &--label-left { flex-direction: row-reverse; }
+
+  &--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  // Size variants
+  &--sm { --cb-size: 0.875rem; gap: var(--space-2); }
+  &--md { --cb-size: 1.125rem; }
+  &--lg { --cb-size: 1.375rem; gap: var(--space-3); }
+}
+
+// ─── Hidden native input ─────────────────────────────────────────────────────
+// Input is first in DOM; box is ordered before it visually via order:-1 on box
+.ds-checkbox__input {
+  position: absolute;
+  opacity: 0;
+  width: var(--cb-size);
+  height: var(--cb-size);
+  margin: 0;
+  cursor: pointer;
+
+  // Focus ring forwarded to the visual box (next sibling)
+  &:focus-visible ~ .ds-checkbox__box {
+    box-shadow:
+      0 0 0 var(--focus-ring-offset) var(--color-surface-base),
+      0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--focus-ring-color);
+  }
+}
+
+// ─── Visual box ──────────────────────────────────────────────────────────────
+.ds-checkbox__box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--cb-size);
+  height: var(--cb-size);
+  flex-shrink: 0;
+  background: var(--cb-bg);
+  border: var(--border-2) solid var(--cb-border);
+  border-radius: var(--cb-radius);
+  transition: var(--cb-transition);
+  order: -1; // visually before label even though input is first in DOM
+  margin-top: 1px;
+
+  // Checked / indeterminate driven by class bindings from the component signal
+  &--checked,
+  &--indeterminate {
+    background: var(--cb-checked-bg);
+    border-color: var(--cb-checked-border);
+  }
+}
+
+// ─── Checkmark / dash SVG ─────────────────────────────────────────────────────
+.ds-checkbox__mark {
+  width: 62%;
+  height: 62%;
+  color: var(--cb-mark);
+  stroke-dasharray: 20;
+  stroke-dashoffset: 20;
+  animation: ds-check-draw var(--motion-duration-fast) var(--motion-easing-ease-out) forwards;
+}
+
+@keyframes ds-check-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+// ─── Label text ──────────────────────────────────────────────────────────────
+.ds-checkbox__label {
+  font-family: var(--font-family-sans);
+  color: var(--color-text-primary);
+  line-height: var(--line-height-normal);
+
+  .ds-checkbox-wrapper--sm & { font-size: var(--font-size-sm); }
+  .ds-checkbox-wrapper--md & { font-size: var(--font-size-md); }
+  .ds-checkbox-wrapper--lg & { font-size: var(--font-size-lg); }
+}
+
+// ─── Helper text ─────────────────────────────────────────────────────────────
+.ds-checkbox__helper {
+  margin: 0;
+  padding-inline-start: calc(var(--cb-size) + var(--space-2-5));
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+// Hover — darken box border
+.ds-checkbox-wrapper:hover:not(.ds-checkbox-wrapper--disabled) .ds-checkbox__box:not(.ds-checkbox__box--checked):not(.ds-checkbox__box--indeterminate) {
+  border-color: var(--color-brand-primary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-checkbox__mark { animation: none; stroke-dashoffset: 0; }
+  .ds-checkbox__box  { transition: none; }
+}

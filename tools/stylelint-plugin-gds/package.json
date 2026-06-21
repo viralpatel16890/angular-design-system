@@ -1,0 +1,11 @@
+{
+  "name": "stylelint-plugin-gds",
+  "version": "0.1.0",
+  "description": "Stylelint plugin enforcing the Angular Design System three-tier token architecture",
+  "main": "index.js",
+  "keywords": ["stylelint", "plugin", "design-tokens", "angular-ds"],
+  "license": "MIT",
+  "peerDependencies": {
+    "stylelint": ">=16"
+  }
+}

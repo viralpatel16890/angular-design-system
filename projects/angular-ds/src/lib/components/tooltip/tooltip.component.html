@@ -1,0 +1,6 @@
+<span [class]="hostClasses()">
+  <ng-content />
+  @if (!disabled()) {
+    <span class="ds-tooltip__bubble" role="tooltip">{{ text() }}</span>
+  }
+</span>

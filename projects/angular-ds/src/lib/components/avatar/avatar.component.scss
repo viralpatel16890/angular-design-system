@@ -1,0 +1,69 @@
+:host { display: inline-flex; }
+
+.ds-avatar {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-brand-primary-muted);
+  color: var(--color-interactive-default);
+  font-weight: var(--font-weight-semibold);
+  overflow: hidden;
+  flex-shrink: 0;
+  user-select: none;
+
+  // ─── Sizes ─────────────────────────────────────────────────────────────────
+  &--xs { width: 1.5rem;  height: 1.5rem;  font-size: 0.625rem; }
+  &--sm { width: 2rem;    height: 2rem;    font-size: 0.75rem; }
+  &--md { width: 2.5rem;  height: 2.5rem;  font-size: 0.875rem; }
+  &--lg { width: 3rem;    height: 3rem;    font-size: 1rem; }
+  &--xl { width: 4rem;    height: 4rem;    font-size: 1.25rem; }
+
+  // ─── Shape ─────────────────────────────────────────────────────────────────
+  &--circle { border-radius: 50%; }
+  &--square  { border-radius: var(--radius-md); }
+
+  // ─── Color seeds ───────────────────────────────────────────────────────────
+  &--color-violet  { background: var(--color-violet-100);  color: var(--color-violet-700); }
+  &--color-teal    { background: var(--color-teal-100);    color: var(--color-teal-700); }
+  &--color-red     { background: var(--color-red-100);     color: var(--color-red-700); }
+  &--color-amber   { background: var(--color-amber-100);   color: var(--color-amber-700); }
+  &--color-green   { background: var(--color-green-100);   color: var(--color-green-700); }
+  &--color-neutral { background: var(--color-neutral-200); color: var(--color-neutral-700); }
+}
+
+.ds-avatar__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.ds-avatar__initials {
+  line-height: 1;
+  letter-spacing: 0.01em;
+}
+
+.ds-avatar__fallback-icon {
+  width: 55%;
+  height: 55%;
+  color: inherit;
+}
+
+// ─── Status indicator ────────────────────────────────────────────────────────
+.ds-avatar__status {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 25%;
+  height: 25%;
+  min-width: 0.5rem;
+  min-height: 0.5rem;
+  border-radius: 50%;
+  border: 2px solid var(--color-surface-base);
+
+  &--online  { background: var(--color-success-default); }
+  &--offline { background: var(--color-neutral-400, #9ca3af); }
+  &--away    { background: var(--color-warning-default); }
+  &--busy    { background: var(--color-danger-default); }
+}

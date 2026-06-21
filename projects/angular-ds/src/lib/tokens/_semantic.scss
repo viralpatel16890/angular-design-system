@@ -1,0 +1,123 @@
+// Tier 2 — Semantic / Alias tokens: intent-based, reference primitives only.
+// These are the tokens components and consumers should use.
+
+:root {
+  // ─── Brand ───────────────────────────────────────────────────────────────────
+  --color-brand-primary:        var(--color-indigo-600);
+  --color-brand-primary-hover:  var(--color-indigo-700);
+  --color-brand-primary-active: var(--color-indigo-800);
+  --color-brand-primary-subtle: var(--color-indigo-50);
+  --color-brand-primary-muted:  var(--color-indigo-100);
+  --color-brand-accent:         var(--color-cyan-500);
+  --color-brand-accent-hover:   var(--color-cyan-600);
+
+  // ─── Interactive ─────────────────────────────────────────────────────────────
+  --color-interactive-default:  var(--color-indigo-600);
+  --color-interactive-hover:    var(--color-indigo-700);
+  --color-interactive-active:   var(--color-indigo-800);
+  --color-interactive-focus:    var(--color-indigo-600);
+  --color-on-interactive:       var(--color-neutral-0);
+
+  // ─── Feedback ────────────────────────────────────────────────────────────────
+  --color-danger-default:       var(--color-red-500);
+  --color-danger-hover:         var(--color-red-600);
+  --color-danger-active:        var(--color-red-700);
+  --color-danger-subtle:        var(--color-red-50);
+  --color-danger-muted:         var(--color-red-100);
+  --color-on-danger:            var(--color-neutral-0);
+
+  --color-success-default:      var(--color-green-500);
+  --color-success-subtle:       var(--color-green-50);
+  --color-success-muted:        var(--color-green-100);
+  --color-on-success:           var(--color-neutral-0);
+
+  --color-warning-default:      var(--color-amber-500);
+  --color-warning-subtle:       var(--color-amber-50);
+  --color-warning-muted:        var(--color-amber-100);
+  --color-on-warning:           var(--color-neutral-900);
+
+  --color-info-default:         var(--color-cyan-500);
+  --color-info-subtle:          var(--color-cyan-50);
+  --color-info-muted:           var(--color-cyan-100);
+  --color-on-info:              var(--color-neutral-0);
+
+  // ─── Text ────────────────────────────────────────────────────────────────────
+  --color-text-primary:         var(--color-neutral-900);
+  --color-text-secondary:       var(--color-neutral-600);
+  --color-text-tertiary:        var(--color-neutral-400);
+  --color-text-disabled:        var(--color-neutral-300);
+  --color-text-inverse:         var(--color-neutral-0);
+  --color-text-brand:           var(--color-indigo-700);
+  --color-text-danger:          var(--color-red-600);
+  --color-text-success:         var(--color-green-700);
+  --color-text-warning:         var(--color-amber-700);
+  --color-text-link:            var(--color-indigo-700);
+  --color-text-link-hover:      var(--color-indigo-800);
+
+  // ─── Surface ─────────────────────────────────────────────────────────────────
+  --color-surface-base:         var(--color-neutral-0);
+  --color-surface-subtle:       var(--color-neutral-50);
+  --color-surface-muted:        var(--color-neutral-100);
+  --color-surface-overlay:      var(--color-neutral-0);
+  --color-surface-inverse:      var(--color-neutral-900);
+
+  // ─── Border ──────────────────────────────────────────────────────────────────
+  --color-border-default:       var(--color-neutral-200);
+  --color-border-strong:        var(--color-neutral-300);
+  --color-border-interactive:   var(--color-indigo-600);
+  --color-border-danger:        var(--color-red-500);
+  --color-border-success:       var(--color-green-500);
+  --color-border-focus:         var(--color-indigo-600);
+
+  // ─── Focus ring ──────────────────────────────────────────────────────────────
+  --focus-ring-color:           var(--color-indigo-600);
+  --focus-ring-width:           2px;
+  --focus-ring-offset:          2px;
+  --focus-ring-style:           solid;
+
+  // ─── Overlay ─────────────────────────────────────────────────────────────────
+  --color-scrim:                rgb(0 0 0 / 0.48);
+
+  // ─── Spacing semantic aliases ─────────────────────────────────────────────────
+  --space-component-xs:   var(--space-1);
+  --space-component-sm:   var(--space-2);
+  --space-component-md:   var(--space-4);
+  --space-component-lg:   var(--space-6);
+  --space-layout-sm:      var(--space-8);
+  --space-layout-md:      var(--space-12);
+  --space-layout-lg:      var(--space-16);
+}
+
+// ─── Dark mode overrides ──────────────────────────────────────────────────────
+// Only semantic tokens are overridden. Primitives never change.
+[data-theme="dark"] {
+  --color-text-primary:         var(--color-neutral-50);
+  --color-text-secondary:       var(--color-neutral-400);
+  --color-text-tertiary:        var(--color-neutral-500);
+  --color-text-disabled:        var(--color-neutral-600);
+
+  --color-surface-base:         var(--color-neutral-950);
+  --color-surface-subtle:       var(--color-neutral-900);
+  --color-surface-muted:        var(--color-neutral-800);
+  --color-surface-overlay:      var(--color-neutral-900);
+
+  --color-border-default:       var(--color-neutral-800);
+  --color-border-strong:        var(--color-neutral-700);
+
+  --color-brand-primary-subtle: var(--color-indigo-900);
+  --color-brand-primary-muted:  var(--color-indigo-800);
+}
+
+// Smooth all elements that use semantic color tokens when theme changes
+*, *::before, *::after {
+  transition-property: background-color, border-color, color, box-shadow, fill, stroke;
+  transition-duration: 350ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+// Remove transitions for elements that opt out (motion-sensitive)
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0ms !important;
+  }
+}

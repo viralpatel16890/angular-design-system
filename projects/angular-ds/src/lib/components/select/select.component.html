@@ -1,0 +1,91 @@
+<div class="ds-select-field" [id]="uid + '-field'">
+  @if (label()) {
+    <label class="ds-select-label" [for]="uid" [class.ds-select-label--required]="required()">
+      {{ label() }}
+    </label>
+  }
+
+  <div class="ds-select-control">
+    <!-- Trigger -->
+    <button
+      #triggerEl
+      [id]="uid"
+      type="button"
+      role="combobox"
+      [class]="triggerClasses()"
+      [disabled]="disabled()"
+      [attr.aria-expanded]="isOpen()"
+      [attr.aria-haspopup]="'listbox'"
+      [attr.aria-controls]="listboxId"
+      [attr.aria-labelledby]="label() ? uid + '-label ' + uid : uid"
+      [attr.aria-describedby]="helperText() ? helperId : null"
+      [attr.aria-required]="required() ? 'true' : null"
+      [attr.aria-invalid]="hasError() ? 'true' : null"
+      (click)="toggle()"
+      (keydown)="onTriggerKeydown($event)"
+      (focus)="isFocused.set(true)"
+      (blur)="isFocused.set(false)"
+    >
+      <span class="ds-select__value" [class.ds-select__value--placeholder]="!selectedLabel()">
+        {{ selectedLabel() ?? placeholder() }}
+      </span>
+      <span class="ds-select__chevron" [class.ds-select__chevron--open]="isOpen()" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+    </button>
+
+    <!-- Dropdown listbox -->
+    @if (isOpen()) {
+      <ul
+        #listboxEl
+        [id]="listboxId"
+        class="ds-select__listbox"
+        role="listbox"
+        [attr.aria-label]="label() || placeholder()"
+      >
+        @for (option of options(); track option.value; let i = $index) {
+          <li
+            class="ds-select__option"
+            role="option"
+            [id]="uid + '-opt-' + i"
+            [attr.aria-selected]="option.value === selectedValue()"
+            [attr.aria-disabled]="option.disabled ? 'true' : null"
+            [class.ds-select__option--selected]="option.value === selectedValue()"
+            [class.ds-select__option--active]="i === activeIndex()"
+            [class.ds-select__option--disabled]="option.disabled"
+            (click)="select(option)"
+            (mouseenter)="activeIndex.set(i)"
+            (keydown)="onOptionKeydown($event, option, i)"
+            tabindex="-1"
+          >
+            <span class="ds-select__option-label">{{ option.label }}</span>
+            @if (option.value === selectedValue()) {
+              <svg class="ds-select__check" width="16" height="16" viewBox="0 0 16 16" fill="none"
+                aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 8l3.5 3.5L13 5" stroke="currentColor" stroke-width="1.5"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            }
+          </li>
+        }
+      </ul>
+    }
+  </div>
+
+  @if (helperText()) {
+    <p
+      class="ds-select-helper"
+      [id]="helperId"
+      [class.ds-select-helper--error]="status() === 'error'"
+      [class.ds-select-helper--success]="status() === 'success'"
+      [class.ds-select-helper--warning]="status() === 'warning'"
+      [attr.role]="status() === 'error' ? 'alert' : null"
+    >
+      {{ helperText() }}
+    </p>
+  }
+
+  <ds-form-error [message]="hasError() ? resolvedError() : ''" />
+</div>

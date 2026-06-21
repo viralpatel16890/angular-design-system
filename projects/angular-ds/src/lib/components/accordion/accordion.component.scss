@@ -1,0 +1,88 @@
+:host {
+  display: block;
+
+  --accordion-bg:          var(--color-surface-base);
+  --accordion-border:      var(--color-border-default);
+  --accordion-radius:      var(--radius-md);
+  --accordion-text:        var(--color-text-primary);
+  --accordion-text-muted:  var(--color-text-secondary);
+  --accordion-hover-bg:    var(--color-surface-subtle);
+  --accordion-padding-x:   1.25rem;
+  --accordion-padding-y:   1rem;
+}
+
+.ds-accordion {
+  &--bordered {
+    border: 1px solid var(--accordion-border);
+    border-radius: var(--accordion-radius);
+    overflow: hidden;
+  }
+}
+
+.ds-accordion__item {
+  background: var(--accordion-bg);
+
+  & + & {
+    border-top: 1px solid var(--accordion-border);
+  }
+
+  &--disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}
+
+.ds-accordion__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: var(--accordion-padding-y) var(--accordion-padding-x);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: start;
+  color: var(--accordion-text);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  transition: background 150ms ease;
+  outline: none;
+
+  &:hover { background: var(--accordion-hover-bg); }
+
+  &:focus-visible {
+    outline: var(--focus-ring-width) var(--focus-ring-style) var(--focus-ring-color);
+    outline-offset: -2px;
+  }
+}
+
+.ds-accordion__trigger-label { flex: 1; text-align: start; }
+
+.ds-accordion__chevron {
+  flex-shrink: 0;
+  color: var(--accordion-text-muted);
+  transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  &--open { transform: rotate(180deg); }
+}
+
+.ds-accordion__panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+
+  &--open { grid-template-rows: 1fr; }
+}
+
+.ds-accordion__panel-inner {
+  overflow: hidden;
+  padding: 0 var(--accordion-padding-x);
+  color: var(--accordion-text-muted);
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-relaxed, 1.75);
+
+  .ds-accordion__panel--open & {
+    padding-bottom: var(--accordion-padding-y);
+  }
+}

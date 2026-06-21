@@ -1,0 +1,68 @@
+<!-- Palette trigger button – always visible in the header -->
+<button
+  class="tc-trigger"
+  [class.tc-trigger--active]="isOpen()"
+  [attr.aria-expanded]="isOpen()"
+  aria-label="Customize theme colors"
+  (click)="toggle()"
+>
+  <!-- Colour swatches icon -->
+  <span class="tc-trigger__swatches" aria-hidden="true">
+    <span class="tc-trigger__dot tc-trigger__dot--primary"></span>
+    <span class="tc-trigger__dot tc-trigger__dot--success"></span>
+    <span class="tc-trigger__dot tc-trigger__dot--danger"></span>
+    <span class="tc-trigger__dot tc-trigger__dot--warning"></span>
+  </span>
+  <span class="tc-trigger__label">Theme</span>
+</button>
+
+<!-- Click-away backdrop -->
+@if (isOpen()) {
+  <div class="tc-backdrop" (click)="close()" aria-hidden="true"></div>
+
+  <!-- Floating panel -->
+  <aside class="tc-panel" role="dialog" aria-label="Theme colour customizer">
+    <div class="tc-panel__header">
+      <h2 class="tc-panel__title">Theme Colors</h2>
+      <button class="tc-panel__close" (click)="close()" aria-label="Close theme customizer">
+        <svg viewBox="0 0 16 16" fill="none" width="14" height="14" aria-hidden="true">
+          <path d="M3.5 3.5l9 9M12.5 3.5l-9 9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <p class="tc-panel__desc">Pick a colour below — all components update live via CSS tokens.</p>
+
+    <div class="tc-panel__body">
+      @for (item of colorItems(); track item.key) {
+        <div class="tc-color-row">
+          <div class="tc-color-row__swatch" [style.background]="item.value" [attr.aria-hidden]="true"></div>
+          <div class="tc-color-row__info">
+            <label class="tc-color-row__label" [for]="'color-' + item.key">{{ item.label }}</label>
+            <span class="tc-color-row__hint">{{ item.hint }}</span>
+          </div>
+          <div class="tc-color-row__controls">
+            <input
+              type="color"
+              [id]="'color-' + item.key"
+              [value]="item.value"
+              class="tc-color-row__input"
+              (input)="updateColor(item.key, $any($event.target).value)"
+            />
+            <code class="tc-color-row__hex">{{ item.value }}</code>
+          </div>
+        </div>
+      }
+    </div>
+
+    <div class="tc-panel__footer">
+      <button class="tc-reset" (click)="reset()">
+        <svg viewBox="0 0 16 16" fill="none" width="14" height="14" aria-hidden="true">
+          <path d="M2 8a6 6 0 116 6H5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M5 11l-3-3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Reset to defaults
+      </button>
+    </div>
+  </aside>
+}

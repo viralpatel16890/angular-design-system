@@ -1,0 +1,38 @@
+<div class="ds-toggle-field">
+  <div [class]="wrapperClasses()">
+
+    <!-- Native input — keyboard + screen reader driver -->
+    <input
+      class="ds-toggle__input"
+      type="checkbox"
+      role="switch"
+      [id]="uid"
+      [checked]="checked()"
+      [disabled]="disabled()"
+      [required]="required()"
+      [attr.aria-checked]="checked()"
+      [attr.aria-describedby]="helperText() ? helperId : null"
+      [attr.aria-required]="required() ? 'true' : null"
+      (change)="toggle()"
+      (blur)="onBlur()"
+    />
+
+    <!-- Visual track + thumb -->
+    <label class="ds-toggle__track" [for]="uid" aria-hidden="true">
+      <span class="ds-toggle__thumb"></span>
+    </label>
+
+    <!-- Label text -->
+    @if (label()) {
+      <label class="ds-toggle__label" [for]="uid">{{ label() }}</label>
+    } @else {
+      <ng-content />
+    }
+  </div>
+
+  @if (helperText()) {
+    <p class="ds-toggle__helper" [id]="helperId">{{ helperText() }}</p>
+  }
+
+  <ds-form-error [message]="hasError() ? resolvedError() : ''" />
+</div>

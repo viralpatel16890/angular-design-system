@@ -1,0 +1,156 @@
+:host {
+  display: block;
+
+  --tabs-gap:             0;
+  --tabs-border-color:    var(--color-border-default);
+  --tabs-active-color:    var(--color-interactive-default);
+  --tabs-text:            var(--color-text-secondary);
+  --tabs-text-active:     var(--color-interactive-default);
+  --tabs-pill-bg-active:  var(--color-brand-primary-muted);
+  --tabs-radius:          var(--radius-md);
+  --tabs-font-sm:         var(--font-size-sm);
+  --tabs-font-md:         var(--font-size-md);
+  --tabs-font-lg:         var(--font-size-lg);
+}
+
+// ─── Tab List ────────────────────────────────────────────────────────────────
+
+.ds-tabs__list {
+  display: flex;
+  align-items: center;
+  gap: var(--tabs-gap);
+
+  // Line variant
+  &--line {
+    border-bottom: 1.5px solid var(--tabs-border-color);
+  }
+
+  // Pill variant
+  &--pill {
+    gap: 0.25rem;
+    padding: 0.25rem;
+    background: var(--color-surface-muted);
+    border-radius: var(--tabs-radius);
+    width: fit-content;
+  }
+
+  &--full { width: 100%; }
+  &--full .ds-tabs__tab { flex: 1; }
+
+  &--sm .ds-tabs__tab { font-size: var(--tabs-font-sm); padding: 0.375rem 0.75rem; }
+  &--md .ds-tabs__tab { font-size: var(--tabs-font-md); padding: 0.5rem 1rem; }
+  &--lg .ds-tabs__tab { font-size: var(--tabs-font-lg); padding: 0.625rem 1.25rem; }
+}
+
+// ─── Tab Button ──────────────────────────────────────────────────────────────
+
+.ds-tabs__tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-weight: var(--font-weight-medium);
+  color: var(--tabs-text);
+  background: none;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 200ms ease, background 200ms ease;
+  border-radius: var(--radius-sm);
+  outline: none;
+
+  // Line variant tab
+  &--line {
+    position: relative;
+    border-radius: 0;
+    padding-bottom: 0.625rem;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -1.5px;
+      inset-inline: 0;
+      height: 2px;
+      background: transparent;
+      transition: background 200ms ease;
+    }
+
+    &.ds-tabs__tab--active {
+      color: var(--tabs-text-active);
+      &::after { background: var(--tabs-active-color); }
+    }
+
+    &:hover:not(.ds-tabs__tab--disabled):not(.ds-tabs__tab--active) {
+      color: var(--color-text-primary);
+    }
+  }
+
+  // Pill variant tab
+  &--pill {
+    border-radius: calc(var(--tabs-radius) - 2px);
+
+    &.ds-tabs__tab--active {
+      color: var(--tabs-text-active);
+      background: var(--color-surface-base);
+      box-shadow: var(--shadow-sm, 0 1px 3px rgb(0 0 0 / 0.1));
+    }
+
+    &:hover:not(.ds-tabs__tab--disabled):not(.ds-tabs__tab--active) {
+      background: var(--color-surface-subtle);
+    }
+  }
+
+  &--disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  &:focus-visible {
+    outline: var(--focus-ring-width) var(--focus-ring-style) var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
+  }
+}
+
+.ds-tabs__tab-icon { display: flex; align-items: center; }
+.ds-tabs__tab-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.25rem;
+  height: 1.25rem;
+  padding: 0 0.3rem;
+  font-size: 0.7rem;
+  font-weight: var(--font-weight-semibold);
+  background: var(--color-interactive-default);
+  color: var(--color-on-interactive);
+  border-radius: var(--radius-full);
+}
+
+// ─── Panels ──────────────────────────────────────────────────────────────────
+
+.ds-tabs__panels { margin-top: 1rem; }
+.ds-tabs__panel { display: none; }
+.ds-tabs__panel--active { display: block; }
+
+// ─── Responsive ──────────────────────────────────────────────────────────────
+
+@media (max-width: 640px) {
+  .ds-tabs__list {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    flex-shrink: 0;
+
+    &::-webkit-scrollbar { display: none; }
+
+    // pill on mobile: stretch to full width and scroll internally
+    &--pill { width: 100%; }
+
+    // prevent full-width tabs from shrinking below min-content
+    &--full .ds-tabs__tab { flex: none; min-width: max-content; }
+
+    &--sm .ds-tabs__tab { padding: 0.375rem 0.625rem; }
+    &--md .ds-tabs__tab { padding: 0.5rem 0.875rem; }
+    &--lg .ds-tabs__tab { padding: 0.625rem 1rem; }
+  }
+}

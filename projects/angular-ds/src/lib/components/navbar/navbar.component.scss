@@ -1,0 +1,214 @@
+:host {
+  display: block;
+  --navbar-height:     3.5rem;
+  --navbar-bg:         var(--color-surface-base);
+  --navbar-border:     var(--color-border-default);
+  --navbar-link-text:  var(--color-text-secondary);
+  --navbar-link-hover: var(--color-text-primary);
+  --navbar-link-active:var(--color-brand-primary);
+  --navbar-px:         var(--space-6);
+}
+
+// ─── Shell ────────────────────────────────────────────────────────────────────
+.ds-navbar {
+  background: var(--navbar-bg);
+  width: 100%;
+  z-index: var(--z-sticky);
+
+  &--sticky { position: sticky; top: 0; }
+  &--bordered { border-bottom: var(--border-1) solid var(--navbar-border); }
+}
+
+// ─── Inner row ────────────────────────────────────────────────────────────────
+.ds-navbar__inner {
+  display: flex;
+  align-items: center;
+  height: var(--navbar-height);
+  padding: 0 var(--navbar-px);
+  gap: var(--space-6);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+// ─── Brand ────────────────────────────────────────────────────────────────────
+.ds-navbar__brand {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+// ─── Desktop nav ──────────────────────────────────────────────────────────────
+.ds-navbar__nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  flex: 1;
+}
+
+.ds-navbar__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1-5);
+  padding: var(--space-1-5) var(--space-3);
+  border-radius: var(--radius-md);
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--navbar-link-text);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background var(--motion-duration-fast) var(--motion-easing-ease-out),
+              color     var(--motion-duration-fast) var(--motion-easing-ease-out);
+
+  &:hover:not(.ds-navbar__link--disabled) {
+    background: var(--color-surface-muted);
+    color: var(--navbar-link-hover);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 var(--focus-ring-offset) var(--navbar-bg),
+                0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--focus-ring-color);
+  }
+
+  &--active {
+    color: var(--navbar-link-active);
+    background: var(--color-brand-primary-subtle);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  &--disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+// ─── Badge ────────────────────────────────────────────────────────────────────
+.ds-navbar__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.125rem;
+  height: 1.125rem;
+  padding: 0 var(--space-1);
+  background: var(--color-danger-default);
+  color: var(--color-on-danger);
+  border-radius: var(--radius-full);
+  font-size: 0.625rem;
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+}
+
+// ─── Actions ─────────────────────────────────────────────────────────────────
+.ds-navbar__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+// ─── Hamburger ────────────────────────────────────────────────────────────────
+.ds-navbar__burger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: var(--space-1-5);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  margin-left: auto;
+  flex-shrink: 0;
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 var(--focus-ring-offset) var(--navbar-bg),
+                0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--focus-ring-color);
+  }
+}
+
+.ds-navbar__burger-bar {
+  display: block;
+  width: 100%;
+  height: 1.5px;
+  background: var(--color-text-primary);
+  border-radius: var(--radius-full);
+  transition: transform var(--motion-duration-normal) var(--motion-easing-ease-out),
+              opacity   var(--motion-duration-fast)   var(--motion-easing-ease-out);
+  transform-origin: center;
+
+  &--open:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  &--open:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  &--open:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+}
+
+// ─── Mobile menu ──────────────────────────────────────────────────────────────
+.ds-navbar__mobile {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-2) var(--space-4) var(--space-4);
+  border-top: var(--border-1) solid var(--navbar-border);
+  animation: ds-navbar-mobile-in var(--motion-duration-normal) var(--motion-easing-ease-out);
+}
+
+.ds-navbar__mobile-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-2);
+  border-radius: var(--radius-md);
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  color: var(--navbar-link-text);
+  text-decoration: none;
+  border-bottom: var(--border-1) solid var(--color-border-default);
+  transition: background var(--motion-duration-fast) var(--motion-easing-ease-out),
+              color     var(--motion-duration-fast) var(--motion-easing-ease-out);
+
+  &:last-of-type { border-bottom: none; }
+
+  &:hover:not(.ds-navbar__mobile-link--disabled) {
+    background: var(--color-surface-muted);
+    color: var(--navbar-link-hover);
+  }
+
+  &--active {
+    color: var(--navbar-link-active);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  &--disabled { opacity: 0.4; pointer-events: none; }
+}
+
+.ds-navbar__mobile-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding-top: var(--space-4);
+}
+
+// ─── Responsive ───────────────────────────────────────────────────────────────
+@media (max-width: 768px) {
+  .ds-navbar__nav     { display: none; }
+  .ds-navbar__actions { display: none; }
+  .ds-navbar__burger  { display: flex; }
+  :host { --navbar-px: var(--space-4); }
+}
+
+@keyframes ds-navbar-mobile-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-navbar__burger-bar { transition: none; }
+  .ds-navbar__mobile     { animation: none; }
+  .ds-navbar__link,
+  .ds-navbar__mobile-link { transition: none; }
+}

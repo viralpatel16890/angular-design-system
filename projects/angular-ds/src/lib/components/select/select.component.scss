@@ -1,0 +1,210 @@
+:host {
+  display: block;
+
+  --select-bg:           var(--color-surface-base);
+  --select-border:       var(--color-border-default);
+  --select-border-hover: var(--color-border-strong);
+  --select-border-focus: var(--color-border-interactive);
+  --select-text:         var(--color-text-primary);
+  --select-radius:       var(--radius-md);
+  --select-font-size:    var(--font-size-md);
+  --select-height:       2.5rem;
+  --select-transition:   border-color var(--motion-duration-fast) var(--motion-easing-ease-out),
+                         box-shadow   var(--motion-duration-fast) var(--motion-easing-ease-out);
+}
+
+// ─── Field layout ─────────────────────────────────────────────────────────────
+.ds-select-field { display: flex; flex-direction: column; gap: var(--space-1-5); }
+
+.ds-select-label {
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+  cursor: pointer;
+
+  &--required::after {
+    content: ' *';
+    color: var(--color-danger-default);
+  }
+}
+
+// ─── Control wrapper (positions listbox) ──────────────────────────────────────
+.ds-select-control { position: relative; }
+
+// ─── Trigger button ───────────────────────────────────────────────────────────
+.ds-select__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  width: 100%;
+  height: var(--select-height);
+  padding: 0 var(--space-3);
+  background: var(--select-bg);
+  border: var(--border-1) solid var(--select-border);
+  border-radius: var(--select-radius);
+  font-family: var(--font-family-sans);
+  font-size: var(--select-font-size);
+  font-weight: var(--font-weight-regular);
+  color: var(--select-text);
+  cursor: pointer;
+  text-align: left;
+  transition: var(--select-transition);
+  outline: none;
+
+  &:hover:not(:disabled) { border-color: var(--select-border-hover); }
+
+  &--focused:not(.ds-select__trigger--disabled) {
+    border-color: var(--select-border-focus);
+    box-shadow:
+      0 0 0 var(--focus-ring-offset) var(--color-surface-base),
+      0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--focus-ring-color);
+  }
+
+  &--open {
+    border-color: var(--select-border-focus);
+    border-bottom-left-radius:  0;
+    border-bottom-right-radius: 0;
+    box-shadow:
+      0 0 0 var(--focus-ring-offset) var(--color-surface-base),
+      0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--focus-ring-color);
+  }
+
+  &--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: var(--color-surface-muted);
+  }
+
+  // Status variants
+  &--error {
+    --select-border:       var(--color-border-danger);
+    --select-border-hover: var(--color-danger-hover);
+    --select-border-focus: var(--color-danger-default);
+  }
+  &--success {
+    --select-border:       var(--color-border-success);
+    --select-border-focus: var(--color-success-default);
+  }
+  &--warning {
+    --select-border:       var(--color-warning-default);
+    --select-border-focus: var(--color-warning-default);
+  }
+
+  // Size variants
+  &--sm {
+    --select-height:    2rem;
+    --select-font-size: var(--font-size-sm);
+    --select-radius:    var(--radius-sm);
+    padding: 0 var(--space-2);
+  }
+  &--lg {
+    --select-height:    3rem;
+    --select-font-size: var(--font-size-lg);
+    --select-radius:    var(--radius-lg);
+    padding: 0 var(--space-4);
+  }
+}
+
+.ds-select__value {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  &--placeholder { color: var(--color-text-tertiary); }
+}
+
+.ds-select__chevron {
+  flex-shrink: 0;
+  color: var(--color-text-tertiary);
+  transition: transform var(--motion-duration-fast) var(--motion-easing-ease-out);
+
+  &--open { transform: rotate(180deg); }
+}
+
+// ─── Listbox dropdown ─────────────────────────────────────────────────────────
+.ds-select__listbox {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: var(--z-dropdown);
+  max-height: 14rem;
+  overflow-y: auto;
+  margin: 0;
+  padding: var(--space-1) 0;
+  list-style: none;
+  background: var(--color-surface-base);
+  border: var(--border-1) solid var(--select-border-focus, var(--color-border-interactive));
+  border-top: none;
+  border-bottom-left-radius:  var(--select-radius);
+  border-bottom-right-radius: var(--select-radius);
+  box-shadow: var(--elevation-3);
+  overscroll-behavior: contain;
+  animation: ds-select-open var(--motion-duration-fast) var(--motion-easing-ease-out);
+}
+
+// ─── Option items ─────────────────────────────────────────────────────────────
+.ds-select__option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-md);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  user-select: none;
+  transition: background var(--motion-duration-fast) var(--motion-easing-ease-out);
+
+  &--active,
+  &:hover:not(.ds-select__option--disabled) {
+    background: var(--color-surface-muted);
+  }
+
+  &--selected {
+    color: var(--color-brand-primary);
+    font-weight: var(--font-weight-medium);
+    background: var(--color-brand-primary-subtle);
+
+    &.ds-select__option--active { background: var(--color-brand-primary-muted); }
+  }
+
+  &--disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}
+
+.ds-select__option-label { flex: 1; }
+
+.ds-select__check {
+  flex-shrink: 0;
+  color: var(--color-brand-primary);
+}
+
+// ─── Helper text ──────────────────────────────────────────────────────────────
+.ds-select-helper {
+  margin: 0;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+
+  &--error   { color: var(--color-text-danger); }
+  &--success { color: var(--color-text-success); }
+  &--warning { color: var(--color-text-warning); }
+}
+
+@keyframes ds-select-open {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-select__trigger  { transition: none; }
+  .ds-select__chevron  { transition: none; }
+  .ds-select__listbox  { animation: none; }
+  .ds-select__option   { transition: none; }
+}

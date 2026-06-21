@@ -1,0 +1,49 @@
+<div class="ds-input-field">
+  @if (label()) {
+    <label
+      class="ds-input-label"
+      [for]="uid"
+      [class.ds-input-label--required]="required()"
+    >
+      {{ label() }}
+    </label>
+  }
+
+  <div [class]="wrapperClasses()">
+    <ng-content select="[slot=prefix]" />
+    <input
+      class="ds-input"
+      [id]="uid"
+      [type]="type()"
+      [name]="name()"
+      [placeholder]="placeholder()"
+      [disabled]="disabled()"
+      [readOnly]="readonly()"
+      [required]="required()"
+      [autocomplete]="autocomplete()"
+      [value]="value()"
+      [attr.aria-describedby]="helperText() ? helperId : null"
+      [attr.aria-invalid]="hasError() ? 'true' : null"
+      [attr.aria-required]="required() ? 'true' : null"
+    (input)="onInput($event)"
+      (focus)="onFocus()"
+      (blur)="onBlur()"
+    />
+    <ng-content select="[slot=suffix]" />
+  </div>
+
+  @if (helperText()) {
+    <p
+      class="ds-input-helper"
+      [id]="helperId"
+      [class.ds-input-helper--error]="status() === 'error'"
+      [class.ds-input-helper--success]="status() === 'success'"
+      [class.ds-input-helper--warning]="status() === 'warning'"
+      [attr.role]="status() === 'error' ? 'alert' : null"
+    >
+      {{ helperText() }}
+    </p>
+  }
+
+  <ds-form-error [message]="hasError() ? resolvedError() : ''" />
+</div>

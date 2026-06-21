@@ -1,0 +1,7 @@
+<article [class]="classes()" [attr.tabindex]="interactive() ? '0' : null">
+  <ng-content select="ds-card-header, [ds-card-header]" />
+  <ng-content select="ds-card-body, [ds-card-body]" />
+  <ng-content select="ds-card-footer, [ds-card-footer]" />
+  <!-- Fallback for unsegmented content -->
+  <ng-content />
+</article>

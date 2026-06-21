@@ -1,0 +1,24 @@
+@if (label() || showValue()) {
+  <div class="ds-progress__header">
+    @if (label()) {
+      <span class="ds-progress__label">{{ label() }}</span>
+    }
+    @if (showValue()) {
+      <span class="ds-progress__value">{{ percent() }}%</span>
+    }
+  </div>
+}
+
+<div
+  [class]="trackClasses()"
+  role="progressbar"
+  [attr.aria-valuenow]="clampedValue()"
+  [attr.aria-valuemin]="0"
+  [attr.aria-valuemax]="max()"
+  [attr.aria-label]="label() || 'Progress'"
+>
+  <div
+    [class]="fillClasses()"
+    [style.width.%]="percent()"
+  ></div>
+</div>

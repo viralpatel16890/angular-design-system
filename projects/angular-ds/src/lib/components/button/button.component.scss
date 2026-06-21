@@ -1,0 +1,180 @@
+// ─── Component-level token declarations ──────────────────────────────────────
+// Parent can override these to theme this button instance
+:host {
+  display: inline-flex;
+
+  --btn-bg:              var(--color-interactive-default);
+  --btn-bg-hover:        var(--color-interactive-hover);
+  --btn-bg-active:       var(--color-interactive-active);
+  --btn-text:            var(--color-on-interactive);
+  --btn-border:          transparent;
+  --btn-border-hover:    transparent;
+  --btn-radius:          var(--radius-md);
+  --btn-font-size:       var(--font-size-md);
+  --btn-font-weight:     var(--font-weight-semibold);
+  --btn-padding-x:       var(--space-5);
+  --btn-padding-y:       var(--space-2-5);
+  --btn-gap:             var(--space-2);
+  --btn-transition:      background var(--motion-duration-fast) var(--motion-easing-ease-out),
+                         box-shadow var(--motion-duration-fast) var(--motion-easing-ease-out),
+                         opacity var(--motion-duration-fast) var(--motion-easing-ease-out);
+}
+
+:host([fullwidth]) {
+  width: 100%;
+}
+
+// ─── Base button ─────────────────────────────────────────────────────────────
+.ds-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--btn-gap);
+  padding: var(--btn-padding-y) var(--btn-padding-x);
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  border: var(--border-1) solid var(--btn-border);
+  border-radius: var(--btn-radius);
+  font-family: var(--font-family-sans);
+  font-size: var(--btn-font-size);
+  font-weight: var(--btn-font-weight);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-normal);
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  text-decoration: none;
+  transition: var(--btn-transition);
+  position: relative;
+  outline: none;
+
+  // Focus-visible ring
+  &:focus-visible {
+    box-shadow:
+      0 0 0 var(--focus-ring-offset) var(--color-surface-base),
+      0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--focus-ring-color);
+  }
+
+  &:hover:not(:disabled) { background: var(--btn-bg-hover); }
+  &:active:not(:disabled) { background: var(--btn-bg-active); transform: translateY(1px); }
+
+  &:disabled,
+  &--loading {
+    opacity: 0.48;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  // Full width
+  &--full { width: 100%; }
+
+  // ─── Variant overrides ──────────────────────────────────────────────────────
+  &--primary {
+    --btn-bg:           var(--color-interactive-default);
+    --btn-bg-hover:     var(--color-interactive-hover);
+    --btn-bg-active:    var(--color-interactive-active);
+    --btn-text:         var(--color-on-interactive);
+  }
+
+  &--secondary {
+    --btn-bg:           var(--color-surface-muted);
+    --btn-bg-hover:     var(--color-neutral-200);
+    --btn-bg-active:    var(--color-neutral-300);
+    --btn-text:         var(--color-text-primary);
+    --btn-border:       var(--color-border-default);
+    --btn-border-hover: var(--color-border-strong);
+  }
+
+  &--danger {
+    --btn-bg:           var(--color-danger-default);
+    --btn-bg-hover:     var(--color-danger-hover);
+    --btn-bg-active:    var(--color-danger-active);
+    --btn-text:         var(--color-on-danger);
+    --btn-border:       transparent;
+  }
+
+  &--ghost {
+    --btn-bg:           transparent;
+    --btn-bg-hover:     var(--color-brand-primary-subtle);
+    --btn-bg-active:    var(--color-brand-primary-muted);
+    --btn-text:         var(--color-text-brand);
+    --btn-border:       transparent;
+  }
+
+  &--link {
+    --btn-bg:           transparent;
+    --btn-bg-hover:     transparent;
+    --btn-bg-active:    transparent;
+    --btn-text:         var(--color-text-link);
+    --btn-border:       transparent;
+    --btn-padding-x:    var(--space-1);
+    --btn-padding-y:    var(--space-0-5);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+
+    &:hover:not(:disabled) {
+      color: var(--color-text-link-hover);
+      text-decoration-thickness: 2px;
+    }
+  }
+
+  // ─── Size overrides ─────────────────────────────────────────────────────────
+  &--sm {
+    --btn-padding-x:  var(--space-3);
+    --btn-padding-y:  var(--space-1-5);
+    --btn-font-size:  var(--font-size-sm);
+    --btn-radius:     var(--radius-sm);
+  }
+
+  &--md {
+    --btn-padding-x:  var(--space-5);
+    --btn-padding-y:  var(--space-2-5);
+    --btn-font-size:  var(--font-size-md);
+  }
+
+  &--lg {
+    --btn-padding-x:  var(--space-6);
+    --btn-padding-y:  var(--space-3);
+    --btn-font-size:  var(--font-size-lg);
+    --btn-radius:     var(--radius-lg);
+  }
+}
+
+// ─── Spinner ─────────────────────────────────────────────────────────────────
+.ds-btn__spinner {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  animation: ds-spin 0.75s linear infinite;
+}
+
+.ds-btn__content {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--btn-gap);
+}
+
+@keyframes ds-spin {
+  to { transform: rotate(360deg); }
+}
+
+// Screen-reader-only utility
+.ds-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-btn {
+    transition: none;
+    &:active:not(:disabled) { transform: none; }
+  }
+  .ds-btn__spinner { animation: none; }
+}

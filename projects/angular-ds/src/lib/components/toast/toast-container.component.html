@@ -1,0 +1,49 @@
+<div
+  class="ds-toast-container"
+  [class]="'ds-toast-container ds-toast-container--' + position()"
+  role="region"
+  aria-label="Notifications"
+  aria-live="polite"
+  aria-atomic="false"
+>
+  @for (toast of toasts(); track trackById($index, toast)) {
+    <div
+      class="ds-toast"
+      [class]="'ds-toast ds-toast--' + toast.variant + (toast.removing ? ' ds-toast--removing' : '')"
+      role="alert"
+      aria-live="assertive"
+      aria-atomic="true"
+    >
+      <!-- Icon -->
+      <span class="ds-toast__icon" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"
+          [innerHTML]="iconFor(toast.variant)">
+        </svg>
+      </span>
+
+      <!-- Content -->
+      <div class="ds-toast__content">
+        @if (toast.title) {
+          <p class="ds-toast__title">{{ toast.title }}</p>
+        }
+        <p class="ds-toast__message">{{ toast.message }}</p>
+      </div>
+
+      <!-- Dismiss -->
+      @if (toast.dismissible) {
+        <button
+          class="ds-toast__close"
+          type="button"
+          aria-label="Dismiss notification"
+          (click)="dismiss(toast.id)"
+        >
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 2L2 10M2 2l8 8" stroke="currentColor" stroke-width="1.5"
+              stroke-linecap="round"/>
+          </svg>
+        </button>
+      }
+    </div>
+  }
+</div>

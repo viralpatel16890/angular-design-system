@@ -4,7 +4,6 @@
 
 ![Angular](https://img.shields.io/badge/Angular-22-DD0031?logo=angular&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-6.0-3178C6?logo=typescript&logoColor=white)
-![License](https://img.shields.io/badge/License-MIT-green)
 ![npm](https://img.shields.io/badge/npm-angular--ds-CB3837?logo=npm&logoColor=white)
 
 ---
@@ -590,7 +589,3 @@ All sub-paths resolve to the same ESM bundle (`fesm2022/angular-ds.mjs`). Becaus
 `ThemeCustomizerComponent` injects `PLATFORM_ID` and wraps all `document.documentElement.style.setProperty()` calls in an `isPlatformBrowser()` guard. This prevents `ReferenceError: document is not defined` on Angular Universal, Analog, or any server-side rendering host. Signal state updates (`colors`, `isOpen`) remain unconditional and work on all platforms.
 
 ---
-
-## License
-
-MIT © 2024 — Angular Design System Contributors

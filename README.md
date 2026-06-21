@@ -2,6 +2,8 @@
 
 > A production-ready Angular 22 component library built on a three-tier design token architecture — powering consistent, accessible, and themeable UIs out of the box.
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-angular--design--system--blue.vercel.app-000?logo=vercel&logoColor=white)](https://angular-design-system-blue.vercel.app/)
+
 ![Angular](https://img.shields.io/badge/Angular-22-DD0031?logo=angular&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-6.0-3178C6?logo=typescript&logoColor=white)
 ![npm](https://img.shields.io/badge/npm-angular--ds-CB3837?logo=npm&logoColor=white)

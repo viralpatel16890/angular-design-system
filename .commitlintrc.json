@@ -9,7 +9,7 @@
     "scope-enum": [
       1,
       "always",
-      ["button", "input", "card", "modal", "badge", "select", "toast", "navbar", "sidebar", "checkbox", "toggle", "tokens", "theme", "deps", "storybook", "vitest", "playwright", "ci"]
+      ["button", "input", "card", "modal", "badge", "select", "toast", "navbar", "sidebar", "checkbox", "toggle", "tokens", "theme", "deps", "storybook", "vitest", "playwright", "ci", "showcase", "docs", "deploy"]
     ],
     "subject-max-length": [2, "always", 72],
     "body-max-line-length": [2, "always", 100]

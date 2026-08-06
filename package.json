@@ -6,9 +6,9 @@
     "start": "ng serve",
     "build": "ng build showcase",
     "watch": "ng build --watch --configuration development",
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage",
+    "test": "ng test --watch=false",
+    "test:watch": "ng test --watch",
+    "test:coverage": "ng test --watch=false --coverage",
     "e2e": "playwright test",
     "e2e:ui": "playwright test --ui",
     "e2e:update-snapshots": "playwright test --update-snapshots",
@@ -24,6 +24,9 @@
   },
   "private": true,
   "packageManager": "npm@10.9.8",
+  "engines": {
+    "node": "^22.22.3 || ^24.15.0 || >=26.0.0"
+  },
   "dependencies": {
     "@angular/cdk": "^22.0.2",
     "@angular/common": "^22.0.0",
@@ -44,6 +47,7 @@
     "@playwright/test": "^1.52.0",
     "@storybook/addon-a11y": "^10.0.0",
     "@storybook/angular": "^10.0.0",
+    "@vitest/coverage-v8": "^4.1.9",
     "husky": "^9.1.7",
     "jsdom": "^29.0.0",
     "ng-packagr": "^22.0.0",

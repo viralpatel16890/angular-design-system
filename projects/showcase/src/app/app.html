@@ -667,6 +667,122 @@
     </div>
   </section>
 
+    <!-- ─── Consuming the Design System ────────────────────────────────── -->
+    <section class="showcase__section" id="consumers">
+      <h2 class="showcase__section-title">Consuming the Design System</h2>
+      <p class="showcase__hint">
+        This Showcase demonstrates every component in isolation. The apps below show
+        <code>angular-ds</code> consumed inside real, independently deployed products —
+        proof the library works outside this repo, not just in a gallery.
+      </p>
+
+      <div class="showcase__group">
+        <h3 class="showcase__group-label">Live consumer apps</h3>
+        <div class="showcase__card-grid">
+          <ds-card variant="outlined">
+            <ds-card-header subtitle="This app — component gallery">
+              <h3 slot="title" class="showcase__card-title">Angular Design System Showcase</h3>
+            </ds-card-header>
+            <ds-card-body>
+              Every <code>ds-*</code> component rendered with its variants, sizes and states.
+              Start here to see the full API surface before wiring a component into an app.
+            </ds-card-body>
+            <ds-card-footer justify="between">
+              <ds-badge variant="default" shape="pill">Gallery</ds-badge>
+              <a href="https://angular-design-system-blue.vercel.app/" target="_blank" rel="noopener noreferrer">
+                <ds-button variant="link" size="sm">Open showcase ↗</ds-button>
+              </a>
+            </ds-card-footer>
+          </ds-card>
+
+          <ds-card variant="outlined">
+            <ds-card-header subtitle="End-to-end fintech UI built on angular-ds">
+              <h3 slot="title" class="showcase__card-title">Fintech Design System — Marketing</h3>
+            </ds-card-header>
+            <ds-card-body>
+              A marketing/landing surface composed from navbar, card, badge and button
+              components, themed via <code>ThemeService.applyTheme()</code> for a distinct brand.
+            </ds-card-body>
+            <ds-card-footer justify="between">
+              <ds-badge variant="info" shape="pill">Consumer app</ds-badge>
+              <a href="https://fintech-design-system-beta.vercel.app/" target="_blank" rel="noopener noreferrer">
+                <ds-button variant="link" size="sm">Open demo ↗</ds-button>
+              </a>
+            </ds-card-footer>
+          </ds-card>
+
+          <ds-card variant="outlined">
+            <ds-card-header subtitle="Authenticated dashboard flow">
+              <h3 slot="title" class="showcase__card-title">Fintech Design System — Consumer Portal</h3>
+            </ds-card-header>
+            <ds-card-body>
+              The <code>/consumer</code> route shows form, table-like data, and feedback
+              components (input, select, toast, progress) doing real work in a logged-in flow.
+            </ds-card-body>
+            <ds-card-footer justify="between">
+              <ds-badge variant="info" shape="pill">Consumer app</ds-badge>
+              <a href="https://fintech-design-system-beta.vercel.app/consumer/" target="_blank" rel="noopener noreferrer">
+                <ds-button variant="link" size="sm">Open portal ↗</ds-button>
+              </a>
+            </ds-card-footer>
+          </ds-card>
+        </div>
+      </div>
+
+      <div class="showcase__group">
+        <h3 class="showcase__group-label">How a consumer app pulls in angular-ds</h3>
+        <pre class="showcase__code"><code>npm install angular-ds
+
+// styles.scss — one-time token import
+&#64;use 'angular-ds/styles/tokens';
+
+// any component file — tree-shakeable sub-path imports
+import &#123; ButtonComponent, CardComponent &#125; from 'angular-ds/button';
+import &#123; NavbarComponent &#125; from 'angular-ds/navbar';</code></pre>
+      </div>
+
+      <div class="showcase__group">
+        <h3 class="showcase__group-label">Where components show up in the fintech demo</h3>
+        <div class="showcase__frame">
+          <table class="showcase__usage-table">
+            <thead>
+              <tr>
+                <th>Component</th>
+                <th>Used for</th>
+                <th>Where</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>ds-navbar</code></td>
+                <td>Top-level marketing + portal navigation</td>
+                <td>Both apps</td>
+              </tr>
+              <tr>
+                <td><code>ds-card</code>, <code>ds-badge</code></td>
+                <td>Pricing tiers, account/status summaries</td>
+                <td>Marketing home</td>
+              </tr>
+              <tr>
+                <td><code>ds-input</code>, <code>ds-select</code></td>
+                <td>Login, transfer and filter forms</td>
+                <td>Consumer portal</td>
+              </tr>
+              <tr>
+                <td><code>ds-toast</code>, <code>ds-progress</code></td>
+                <td>Async feedback for submitted actions</td>
+                <td>Consumer portal</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="showcase__hint">
+          Exact usage may evolve as the fintech demo changes — open the links above for the
+          current implementation.
+        </p>
+      </div>
+    </section>
+
   </main>
 
   <!-- Toast container — renders fixed, outside flow -->

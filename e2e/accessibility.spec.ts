@@ -13,13 +13,13 @@ test.describe('Angular Design System — Accessibility', () => {
   });
 
   test('buttons should be keyboard accessible', async ({ page }) => {
-    const firstButton = page.locator('gds-button button').first();
+    const firstButton = page.locator('ds-button button').first();
     await firstButton.focus();
     await expect(firstButton).toBeFocused();
   });
 
   test('checkboxes should be keyboard operable', async ({ page }) => {
-    const firstCheckbox = page.locator('gds-checkbox input[type=checkbox]').first();
+    const firstCheckbox = page.locator('ds-checkbox input[type=checkbox]').first();
     await firstCheckbox.focus();
     await expect(firstCheckbox).toBeFocused();
     await page.keyboard.press('Space');
@@ -29,14 +29,14 @@ test.describe('Angular Design System — Accessibility', () => {
   });
 
   test('toggles should be keyboard operable', async ({ page }) => {
-    const firstToggle = page.locator('gds-toggle input[type=checkbox]').first();
+    const firstToggle = page.locator('ds-toggle input[type=checkbox]').first();
     await firstToggle.focus();
     await expect(firstToggle).toBeFocused();
   });
 
   test('modal should trap focus when open', async ({ page }) => {
     // Open modal
-    const openButton = page.locator('gds-button button').filter({ hasText: /open modal/i }).first();
+    const openButton = page.locator('ds-button button').filter({ hasText: /open modal/i }).first();
     if (await openButton.count() > 0) {
       await openButton.click();
       await expect(page.locator('dialog[open]')).toBeVisible();

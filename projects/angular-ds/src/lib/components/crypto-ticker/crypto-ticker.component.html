@@ -1,0 +1,17 @@
+<div class="ds-ticker">
+  <div class="ds-ticker__left">
+    <div class="ds-ticker__logo">{{ logo() }}</div>
+    <div class="ds-ticker__info">
+      <span class="ds-ticker__symbol">{{ symbol() }}</span>
+      <span class="ds-ticker__name">{{ name() }}</span>
+    </div>
+  </div>
+  <div class="ds-ticker__right">
+    <span class="ds-ticker__price" [class.ds-ticker__price--flash]="isFlashing()">
+      {{ formattedPrice() }}
+    </span>
+    <span class="ds-ticker__change" [class.up]="change24h() >= 0" [class.down]="change24h() < 0">
+      {{ change24h() >= 0 ? '▲' : '▼' }}&nbsp;{{ absChange() | number: '1.2-2' }}%
+    </span>
+  </div>
+</div>

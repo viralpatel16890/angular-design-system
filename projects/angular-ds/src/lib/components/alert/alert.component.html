@@ -1,0 +1,14 @@
+@if (visible()) {
+  <div [class]="classes()" role="alert">
+    <span class="ds-alert__icon" aria-hidden="true">{{ icon() }}</span>
+    <div class="ds-alert__body">
+      @if (title()) {
+        <span class="ds-alert__title">{{ title() }}</span>
+      }
+      <span class="ds-alert__message">{{ message() }}</span>
+    </div>
+    @if (dismissible()) {
+      <button type="button" class="ds-alert__close" (click)="dismiss()" aria-label="Dismiss">✕</button>
+    }
+  </div>
+}

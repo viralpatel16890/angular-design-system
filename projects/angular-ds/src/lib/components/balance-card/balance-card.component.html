@@ -1,0 +1,20 @@
+<div [class]="classes()">
+  <div class="ds-balance__header">
+    <span class="ds-balance__label">{{ label() }}</span>
+    <span class="ds-balance__icon" aria-hidden="true">{{ icon() }}</span>
+  </div>
+  <div class="ds-balance__amount">
+    <span class="ds-balance__currency">{{ currency() }}</span>
+    <span class="ds-balance__value">{{ amount() | number: '1.2-2' }}</span>
+  </div>
+  <div class="ds-balance__footer">
+    <span
+      class="ds-balance__trend"
+      [class.ds-balance__trend--up]="trend() >= 0"
+      [class.ds-balance__trend--down]="trend() < 0"
+    >
+      {{ trend() >= 0 ? '▲' : '▼' }}&nbsp;{{ absTrend() | number: '1.1-1' }}%
+    </span>
+    <span class="ds-balance__period">{{ period() }}</span>
+  </div>
+</div>

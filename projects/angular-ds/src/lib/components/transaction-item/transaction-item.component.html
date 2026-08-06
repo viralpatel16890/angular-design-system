@@ -1,0 +1,26 @@
+<div
+  class="ds-txn"
+  [class.ds-txn--clickable]="clickable()"
+  [attr.role]="clickable() ? 'button' : null"
+  [attr.tabindex]="clickable() ? 0 : null"
+  [attr.aria-label]="clickable() ? ariaLabel() : null"
+  (click)="clickable() && itemClicked.emit()"
+  (keydown.enter)="clickable() && itemClicked.emit()"
+  (keydown.space)="clickable() && itemClicked.emit(); $event.preventDefault()"
+>
+  <div class="ds-txn__avatar" aria-hidden="true">{{ avatar() }}</div>
+  <div class="ds-txn__info">
+    <span class="ds-txn__name">{{ name() }}</span>
+    <span class="ds-txn__meta">{{ category() }} · {{ date() }}</span>
+  </div>
+  <div class="ds-txn__right">
+    <span
+      class="ds-txn__amount"
+      [class.ds-txn__amount--credit]="type() === 'credit'"
+      [class.ds-txn__amount--debit]="type() === 'debit'"
+    >
+      {{ type() === 'credit' ? '+' : '−' }}{{ formattedAmount() }}
+    </span>
+    <ds-badge [variant]="badgeVariant()" size="sm" [dot]="true">{{ status() }}</ds-badge>
+  </div>
+</div>

@@ -1,0 +1,89 @@
+:host {
+  display: block;
+  --balance-accent: var(--color-cyan-500);
+}
+
+.ds-balance {
+  background: var(--color-surface-subtle);
+  border: var(--border-1) solid var(--color-border-default);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  min-width: 220px;
+  transition:
+    border-color var(--motion-duration-normal) var(--motion-easing-ease-out),
+    box-shadow var(--motion-duration-normal) var(--motion-easing-ease-out),
+    transform var(--motion-duration-normal) var(--motion-easing-ease-out);
+
+  &:hover {
+    border-color: var(--color-border-strong);
+    box-shadow: var(--elevation-3);
+    transform: translateY(-3px);
+  }
+}
+
+.ds-balance--cyan   { --balance-accent: var(--color-cyan-500); }
+.ds-balance--violet { --balance-accent: var(--color-violet-500); }
+.ds-balance--amber  { --balance-accent: var(--color-amber-500); }
+
+.ds-balance__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+}
+
+.ds-balance__label {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.ds-balance__icon {
+  font-size: var(--font-size-xl);
+}
+
+.ds-balance__amount {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-0-5);
+  margin-bottom: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.ds-balance__currency {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-secondary);
+  font-family: var(--font-family-mono);
+}
+
+.ds-balance__value {
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
+  font-family: var(--font-family-mono);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--balance-accent);
+}
+
+.ds-balance__footer {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.ds-balance__trend {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  font-family: var(--font-family-mono);
+
+  &--up   { color: var(--color-success-default); }
+  &--down { color: var(--color-danger-default); }
+}
+
+.ds-balance__period {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+}

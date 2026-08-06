@@ -73,3 +73,21 @@ export * from './lib/services/theme.service';
 
 // Form Error
 export * from './lib/components/form-error/form-error.component';
+
+// Alert
+export * from './lib/components/alert/alert.types';
+export * from './lib/components/alert/alert.component';
+
+// Balance Card
+export * from './lib/components/balance-card/balance-card.types';
+export * from './lib/components/balance-card/balance-card.component';
+
+// Crypto Ticker
+export * from './lib/components/crypto-ticker/crypto-ticker.component';
+
+// Metric Card
+export * from './lib/components/metric-card/metric-card.component';
+
+// Transaction Item
+export * from './lib/components/transaction-item/transaction-item.types';
+export * from './lib/components/transaction-item/transaction-item.component';

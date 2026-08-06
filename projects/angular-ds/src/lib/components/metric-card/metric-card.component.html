@@ -1,0 +1,23 @@
+<div class="ds-metric">
+  <div class="ds-metric__top">
+    <span class="ds-metric__icon" aria-hidden="true">{{ icon() }}</span>
+    <span class="ds-metric__badge" [class.up]="change() >= 0" [class.down]="change() < 0">
+      {{ change() >= 0 ? '+' : '' }}{{ change() | number: '1.1-1' }}%
+    </span>
+  </div>
+  <div class="ds-metric__value">
+    @if (prefix()) {
+      <span class="ds-metric__affix">{{ prefix() }}</span>
+    }
+    {{ formattedValue() }}
+    @if (suffix()) {
+      <span class="ds-metric__affix">{{ suffix() }}</span>
+    }
+  </div>
+  <div class="ds-metric__label">{{ label() }}</div>
+  <div class="ds-metric__bars" aria-hidden="true">
+    @for (bar of sparkBars(); track $index) {
+      <div class="ds-metric__bar" [style.height.%]="bar" [class.active]="$last"></div>
+    }
+  </div>
+</div>

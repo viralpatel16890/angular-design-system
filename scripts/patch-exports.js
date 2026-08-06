@@ -14,6 +14,7 @@ const components = [
   'accordion', 'avatar', 'badge', 'button', 'card', 'checkbox',
   'form-error', 'input', 'modal', 'navbar', 'progress', 'select',
   'sidebar', 'tabs', 'toast', 'toggle', 'tooltip', 'theme',
+  'alert', 'balance-card', 'crypto-ticker', 'metric-card', 'transaction-item',
 ];
 
 for (const c of components) {

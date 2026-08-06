@@ -667,6 +667,175 @@
     </div>
   </section>
 
+    <!-- ─── Fintech-domain components ──────────────────────────────────── -->
+    <section class="showcase__section">
+      <h2 class="showcase__section-title">Fintech Components</h2>
+      <p class="showcase__hint">
+        Domain-specific components ported from the fintech consumer app into this library,
+        restyled onto the same token system as every other component on this page.
+      </p>
+
+      <div class="showcase__group">
+        <h3 class="showcase__group-label">Alert</h3>
+        <div class="showcase__stack">
+          <ds-alert variant="info" title="Heads up" message="Your statement is ready to download." />
+          <ds-alert variant="success" title="Transfer complete" message="$1,200.00 sent to Alex Chen." />
+          <ds-alert variant="warning" message="Your card expires at the end of this month." [dismissible]="false" />
+          <ds-alert variant="danger" title="Payment failed" message="Insufficient funds for this transaction." />
+        </div>
+      </div>
+
+      <div class="showcase__group">
+        <h3 class="showcase__group-label">Balance card</h3>
+        <div class="showcase__card-grid">
+          <ds-balance-card label="Total Balance" [amount]="24680.55" [trend]="4.2" accent="cyan" />
+          <ds-balance-card label="Investments" [amount]="9120.10" [trend]="-1.8" accent="violet" icon="📈" />
+          <ds-balance-card label="Savings" [amount]="15400" [trend]="2.1" accent="amber" icon="🏦" />
+        </div>
+      </div>
+
+      <div class="showcase__group">
+        <h3 class="showcase__group-label">Metric card</h3>
+        <div class="showcase__card-grid">
+          <ds-metric-card label="Monthly Revenue" [value]="128400" [change]="6.4" icon="💰" prefix="$" />
+          <ds-metric-card label="Active Users" [value]="8240" [change]="-2.1" icon="👥" />
+        </div>
+      </div>
+
+      <div class="showcase__group">
+        <h3 class="showcase__group-label">Crypto ticker</h3>
+        <div class="showcase__stack">
+          <ds-crypto-ticker symbol="BTC" name="Bitcoin" [price]="64230.12" [change24h]="2.4" logo="₿" />
+          <ds-crypto-ticker symbol="ETH" name="Ethereum" [price]="3120.87" [change24h]="-1.1" logo="Ξ" />
+        </div>
+      </div>
+
+      <div class="showcase__group">
+        <h3 class="showcase__group-label">Transaction item</h3>
+        <div class="showcase__frame">
+          @for (txn of demoTransactions; track txn.name) {
+            <ds-transaction-item
+              [name]="txn.name"
+              [category]="txn.category"
+              [date]="txn.date"
+              [amount]="txn.amount"
+              [type]="txn.type"
+              [status]="txn.status"
+              [avatar]="txn.avatar"
+              [ariaLabel]="txn.name + ' transaction details'"
+            />
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Consuming the Design System ────────────────────────────────── -->
+    <section class="showcase__section" id="consumers">
+      <h2 class="showcase__section-title">Consuming the Design System</h2>
+      <p class="showcase__hint">
+        This Showcase demonstrates every component in isolation. The consumer app below shows
+        <code>angular-ds</code> — including the fintech-domain components — doing real work
+        inside an actual app, not just a gallery. Both apps live in this repo and deploy
+        together from one Vercel project.
+      </p>
+
+      <div class="showcase__group">
+        <h3 class="showcase__group-label">Live apps</h3>
+        <div class="showcase__card-grid">
+          <ds-card variant="outlined">
+            <ds-card-header subtitle="This app — component gallery">
+              <h3 slot="title" class="showcase__card-title">Angular Design System Showcase</h3>
+            </ds-card-header>
+            <ds-card-body>
+              Every <code>ds-*</code> component rendered with its variants, sizes and states.
+              Start here to see the full API surface before wiring a component into an app.
+            </ds-card-body>
+            <ds-card-footer justify="between">
+              <ds-badge variant="default" shape="pill">Gallery</ds-badge>
+              <a href="/">
+                <ds-button variant="link" size="sm">Open showcase ↗</ds-button>
+              </a>
+            </ds-card-footer>
+          </ds-card>
+
+          <ds-card variant="outlined">
+            <ds-card-header subtitle="A trading-desk UI built entirely on angular-ds">
+              <h3 slot="title" class="showcase__card-title">TradeDesk — Consumer Demo</h3>
+            </ds-card-header>
+            <ds-card-body>
+              Portfolio cards, KPI metrics, a trade form and a transaction list, all wired to
+              working state — <code>ds-select</code>/<code>ds-input</code> two-way binding,
+              <code>ds-alert</code> validation feedback, and a real <code>ToastService</code> call.
+            </ds-card-body>
+            <ds-card-footer justify="between">
+              <ds-badge variant="info" shape="pill">Consumer app</ds-badge>
+              <a href="/consumer/">
+                <ds-button variant="link" size="sm">Open TradeDesk ↗</ds-button>
+              </a>
+            </ds-card-footer>
+          </ds-card>
+        </div>
+      </div>
+
+      <div class="showcase__group">
+        <h3 class="showcase__group-label">How a consumer app pulls in angular-ds</h3>
+        <pre class="showcase__code"><code>npm install angular-ds
+
+// styles.scss — one-time token import
+&#64;use 'angular-ds/styles/tokens';
+
+// any component file — tree-shakeable sub-path imports
+import &#123; ButtonComponent, CardComponent &#125; from 'angular-ds/button';
+import &#123; NavbarComponent &#125; from 'angular-ds/navbar';</code></pre>
+      </div>
+
+      <div class="showcase__group">
+        <h3 class="showcase__group-label">Where components show up in TradeDesk</h3>
+        <div class="showcase__frame">
+          <table class="showcase__usage-table">
+            <thead>
+              <tr>
+                <th>Component</th>
+                <th>Used for</th>
+                <th>Where</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>ds-balance-card</code>, <code>ds-metric-card</code></td>
+                <td>Portfolio value and performance KPIs</td>
+                <td>Portfolio Overview / Performance</td>
+              </tr>
+              <tr>
+                <td><code>ds-select</code>, <code>ds-input</code>, <code>ds-button</code></td>
+                <td>Trade form with two-way binding and a loading state</td>
+                <td>Execute Trade</td>
+              </tr>
+              <tr>
+                <td><code>ds-alert</code></td>
+                <td>Inline validation feedback when a trade fails to validate</td>
+                <td>Execute Trade</td>
+              </tr>
+              <tr>
+                <td><code>ds-transaction-item</code>, <code>ds-badge</code></td>
+                <td>Trade history list with a status badge per row</td>
+                <td>Recent Trades</td>
+              </tr>
+              <tr>
+                <td><code>ds-toast-container</code>, <code>ToastService</code></td>
+                <td>Confirmation toast after a trade executes</td>
+                <td>Global</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="showcase__hint">
+          Open <a href="/consumer/">TradeDesk</a> to see the current implementation, or view the
+          source at <code>projects/consumer-demo</code> in this repo.
+        </p>
+      </div>
+    </section>
+
   </main>
 
   <!-- Toast container — renders fixed, outside flow -->

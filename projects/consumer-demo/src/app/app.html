@@ -1,0 +1,109 @@
+<div class="ca-root">
+
+  <!-- Header -->
+  <header class="ca-header">
+    <div class="ca-header__brand">
+      <span class="ca-header__logo">⬡</span>
+      <div>
+        <h1 class="ca-header__title">TradeDesk</h1>
+        <span class="ca-header__sub">Built with angular-ds · Angular 22</span>
+      </div>
+    </div>
+    <div class="ca-header__actions">
+      <a class="ca-nav-btn" href="/">← Showcase</a>
+      <ds-badge variant="info" shape="pill" [dot]="true">Markets Open</ds-badge>
+      <ds-button variant="ghost" size="sm">Portfolio</ds-button>
+      <ds-button variant="primary" size="sm">+ New Trade</ds-button>
+    </div>
+  </header>
+
+  <main class="ca-main">
+
+    <!-- Library credit banner -->
+    <ds-alert
+      variant="info"
+      title="angular-ds Consumer Demo"
+      message="Every component below — including the fintech-domain ones — is imported straight from the angular-ds npm package."
+      [dismissible]="false"
+    />
+
+    <!-- Portfolio overview -->
+    <section class="ca-section">
+      <h2 class="ca-section__title">Portfolio Overview</h2>
+      <div class="ca-grid ca-grid--3">
+        @for (b of balances; track b.label) {
+          <ds-balance-card [label]="b.label" [amount]="b.amount" [trend]="b.trend" [icon]="b.icon" [accent]="b.accent" />
+        }
+      </div>
+    </section>
+
+    <!-- KPI metrics -->
+    <section class="ca-section">
+      <h2 class="ca-section__title">Performance</h2>
+      <div class="ca-grid ca-grid--4">
+        @for (m of metrics; track m.label) {
+          <ds-metric-card [label]="m.label" [value]="m.value" [change]="m.change" [icon]="m.icon" [prefix]="m.prefix" [suffix]="m.suffix" />
+        }
+      </div>
+    </section>
+
+    <!-- Trade execution form -->
+    <section class="ca-section">
+      <h2 class="ca-section__title">Execute Trade</h2>
+      <div class="ca-trade-form">
+        @if (tradeError()) {
+          <ds-alert variant="danger" [message]="tradeError()" [dismissible]="false" />
+        }
+
+        <ds-select
+          label="Asset"
+          placeholder="Select asset to trade"
+          [options]="assetOptions"
+          [status]="tradeError() && !tradeAsset() ? 'error' : 'default'"
+          [ngModel]="tradeAsset()"
+          (ngModelChange)="tradeAsset.set($event)"
+        />
+
+        <ds-input
+          label="Amount (USD)"
+          type="number"
+          placeholder="0.00"
+          helperText="Available: $24,800.00"
+          [status]="tradeError() && tradeAsset() ? 'error' : 'default'"
+          [ngModel]="tradeAmount()"
+          (ngModelChange)="tradeAmount.set($event)"
+        />
+
+        <div class="ca-trade-actions">
+          <ds-button variant="primary" size="lg" [loading]="tradeLoading()" [disabled]="!canExecute()" (pressed)="validateAndExecute()">
+            {{ tradeLoading() ? 'Executing…' : 'Execute Trade' }}
+          </ds-button>
+          <ds-button variant="ghost" size="lg" (pressed)="clearTrade()">Clear</ds-button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Recent trades -->
+    <section class="ca-section">
+      <h2 class="ca-section__title">Recent Trades</h2>
+      <div class="ca-card">
+        @for (t of recentTrades; track t.name) {
+          <ds-transaction-item
+            [name]="t.name"
+            [category]="t.category"
+            [date]="t.date"
+            [amount]="t.amount"
+            [type]="t.type"
+            [status]="t.status"
+            [avatar]="t.avatar"
+            [clickable]="false"
+          />
+        }
+      </div>
+    </section>
+
+  </main>
+
+  <ds-toast-container position="top-right" />
+
+</div>

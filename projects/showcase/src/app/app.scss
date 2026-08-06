@@ -177,6 +177,44 @@
   }
 }
 
+// ─── Code block (consuming-the-library snippets) ──────────────────────────
+.showcase__code {
+  margin: 0;
+  padding: var(--space-4) var(--space-5);
+  border: var(--border-1) solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-subtle);
+  overflow-x: auto;
+  font-family: var(--font-family-mono, monospace);
+  font-size: var(--font-size-xs);
+  line-height: 1.6;
+  color: var(--color-text-primary);
+}
+
+// ─── Usage table (component → consumer-app mapping) ───────────────────────
+.showcase__usage-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-size-sm);
+
+  th,
+  td {
+    padding: var(--space-3) var(--space-4);
+    text-align: left;
+    border-bottom: var(--border-1) solid var(--color-border-default);
+  }
+
+  th {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-secondary);
+    background: var(--color-surface-subtle);
+  }
+
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+}
+
 .showcase__shell-mobile-bar {
   display: none;
   padding: var(--space-2) var(--space-3);
@@ -307,6 +345,13 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-5);
+  max-width: 36rem;
+}
+
+.showcase__stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
   max-width: 36rem;
 }
 

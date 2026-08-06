@@ -21,6 +21,11 @@ import { AccordionComponent } from '../../../angular-ds/src/lib/components/accor
 import { AvatarComponent } from '../../../angular-ds/src/lib/components/avatar/avatar.component';
 import { TooltipComponent } from '../../../angular-ds/src/lib/components/tooltip/tooltip.component';
 import { ProgressComponent } from '../../../angular-ds/src/lib/components/progress/progress.component';
+import { AlertComponent } from '../../../angular-ds/src/lib/components/alert/alert.component';
+import { BalanceCardComponent } from '../../../angular-ds/src/lib/components/balance-card/balance-card.component';
+import { CryptoTickerComponent } from '../../../angular-ds/src/lib/components/crypto-ticker/crypto-ticker.component';
+import { MetricCardComponent } from '../../../angular-ds/src/lib/components/metric-card/metric-card.component';
+import { TransactionItemComponent } from '../../../angular-ds/src/lib/components/transaction-item/transaction-item.component';
 import type { SelectOption } from '../../../angular-ds/src/lib/components/select/select.types';
 import type { NavItem } from '../../../angular-ds/src/lib/components/navbar/navbar.types';
 import type { SidebarGroup, SidebarItem } from '../../../angular-ds/src/lib/components/sidebar/sidebar.types';
@@ -61,6 +66,11 @@ const ICON = {
     AvatarComponent,
     TooltipComponent,
     ProgressComponent,
+    AlertComponent,
+    BalanceCardComponent,
+    CryptoTickerComponent,
+    MetricCardComponent,
+    TransactionItemComponent,
     TitleCasePipe,
     CheckboxComponent,
     ToggleComponent,
@@ -179,6 +189,15 @@ export class App {
 
   // ─── Progress demo ────────────────────────────────────────────────────────
   progressValue = signal(65);
+
+  // ─── Fintech-domain components demo ──────────────────────────────────────
+  demoTransactions = [
+    { name: 'Figma', category: 'Software', date: 'Aug 4', amount: 45, type: 'debit' as const, status: 'success' as const, avatar: '🎨' },
+    { name: 'Payroll deposit', category: 'Income', date: 'Aug 1', amount: 4200, type: 'credit' as const, status: 'success' as const, avatar: '💼' },
+    { name: 'Vercel Pro', category: 'Software', date: 'Jul 30', amount: 20, type: 'debit' as const, status: 'processing' as const, avatar: '▲' },
+    { name: 'Client invoice #42', category: 'Income', date: 'Jul 29', amount: 1800, type: 'credit' as const, status: 'pending' as const, avatar: '🧾' },
+    { name: 'AWS', category: 'Infrastructure', date: 'Jul 28', amount: 132.5, type: 'debit' as const, status: 'failed' as const, avatar: '☁️' },
+  ];
 
   onSidebarItemClick(item: SidebarItem): void {
     this.activeSidebarId.set(item.id);

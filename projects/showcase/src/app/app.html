@@ -667,6 +667,68 @@
     </div>
   </section>
 
+    <!-- ─── Fintech-domain components ──────────────────────────────────── -->
+    <section class="showcase__section">
+      <h2 class="showcase__section-title">Fintech Components</h2>
+      <p class="showcase__hint">
+        Domain-specific components ported from the fintech consumer app into this library,
+        restyled onto the same token system as every other component on this page.
+      </p>
+
+      <div class="showcase__group">
+        <h3 class="showcase__group-label">Alert</h3>
+        <div class="showcase__stack">
+          <ds-alert variant="info" title="Heads up" message="Your statement is ready to download." />
+          <ds-alert variant="success" title="Transfer complete" message="$1,200.00 sent to Alex Chen." />
+          <ds-alert variant="warning" message="Your card expires at the end of this month." [dismissible]="false" />
+          <ds-alert variant="danger" title="Payment failed" message="Insufficient funds for this transaction." />
+        </div>
+      </div>
+
+      <div class="showcase__group">
+        <h3 class="showcase__group-label">Balance card</h3>
+        <div class="showcase__card-grid">
+          <ds-balance-card label="Total Balance" [amount]="24680.55" [trend]="4.2" accent="cyan" />
+          <ds-balance-card label="Investments" [amount]="9120.10" [trend]="-1.8" accent="violet" icon="📈" />
+          <ds-balance-card label="Savings" [amount]="15400" [trend]="2.1" accent="amber" icon="🏦" />
+        </div>
+      </div>
+
+      <div class="showcase__group">
+        <h3 class="showcase__group-label">Metric card</h3>
+        <div class="showcase__card-grid">
+          <ds-metric-card label="Monthly Revenue" [value]="128400" [change]="6.4" icon="💰" prefix="$" />
+          <ds-metric-card label="Active Users" [value]="8240" [change]="-2.1" icon="👥" />
+        </div>
+      </div>
+
+      <div class="showcase__group">
+        <h3 class="showcase__group-label">Crypto ticker</h3>
+        <div class="showcase__stack">
+          <ds-crypto-ticker symbol="BTC" name="Bitcoin" [price]="64230.12" [change24h]="2.4" logo="₿" />
+          <ds-crypto-ticker symbol="ETH" name="Ethereum" [price]="3120.87" [change24h]="-1.1" logo="Ξ" />
+        </div>
+      </div>
+
+      <div class="showcase__group">
+        <h3 class="showcase__group-label">Transaction item</h3>
+        <div class="showcase__frame">
+          @for (txn of demoTransactions; track txn.name) {
+            <ds-transaction-item
+              [name]="txn.name"
+              [category]="txn.category"
+              [date]="txn.date"
+              [amount]="txn.amount"
+              [type]="txn.type"
+              [status]="txn.status"
+              [avatar]="txn.avatar"
+              [ariaLabel]="txn.name + ' transaction details'"
+            />
+          }
+        </div>
+      </div>
+    </section>
+
     <!-- ─── Consuming the Design System ────────────────────────────────── -->
     <section class="showcase__section" id="consumers">
       <h2 class="showcase__section-title">Consuming the Design System</h2>

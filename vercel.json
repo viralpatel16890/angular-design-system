@@ -1,0 +1,8 @@
+{
+  "buildCommand": "npm run build:vercel",
+  "outputDirectory": "dist/showcase/browser",
+  "rewrites": [
+    { "source": "/consumer/(.*)", "destination": "/consumer/index.html" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}

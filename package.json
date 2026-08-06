@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build showcase",
+    "build:vercel": "ng build showcase --configuration production && ng build consumer-demo --configuration production --base-href /consumer/ && node scripts/copy-consumer-static.js",
     "watch": "ng build --watch --configuration development",
     "test": "vitest run",
     "test:watch": "vitest",

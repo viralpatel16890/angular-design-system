@@ -1,0 +1,8 @@
+// Design tokens — same 3-tier system as showcase, so the consumer app is
+// visually consistent with (and provably built from) angular-ds.
+@use '../../angular-ds/src/lib/tokens/primitives';
+@use '../../angular-ds/src/lib/tokens/semantic';
+@use '../../angular-ds/src/lib/tokens/reset';
+@use '../../angular-ds/src/lib/tokens/typography';
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');

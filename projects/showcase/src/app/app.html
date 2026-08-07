@@ -7,6 +7,12 @@
         <span class="showcase__brand-name">Angular Design System</span>
       </div>
       <div class="showcase__header-actions">
+        <a href="/consumer/">
+          <ds-button variant="ghost" size="sm">Demo</ds-button>
+        </a>
+        <a href="#consumers">
+          <ds-button variant="ghost" size="sm">Consume library</ds-button>
+        </a>
         <app-theme-customizer />
         <ds-button variant="ghost" size="sm" (pressed)="toggleTheme()">
           {{ isDark() ? '☀️ Light' : '🌙 Dark' }}

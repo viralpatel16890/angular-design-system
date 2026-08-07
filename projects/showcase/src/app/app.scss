@@ -415,6 +415,16 @@
     padding-right: var(--space-4);
   }
 
+  .showcase__header-inner {
+    flex-wrap: wrap;
+    row-gap: var(--space-2);
+  }
+
+  .showcase__header-actions {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
   .showcase__main {
     padding-top: var(--space-6);
     padding-bottom: var(--space-6);

@@ -3,6 +3,7 @@
 > A production-ready Angular 22 component library built on a three-tier design token architecture — powering consistent, accessible, and themeable UIs out of the box.
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-angular--design--system--blue.vercel.app-000?logo=vercel&logoColor=white)](https://angular-design-system-blue.vercel.app/)
+[![TradeDesk Consumer Demo](https://img.shields.io/badge/TradeDesk%20Demo-%2Fconsumer%2F-000?logo=vercel&logoColor=white)](https://angular-design-system-blue.vercel.app/consumer/)
 
 ![Angular](https://img.shields.io/badge/Angular-22-DD0031?logo=angular&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-6.0-3178C6?logo=typescript&logoColor=white)
@@ -12,13 +13,13 @@
 
 ## Summary
 
-The **Angular Design System** (published as `angular-ds`) is a standalone Angular 22 component library that provides **19 polished UI components** backed by a three-tier CSS custom-property token system. All component selectors use the `ds-` prefix (e.g. `<ds-button>`, `<ds-tabs>`). It is built for Angular application teams who want a consistent, dark-mode-capable, and token-driven UI layer without the overhead of integrating a third-party design system. Every component is a standalone Angular component (no NgModule required), supports `ControlValueAccessor` where appropriate, and ships with zero runtime dependencies beyond Angular itself. The companion **Showcase** app demonstrates every component in a live, interactive environment that developers can run locally.
+The **Angular Design System** (published as `angular-ds`) is a standalone Angular 22 component library that provides **24 polished UI components** backed by a three-tier CSS custom-property token system — 19 general-purpose UI components plus 5 fintech-domain components (`ds-alert`, `ds-balance-card`, `ds-crypto-ticker`, `ds-metric-card`, `ds-transaction-item`) for building trading, banking, and portfolio interfaces. All component selectors use the `ds-` prefix (e.g. `<ds-button>`, `<ds-tabs>`, `<ds-balance-card>`). It is built for Angular application teams who want a consistent, dark-mode-capable, and token-driven UI layer without the overhead of integrating a third-party design system. Every component is a standalone Angular component (no NgModule required), supports `ControlValueAccessor` where appropriate, and ships with zero runtime dependencies beyond Angular itself. Two companion apps prove the library out: the **Showcase**, which demonstrates every component in a live, interactive gallery, and **TradeDesk** (`consumer-demo`), a realistic trading-desk UI built entirely on `angular-ds` components — both run locally and deploy together.
 
 ---
 
 ## Benefits for Large-Scale Enterprise Applications
 
-Angular Design System is purpose-built for enterprise scale. Its three-tier token architecture (Primitive → Semantic → Component) creates a single source of truth across all 19 components, so a brand colour, radius, or typography change propagates everywhere without touching individual files — and multi-brand or white-label theming is a one-call runtime override via `ThemeService.applyTheme()`. Every component ships WCAG 2.2 AA compliant with correct ARIA roles, full keyboard navigation, Angular CDK focus trapping, and screen reader announcements, all protected by automated axe-core and Playwright checks in CI. Components are standalone, signals-first (`input()`, `computed()`, `OnPush`), tree-shakeable, and carry zero runtime dependencies beyond Angular, making them safe for large monorepos with complex dependency graphs. Form-bound components implement `ControlValueAccessor` natively, eliminating wrapper boilerplate. Contribution quality is locked in by Stylelint token-tier rules, Conventional Commits, Release Please, and Husky pre-commit hooks, while Style Dictionary 5 bridges Figma and code through a single token file so design and engineering stay in sync automatically. All 19 components are verified responsive across mobile, tablet, and desktop.
+Angular Design System is purpose-built for enterprise scale. Its three-tier token architecture (Primitive → Semantic → Component) creates a single source of truth across all 24 components, so a brand colour, radius, or typography change propagates everywhere without touching individual files — and multi-brand or white-label theming is a one-call runtime override via `ThemeService.applyTheme()`. Every component ships WCAG 2.2 AA compliant with correct ARIA roles, full keyboard navigation, Angular CDK focus trapping, and screen reader announcements, checked with axe-core (via Storybook's `addon-a11y`) and Playwright accessibility tests (`npm run e2e`); these are run locally today — the CI workflow currently runs the build and unit test suite only, not e2e/a11y checks. Components are standalone, signals-first (`input()`, `computed()`, `OnPush`), tree-shakeable, and carry zero runtime dependencies beyond Angular, making them safe for large monorepos with complex dependency graphs. Form-bound components implement `ControlValueAccessor` natively, eliminating wrapper boilerplate. Contribution quality is locked in by Stylelint token-tier rules, Conventional Commits, Release Please, and Husky pre-commit hooks, while Style Dictionary 5 bridges Figma and code through a single token file so design and engineering stay in sync automatically. The library is proven in two real apps — the component-gallery Showcase and the TradeDesk consumer demo — and all 24 components are verified responsive across mobile, tablet, and desktop.
 
 ---
 
@@ -36,6 +37,8 @@ Angular Design System is purpose-built for enterprise scale. Its three-tier toke
 | Vitest | 4.x |
 | Playwright | 1.52.x |
 | commitlint | 21.x |
+
+> **Note:** Storybook 10 has an unresolved peer-dependency conflict between Angular 22 and TypeScript 6. `.npmrc` sets `legacy-peer-deps=true` as a workaround for `npm install`, but `npm run storybook` / `npm run build-storybook` are not guaranteed to run cleanly until upstream compatibility lands — see [What's Implemented → Storybook](#1-storybook).
 
 Install the Angular CLI globally if you haven't already:
 
@@ -60,7 +63,13 @@ npm install
 # 3. Launch the Showcase app
 npm start
 # Visit http://localhost:4200
+
+# 4. Or launch the TradeDesk consumer demo instead
+ng serve consumer-demo
+# Visit http://localhost:4200 (stop the Showcase first, or pass --port to run both)
 ```
+
+The workspace has three projects: the `angular-ds` library, the **Showcase** component gallery, and **consumer-demo** (TradeDesk), a realistic trading-desk app built on `angular-ds`. See [TradeDesk: A Consumer App, Not Just a Gallery](#tradedesk-a-consumer-app-not-just-a-gallery) below.
 
 ### Consuming the library in an external Angular project
 
@@ -258,6 +267,10 @@ Override any token at `:root` or any ancestor selector:
 
 ## Component Library
 
+24 components in total: 19 general-purpose components plus 5 fintech-domain components.
+
+### General-purpose components
+
 | Component | Selector | Description | Key Inputs | Key Outputs |
 |---|---|---|---|---|
 | **Button** | `<ds-button>` | Themed action button with multiple variants and sizes | `variant`, `size`, `disabled`, `loading`, `fullWidth` | `(pressed)` |
@@ -279,6 +292,18 @@ Override any token at `:root` or any ancestor selector:
 | **Avatar** | `<ds-avatar>` | User avatar — displays an image, falls back to initials, then to a generic person icon. Status dot indicator supported | `src`, `name`, `size`, `shape`, `color`, `status` | — |
 | **Tooltip** | `<ds-tooltip>` | CSS-driven tooltip wrapping any trigger element, with four positional variants and a reduced-motion fade | `text`, `position`, `disabled` | — |
 | **Progress** | `<ds-progress>` | Progress bar with semantic colour variants, three sizes, optional stripe animation, and ARIA `progressbar` role | `value`, `max`, `variant`, `size`, `label`, `showValue`, `striped`, `animated` | — |
+
+### Fintech-domain components
+
+Domain-specific components originally built for the TradeDesk consumer app, then ported into the library and restyled onto the same token system as every other component.
+
+| Component | Selector | Description | Key Inputs | Key Outputs |
+|---|---|---|---|---|
+| **Alert** | `<ds-alert>` | Dismissible inline alert with `info`/`success`/`warning`/`danger` variants and an icon per variant | `variant`, `title`, `message`, `dismissible` | `(dismissed)` |
+| **Balance Card** | `<ds-balance-card>` | KPI-style card for an account or portfolio balance, with a trend indicator and accent colour | `label`, `amount`, `currency`, `trend`, `icon`, `accent`, `period` | — |
+| **Metric Card** | `<ds-metric-card>` | Compact KPI card for a single metric with a change indicator, optional prefix/suffix | `label`, `value`, `change`, `icon`, `prefix`, `suffix` | — |
+| **Crypto Ticker** | `<ds-crypto-ticker>` | Live-style price ticker row for a crypto asset, with a 24h change indicator | `symbol`, `name`, `price`, `change24h`, `logo` | — |
+| **Transaction Item** | `<ds-transaction-item>` | Single row in a transaction/trade history list — avatar, category, date, amount, debit/credit type, and status badge | `name`, `category`, `date`, `amount`, `type`, `status`, `avatar`, `clickable`, `ariaLabel` | `(itemClicked)` |
 
 ### Using `ToastService`
 
@@ -472,7 +497,7 @@ ng serve showcase
 npm start
 ```
 
-Navigate to [http://localhost:4200](http://localhost:4200). The Showcase demonstrates all 19 components with live controls, dark/light mode toggling with View Transitions animation, form bindings with `ngModel`, toast notifications, modal dialogs, navbar, and sidebar navigation.
+Navigate to [http://localhost:4200](http://localhost:4200). The Showcase demonstrates all 24 components (including the 5 fintech-domain components) with live controls, dark/light mode toggling with View Transitions animation, form bindings with `ngModel`, toast notifications, modal dialogs, navbar, and sidebar navigation. The header also carries quick-access **Demo** (jumps to the TradeDesk consumer app at `/consumer/`) and **Consume library** (jumps to the in-page "Consuming the Design System" section) links next to the theme toggle.
 
 **Build the Showcase as a static site:**
 
@@ -483,34 +508,52 @@ ng build showcase --configuration production
 
 ---
 
-## Deployment
+## TradeDesk: A Consumer App, Not Just a Gallery
 
-This workspace is configured for deployment on **Node.js Hosting** (GoDaddy managed PaaS). The platform runs `npm install` followed by `npm start` automatically — no Docker or CI/CD configuration needed.
+The Showcase demonstrates every component in isolation. **TradeDesk** (`projects/consumer-demo`) is the second proof point: a realistic trading-desk UI built entirely on `angular-ds` components, showing them doing real work inside an actual app rather than a component gallery.
 
-**Steps to deploy the Showcase:**
+TradeDesk wires up:
 
-1. Build: `ng build showcase --configuration production`
-2. Add an Express static server at the root:
+| Component(s) | Used for |
+|---|---|
+| `ds-balance-card`, `ds-metric-card` | Portfolio value and performance KPIs |
+| `ds-select`, `ds-input`, `ds-button` | A trade form with two-way `ngModel` binding and a loading state |
+| `ds-alert` | Inline validation feedback when a trade fails to validate |
+| `ds-transaction-item`, `ds-badge` | A transaction/trade history list with a status badge per row |
+| `ds-toast-container`, `ToastService` | A confirmation toast after a trade executes |
 
-```javascript
-// server.js
-const express = require('express');
-const path    = require('path');
-const app     = express();
-const port    = process.env.PORT || 3000;
+```bash
+# Serve TradeDesk with hot reload
+ng serve consumer-demo
+# Visit http://localhost:4200
 
-app.use(express.static(path.join(__dirname, 'dist/showcase/browser')));
-app.get('*', (req, res) =>
-  res.sendFile(path.join(__dirname, 'dist/showcase/browser/index.html'))
-);
-app.listen(port, () => console.log(`Serving on port ${port}`));
+# Build as a static site
+ng build consumer-demo --configuration production --base-href /consumer/
+# Output: dist/consumer-demo/browser/
 ```
 
-3. `npm install express --save`
-4. Update `package.json`: `"start": "node server.js"`
-5. Upload the folder via the Node.js Hosting UI
+Open the [live Showcase](https://angular-design-system-blue.vercel.app/) and follow the **Demo** link, or go directly to [`/consumer/`](https://angular-design-system-blue.vercel.app/consumer/), to see TradeDesk running.
 
-SSL, CDN, and process management are handled by the platform automatically.
+---
+
+## Deployment
+
+Both the Showcase and TradeDesk (`consumer-demo`) are built and deployed together from a single **Vercel** project, defined by the root `vercel.json`:
+
+```json
+{
+  "buildCommand": "npm run build:vercel",
+  "outputDirectory": "dist/showcase/browser",
+  "rewrites": [
+    { "source": "/consumer/(.*)", "destination": "/consumer/index.html" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
+```
+
+`npm run build:vercel` runs three steps: `ng build showcase` (production), `ng build consumer-demo` (production, with `--base-href /consumer/`), then `scripts/copy-consumer-static.js`, which copies the built `consumer-demo` output into `dist/showcase/browser/consumer/` so a single static root serves both apps — Showcase at `/`, TradeDesk at `/consumer/`. This replaced the project's previous setup of two separate demo repos with independent deployments.
+
+SSL, CDN, and previews for every push are handled by Vercel automatically; no Docker or custom server is required.
 
 ---
 
@@ -519,13 +562,16 @@ SSL, CDN, and process management are handled by the platform automatically.
 | Script | Command | Description |
 |---|---|---|
 | Dev server | `npm start` | Serves the Showcase at `localhost:4200` |
+| Dev server (TradeDesk) | `ng serve consumer-demo` | Serves the consumer demo at `localhost:4200` |
 | Build library | `ng build angular-ds` | Outputs `dist/angular-ds/` |
 | Build Showcase | `ng build showcase --configuration production` | Production static build |
-| Unit tests | `npm test` | Runs all Vitest specs |
-| Test watch | `npm run test:watch` | Vitest in interactive watch mode |
+| Build TradeDesk | `ng build consumer-demo --configuration production --base-href /consumer/` | Production static build |
+| Build for Vercel | `npm run build:vercel` | Builds Showcase + TradeDesk and merges them into one deployable `dist/showcase/browser/` |
+| Unit tests | `npm test` | Runs `ng test --watch=false` (Angular's unit-test builder) across `angular-ds`, `showcase`, and `consumer-demo` — 238 tests |
+| Test watch | `npm run test:watch` | `ng test` in interactive watch mode |
 | Test coverage | `npm run test:coverage` | Coverage report with 70% threshold |
-| Storybook | `npm run storybook` | Launches Storybook on `localhost:6006` |
-| Build Storybook | `npm run build-storybook` | Static Storybook build |
+| Storybook | `npm run storybook` | Launches Storybook on `localhost:6006` (peer-dependency caveat above) |
+| Build Storybook | `npm run build-storybook` | Static Storybook build (peer-dependency caveat above) |
 | E2E tests | `npm run e2e` | Playwright visual regression + a11y tests |
 | Update snapshots | `npm run e2e:update-snapshots` | Regenerate Playwright baselines |
 | Lint styles | `npm run lint:styles` | Stylelint with DS token-tier plugin |
@@ -535,20 +581,20 @@ SSL, CDN, and process management are handled by the platform automatically.
 
 ## What's Implemented
 
-This workspace ships all ten engineering improvements end-to-end:
+This workspace ships the following engineering improvements end-to-end:
 
 ### 1. Storybook
-`@storybook/angular` **10** configured with `addon-a11y` (essentials and interactions are now bundled into core in Storybook 10). Every component has a `.stories.ts` with multiple stories, arg controls, and a light/dark theme switcher in the toolbar. Run with `npm run storybook`.
+`@storybook/angular` **10** configured with `addon-a11y` (essentials and interactions are now bundled into core in Storybook 10). Every component has a `.stories.ts` with multiple stories, arg controls, and a light/dark theme switcher in the toolbar. Run with `npm run storybook`. **Known issue:** there is an unresolved peer-dependency conflict between Angular 22 and TypeScript 6 in Storybook 10's dependency tree; `.npmrc` sets `legacy-peer-deps=true` to get `npm install` through, but `npm run storybook` / `npm run build-storybook` are not verified to run cleanly on top of that workaround — treat Storybook support as best-effort until upstream compatibility lands.
 
-### 2. Vitest Unit Tests
-Full spec suite across all 19 components (~160 tests) covering: signal input reflection, ControlValueAccessor (`writeValue` / `onChange` / `onTouched`), computed class output, ARIA attributes, and keyboard behaviour. Vitest config at `vitest.config.ts` with 70% coverage thresholds and HTML + LCOV reporters.
+### 2. Unit Tests (Angular CLI Unit-Test Builder)
+Full spec suite across all three projects — `angular-ds` (24 components), `showcase`, and `consumer-demo` — **238 tests total, all passing**, covering: signal input reflection, ControlValueAccessor (`writeValue` / `onChange` / `onTouched`), computed class output, ARIA attributes, and keyboard behaviour. `npm run test` runs `ng test --watch=false`, which uses `@angular/build:unit-test` (configured per-project in `angular.json`, Vitest-backed) rather than invoking Vitest directly — this replaced a previously broken raw-Vitest setup that didn't correctly exercise the workspace. 70% coverage thresholds and HTML + LCOV reporters via `npm run test:coverage`.
 
 ### 3. Angular CDK Accessibility
 - **ModalComponent** — `FocusTrapFactory` from `@angular/cdk/a11y` creates a focus trap when the dialog opens and destroys it on close. Tab cycles only within the open modal.
 - **ToastService** — `LiveAnnouncer` announces each toast message to screen readers (`assertive` for errors, `polite` for all others).
 
 ### 4. Style Dictionary Token Pipeline
-Single source-of-truth token file at `design-tokens/tokens.json` (W3C DTCG format, Tokens Studio / Figma Variables compatible). `style-dictionary.config.js` (Style Dictionary **5**) builds to `design-tokens/build/`: CSS custom properties (`tokens.css`), SCSS variables (`_tokens.scss`), ES6 constants (`tokens.js`), and TypeScript declarations (`tokens.d.ts`). The token file contains the full indigo + cyan primitive scales, all semantic aliases, and a `color.semantic.defaults` section that mirrors the ThemeCustomizer's five colour defaults — keeping the JSON file and the runtime component in sync. Run with `npm run tokens:build`. The `design-tokens/build/` output is regenerated automatically in CI via `npm run tokens:check`.
+Single source-of-truth token file at `design-tokens/tokens.json` (W3C DTCG format, Tokens Studio / Figma Variables compatible). `style-dictionary.config.js` (Style Dictionary **5**) builds to `design-tokens/build/`: CSS custom properties (`tokens.css`), SCSS variables (`_tokens.scss`), ES6 constants (`tokens.js`), and TypeScript declarations (`tokens.d.ts`). The token file contains the full indigo + cyan primitive scales, all semantic aliases, and a `color.semantic.defaults` section that mirrors the ThemeCustomizer's five colour defaults — keeping the JSON file and the runtime component in sync. Run with `npm run tokens:build`. `npm run tokens:check` rebuilds and diffs `design-tokens/build/` to catch drift, but it is not currently wired into `.github/workflows/ci.yml` — run it locally before committing token changes.
 
 ### 5. Multi-Brand ThemeService
 `ThemeService` (`projects/angular-ds/src/lib/services/theme.service.ts`) — injectable service with `applyTheme(config)`, `resetTheme()`, `setDarkMode(bool)`, and `toggleDarkMode()`. Writes a `<style id="ds-theme-overrides">` tag to `<head>` for runtime brand overrides without touching component code.
@@ -574,10 +620,10 @@ Custom Stylelint **17** plugin at `tools/stylelint-plugin-gds/` enforces the `ds
 `playwright.config.ts` targets Chromium against the Showcase at `localhost:4200`. Tests in `e2e/visual-regression.spec.ts` snapshot the full page and individual sections in both light and dark mode (`maxDiffPixelRatio: 0.02`). `e2e/accessibility.spec.ts` covers keyboard focus, modal Escape handling, and theme toggle. Generate baselines with `npm run e2e:update-snapshots`.
 
 ### 10. Conventional Commits + Release Please
-`.commitlintrc.json` enforces `@commitlint/config-conventional` rules with a scope enum matching all 19 components. `.release-please-config.json` targets `projects/angular-ds` for automated semver bumps and `CHANGELOG.md` generation. `.github/workflows/ci.yml` runs build + tests on every PR. `.github/workflows/release.yml` triggers Release Please on pushes to `main`.
+`.commitlintrc.json` enforces `@commitlint/config-conventional` rules with a scope enum covering the common component and workspace scopes (`button`, `input`, `card`, `modal`, `select`, `toast`, `showcase`, `ci`, `deploy`, etc.). `.release-please-config.json` targets `projects/angular-ds` for automated semver bumps and `CHANGELOG.md` generation. `.github/workflows/ci.yml` builds the library and the Showcase and runs the full unit-test suite (`angular-ds`, `showcase`, `consumer-demo`) on every push/PR to `main` and `claude/**` branches — it does **not** currently run Storybook, Playwright e2e, or lint jobs. `.github/workflows/release.yml` triggers Release Please on pushes to `main`.
 
 ### 11. Sub-Path Package Exports (Tree-Shaking)
-The distributed `package.json` declares an `exports` map with 18 named sub-paths — one per component — in addition to the primary `.` entry. Consumers can import from a component sub-path for semantic clarity and better code-splitting hints:
+The distributed `package.json` declares an `exports` map with 23 named sub-paths — one per component, plus `theme` — in addition to the primary `.` entry. Consumers can import from a component sub-path for semantic clarity and better code-splitting hints:
 
 ```typescript
 import { ButtonComponent }    from 'angular-ds/button';

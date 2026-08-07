@@ -7,6 +7,12 @@
         <span class="showcase__brand-name">Angular Design System</span>
       </div>
       <div class="showcase__header-actions">
+        <a href="/consumer/">
+          <ds-button variant="ghost" size="sm">Demo</ds-button>
+        </a>
+        <a href="#consumers">
+          <ds-button variant="ghost" size="sm">Consume library</ds-button>
+        </a>
         <app-theme-customizer />
         <ds-button variant="ghost" size="sm" (pressed)="toggleTheme()">
           {{ isDark() ? '☀️ Light' : '🌙 Dark' }}
@@ -122,6 +128,194 @@
             </div>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- ─── Tabs ─────────────────────────────────────────────────────────── -->
+  <section class="showcase__section">
+    <h2 class="showcase__section-title">Tabs</h2>
+
+    <div class="showcase__group">
+      <h3 class="showcase__group-label">Line variant</h3>
+      <ds-tabs [tabs]="demoTabs" [activeId]="activeTab()" (tabChange)="activeTab.set($event)" />
+      <div class="showcase__tab-panel">
+        @if (activeTab() === 'overview')  { <p class="showcase__hint">Overview — key metrics and recent activity at a glance.</p> }
+        @if (activeTab() === 'analytics') { <p class="showcase__hint">Analytics — deeper data insights and trend charts.</p> }
+        @if (activeTab() === 'settings')  { <p class="showcase__hint">Settings — configure notifications, privacy, and integrations.</p> }
+        @if (activeTab() === 'disabled')  { <p class="showcase__hint">This panel is unreachable (tab is disabled).</p> }
+      </div>
+    </div>
+
+    <div class="showcase__group">
+      <h3 class="showcase__group-label">Pill variant</h3>
+      <ds-tabs [tabs]="demoTabs" variant="pill" [activeId]="activeTab()" (tabChange)="activeTab.set($event)" />
+      <div class="showcase__tab-panel">
+        @if (activeTab() === 'overview')  { <p class="showcase__hint">Overview content.</p> }
+        @if (activeTab() === 'analytics') { <p class="showcase__hint">Analytics content with new data insights.</p> }
+        @if (activeTab() === 'settings')  { <p class="showcase__hint">Settings panel content.</p> }
+      </div>
+    </div>
+
+    <div class="showcase__group">
+      <h3 class="showcase__group-label">Full width — pill</h3>
+      <ds-tabs [tabs]="demoTabs" variant="pill" [fullWidth]="true" [activeId]="activeTab()" (tabChange)="activeTab.set($event)" />
+    </div>
+  </section>
+
+  <!-- ─── Accordion ────────────────────────────────────────────────────── -->
+  <section class="showcase__section">
+    <h2 class="showcase__section-title">Accordion</h2>
+
+    <div class="showcase__group">
+      <h3 class="showcase__group-label">Single expand (default)</h3>
+      <ds-accordion [items]="accordionItems" />
+    </div>
+
+    <div class="showcase__group">
+      <h3 class="showcase__group-label">Multiple expand</h3>
+      <ds-accordion [items]="accordionItems" [multiple]="true" />
+    </div>
+  </section>
+
+    <!-- ─── Buttons ─────────────────────────────────────────────────── -->
+    <section class="showcase__section">
+      <h2 class="showcase__section-title">Button</h2>
+
+      <div class="showcase__group">
+        <h3 class="showcase__group-label">Variants</h3>
+        <div class="showcase__row">
+          <ds-button variant="primary">Primary</ds-button>
+          <ds-button variant="secondary">Secondary</ds-button>
+          <ds-button variant="danger">Danger</ds-button>
+          <ds-button variant="ghost">Ghost</ds-button>
+          <ds-button variant="link">Link</ds-button>
+        </div>
+      </div>
+
+      <div class="showcase__group">
+        <h3 class="showcase__group-label">Sizes</h3>
+        <div class="showcase__row showcase__row--align-center">
+          <ds-button size="sm">Small</ds-button>
+          <ds-button size="md">Medium</ds-button>
+          <ds-button size="lg">Large</ds-button>
+        </div>
+      </div>
+
+      <div class="showcase__group">
+        <h3 class="showcase__group-label">States</h3>
+        <div class="showcase__row">
+          <ds-button [disabled]="true">Disabled</ds-button>
+          <ds-button [loading]="true">Loading</ds-button>
+        </div>
+        <div class="showcase__row" style="max-width: 320px; margin-top: 12px;">
+          <ds-button variant="primary" [fullWidth]="true">Full Width</ds-button>
+        </div>
+      </div>
+
+      <div class="showcase__group">
+        <h3 class="showcase__group-label">Actions</h3>
+        <div class="showcase__row">
+          <ds-button variant="primary" (pressed)="modalOpen.set(true)">
+            Open Modal
+          </ds-button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Inputs ──────────────────────────────────────────────────── -->
+    <section class="showcase__section">
+      <h2 class="showcase__section-title">Input</h2>
+
+      <form class="showcase__grid" aria-label="Input examples" (submit)="$event.preventDefault()">
+        <ds-input
+          label="Email address"
+          type="email"
+          placeholder="you@example.com"
+          helperText="We'll never share your email."
+          [required]="true"
+        />
+        <ds-input
+          label="Password"
+          type="password"
+          placeholder="••••••••"
+        />
+        <ds-input
+          label="Error state"
+          type="text"
+          placeholder="Invalid input"
+          status="error"
+          helperText="This field is required."
+        />
+        <ds-input
+          label="Success state"
+          type="text"
+          placeholder="Great value"
+          status="success"
+          helperText="Looks good!"
+        />
+        <ds-input
+          label="Small size"
+          placeholder="Small input"
+          size="sm"
+        />
+        <ds-input
+          label="Large size"
+          placeholder="Large input"
+          size="lg"
+        />
+        <ds-input
+          label="Disabled"
+          placeholder="Cannot edit"
+          [disabled]="true"
+          helperText="This field is disabled."
+        />
+      </form>
+    </section>
+
+    <!-- ─── Select ──────────────────────────────────────────────────── -->
+    <section class="showcase__section">
+      <h2 class="showcase__section-title">Select</h2>
+
+      <div class="showcase__grid">
+        <ds-select
+          label="Framework"
+          placeholder="Choose a framework"
+          [options]="frameworkOptions"
+          helperText="Pick your favourite front-end framework."
+        />
+        <ds-select
+          label="Role"
+          placeholder="Assign a role"
+          [options]="roleOptions"
+          helperText="Guest accounts are disabled."
+          [required]="true"
+        />
+        <ds-select
+          label="Size (error state)"
+          placeholder="Select size"
+          [options]="sizeOptions"
+          status="error"
+          helperText="Size is required."
+        />
+        <ds-select
+          label="Small select"
+          placeholder="Select…"
+          [options]="frameworkOptions"
+          size="sm"
+        />
+        <ds-select
+          label="Large select"
+          placeholder="Select…"
+          [options]="frameworkOptions"
+          size="lg"
+        />
+        <ds-select
+          label="Disabled"
+          placeholder="Cannot change"
+          [options]="frameworkOptions"
+          [disabled]="true"
+          helperText="This field is locked."
+        />
       </div>
     </section>
 
@@ -243,99 +437,28 @@
       </div>
     </section>
 
-    <!-- ─── Buttons ─────────────────────────────────────────────────── -->
+    <!-- ─── Toast ───────────────────────────────────────────────────── -->
     <section class="showcase__section">
-      <h2 class="showcase__section-title">Button</h2>
+      <h2 class="showcase__section-title">Toast</h2>
 
       <div class="showcase__group">
-        <h3 class="showcase__group-label">Variants</h3>
+        <h3 class="showcase__group-label">Fire a notification</h3>
         <div class="showcase__row">
-          <ds-button variant="primary">Primary</ds-button>
-          <ds-button variant="secondary">Secondary</ds-button>
-          <ds-button variant="danger">Danger</ds-button>
-          <ds-button variant="ghost">Ghost</ds-button>
-          <ds-button variant="link">Link</ds-button>
-        </div>
-      </div>
-
-      <div class="showcase__group">
-        <h3 class="showcase__group-label">Sizes</h3>
-        <div class="showcase__row showcase__row--align-center">
-          <ds-button size="sm">Small</ds-button>
-          <ds-button size="md">Medium</ds-button>
-          <ds-button size="lg">Large</ds-button>
-        </div>
-      </div>
-
-      <div class="showcase__group">
-        <h3 class="showcase__group-label">States</h3>
-        <div class="showcase__row">
-          <ds-button [disabled]="true">Disabled</ds-button>
-          <ds-button [loading]="true">Loading</ds-button>
-        </div>
-        <div class="showcase__row" style="max-width: 320px; margin-top: 12px;">
-          <ds-button variant="primary" [fullWidth]="true">Full Width</ds-button>
-        </div>
-      </div>
-
-      <div class="showcase__group">
-        <h3 class="showcase__group-label">Actions</h3>
-        <div class="showcase__row">
-          <ds-button variant="primary" (pressed)="modalOpen.set(true)">
-            Open Modal
+          <ds-button variant="secondary" (pressed)="fireToast('info')">
+            Info toast
+          </ds-button>
+          <ds-button variant="secondary" (pressed)="fireToast('success')">
+            Success toast
+          </ds-button>
+          <ds-button variant="secondary" (pressed)="fireToast('warning')">
+            Warning toast
+          </ds-button>
+          <ds-button variant="danger" (pressed)="fireToast('error')">
+            Error toast
           </ds-button>
         </div>
+        <p class="showcase__hint">Toasts auto-dismiss after 4 s. Click × to dismiss early.</p>
       </div>
-    </section>
-
-    <!-- ─── Inputs ──────────────────────────────────────────────────── -->
-    <section class="showcase__section">
-      <h2 class="showcase__section-title">Input</h2>
-
-      <form class="showcase__grid" aria-label="Input examples" (submit)="$event.preventDefault()">
-        <ds-input
-          label="Email address"
-          type="email"
-          placeholder="you@example.com"
-          helperText="We'll never share your email."
-          [required]="true"
-        />
-        <ds-input
-          label="Password"
-          type="password"
-          placeholder="••••••••"
-        />
-        <ds-input
-          label="Error state"
-          type="text"
-          placeholder="Invalid input"
-          status="error"
-          helperText="This field is required."
-        />
-        <ds-input
-          label="Success state"
-          type="text"
-          placeholder="Great value"
-          status="success"
-          helperText="Looks good!"
-        />
-        <ds-input
-          label="Small size"
-          placeholder="Small input"
-          size="sm"
-        />
-        <ds-input
-          label="Large size"
-          placeholder="Large input"
-          size="lg"
-        />
-        <ds-input
-          label="Disabled"
-          placeholder="Cannot edit"
-          [disabled]="true"
-          helperText="This field is disabled."
-        />
-      </form>
     </section>
 
     <!-- ─── Cards ───────────────────────────────────────────────────── -->
@@ -440,123 +563,6 @@
         </div>
       </div>
     </section>
-
-    <!-- ─── Select ──────────────────────────────────────────────────── -->
-    <section class="showcase__section">
-      <h2 class="showcase__section-title">Select</h2>
-
-      <div class="showcase__grid">
-        <ds-select
-          label="Framework"
-          placeholder="Choose a framework"
-          [options]="frameworkOptions"
-          helperText="Pick your favourite front-end framework."
-        />
-        <ds-select
-          label="Role"
-          placeholder="Assign a role"
-          [options]="roleOptions"
-          helperText="Guest accounts are disabled."
-          [required]="true"
-        />
-        <ds-select
-          label="Size (error state)"
-          placeholder="Select size"
-          [options]="sizeOptions"
-          status="error"
-          helperText="Size is required."
-        />
-        <ds-select
-          label="Small select"
-          placeholder="Select…"
-          [options]="frameworkOptions"
-          size="sm"
-        />
-        <ds-select
-          label="Large select"
-          placeholder="Select…"
-          [options]="frameworkOptions"
-          size="lg"
-        />
-        <ds-select
-          label="Disabled"
-          placeholder="Cannot change"
-          [options]="frameworkOptions"
-          [disabled]="true"
-          helperText="This field is locked."
-        />
-      </div>
-    </section>
-
-    <!-- ─── Toast ───────────────────────────────────────────────────── -->
-    <section class="showcase__section">
-      <h2 class="showcase__section-title">Toast</h2>
-
-      <div class="showcase__group">
-        <h3 class="showcase__group-label">Fire a notification</h3>
-        <div class="showcase__row">
-          <ds-button variant="secondary" (pressed)="fireToast('info')">
-            Info toast
-          </ds-button>
-          <ds-button variant="secondary" (pressed)="fireToast('success')">
-            Success toast
-          </ds-button>
-          <ds-button variant="secondary" (pressed)="fireToast('warning')">
-            Warning toast
-          </ds-button>
-          <ds-button variant="danger" (pressed)="fireToast('error')">
-            Error toast
-          </ds-button>
-        </div>
-        <p class="showcase__hint">Toasts auto-dismiss after 4 s. Click × to dismiss early.</p>
-      </div>
-    </section>
-
-    <!-- ─── Tabs ─────────────────────────────────────────────────────────── -->
-  <section class="showcase__section">
-    <h2 class="showcase__section-title">Tabs</h2>
-
-    <div class="showcase__group">
-      <h3 class="showcase__group-label">Line variant</h3>
-      <ds-tabs [tabs]="demoTabs" [activeId]="activeTab()" (tabChange)="activeTab.set($event)" />
-      <div class="showcase__tab-panel">
-        @if (activeTab() === 'overview')  { <p class="showcase__hint">Overview — key metrics and recent activity at a glance.</p> }
-        @if (activeTab() === 'analytics') { <p class="showcase__hint">Analytics — deeper data insights and trend charts.</p> }
-        @if (activeTab() === 'settings')  { <p class="showcase__hint">Settings — configure notifications, privacy, and integrations.</p> }
-        @if (activeTab() === 'disabled')  { <p class="showcase__hint">This panel is unreachable (tab is disabled).</p> }
-      </div>
-    </div>
-
-    <div class="showcase__group">
-      <h3 class="showcase__group-label">Pill variant</h3>
-      <ds-tabs [tabs]="demoTabs" variant="pill" [activeId]="activeTab()" (tabChange)="activeTab.set($event)" />
-      <div class="showcase__tab-panel">
-        @if (activeTab() === 'overview')  { <p class="showcase__hint">Overview content.</p> }
-        @if (activeTab() === 'analytics') { <p class="showcase__hint">Analytics content with new data insights.</p> }
-        @if (activeTab() === 'settings')  { <p class="showcase__hint">Settings panel content.</p> }
-      </div>
-    </div>
-
-    <div class="showcase__group">
-      <h3 class="showcase__group-label">Full width — pill</h3>
-      <ds-tabs [tabs]="demoTabs" variant="pill" [fullWidth]="true" [activeId]="activeTab()" (tabChange)="activeTab.set($event)" />
-    </div>
-  </section>
-
-  <!-- ─── Accordion ────────────────────────────────────────────────────── -->
-  <section class="showcase__section">
-    <h2 class="showcase__section-title">Accordion</h2>
-
-    <div class="showcase__group">
-      <h3 class="showcase__group-label">Single expand (default)</h3>
-      <ds-accordion [items]="accordionItems" />
-    </div>
-
-    <div class="showcase__group">
-      <h3 class="showcase__group-label">Multiple expand</h3>
-      <ds-accordion [items]="accordionItems" [multiple]="true" />
-    </div>
-  </section>
 
   <!-- ─── Avatar ───────────────────────────────────────────────────────── -->
   <section class="showcase__section">

@@ -1,6 +1,6 @@
 :host {
   display: block;
-  --balance-accent: var(--color-cyan-500);
+  --balance-accent: var(--color-brand-accent);
 }
 
 .ds-balance {
@@ -9,19 +9,9 @@
   border-radius: var(--radius-xl);
   padding: var(--space-6);
   min-width: 220px;
-  transition:
-    border-color var(--motion-duration-normal) var(--motion-easing-ease-out),
-    box-shadow var(--motion-duration-normal) var(--motion-easing-ease-out),
-    transform var(--motion-duration-normal) var(--motion-easing-ease-out);
-
-  &:hover {
-    border-color: var(--color-border-strong);
-    box-shadow: var(--elevation-3);
-    transform: translateY(-3px);
-  }
 }
 
-.ds-balance--cyan   { --balance-accent: var(--color-cyan-500); }
+.ds-balance--cyan   { --balance-accent: var(--color-brand-accent); }
 .ds-balance--violet { --balance-accent: var(--color-violet-500); }
 .ds-balance--amber  { --balance-accent: var(--color-amber-500); }
 

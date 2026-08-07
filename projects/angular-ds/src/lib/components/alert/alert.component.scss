@@ -66,8 +66,9 @@
 
   &:hover { opacity: 1; }
   &:focus-visible {
-    outline: var(--focus-ring-width) var(--focus-ring-style) currentColor;
-    outline-offset: var(--focus-ring-offset);
+    box-shadow:
+      0 0 0 var(--focus-ring-offset) var(--color-surface-base),
+      0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--focus-ring-color);
     opacity: 1;
   }
 }

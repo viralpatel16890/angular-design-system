@@ -1,4 +1,6 @@
 <div class="showcase">
+  <a class="showcase__skip-link" href="#main-content">Skip to main content</a>
+
   <!-- Header -->
   <header class="showcase__header">
     <div class="showcase__header-inner">
@@ -21,7 +23,7 @@
     </div>
   </header>
 
-  <main class="showcase__main">
+  <main class="showcase__main" id="main-content">
 
     <!-- ─── Navbar ──────────────────────────────────────────────────── -->
     <section class="showcase__section">
@@ -48,7 +50,7 @@
         <div class="showcase__frame">
           <ds-navbar [items]="navItemsWithBadge" [sticky]="false">
             <div slot="brand" class="showcase__demo-brand">
-              <span class="showcase__logo" style="background: var(--color-teal-500);">A</span>
+              <span class="showcase__logo showcase__logo--teal">A</span>
               <span class="showcase__brand-name">Acme Corp</span>
             </div>
             <div slot="actions">
@@ -122,7 +124,7 @@
               <p class="showcase__shell-page-title">
                 {{ activeSidebarId() | titlecase }}
               </p>
-              <p style="color: var(--color-text-secondary); font-size: var(--font-size-sm);">
+              <p class="showcase__shell-page-subtitle">
                 Active page: <code>{{ activeSidebarId() }}</code>
               </p>
             </div>
@@ -207,7 +209,7 @@
           <ds-button [disabled]="true">Disabled</ds-button>
           <ds-button [loading]="true">Loading</ds-button>
         </div>
-        <div class="showcase__row" style="max-width: 320px; margin-top: 12px;">
+        <div class="showcase__row showcase__row--constrained">
           <ds-button variant="primary" [fullWidth]="true">Full Width</ds-button>
         </div>
       </div>
@@ -375,7 +377,7 @@
             [checked]="cbBasic() && cbNotifications()"
             (checkedChange)="cbBasic.set($event); cbNotifications.set($event)"
           />
-          <div style="padding-left: var(--space-8); display: flex; flex-direction: column; gap: var(--space-2);">
+          <div class="showcase__checkbox-nested">
             <ds-checkbox label="Email updates" [(ngModel)]="cbBasic" />
             <ds-checkbox label="SMS alerts" [(ngModel)]="cbNotifications" />
           </div>
@@ -546,17 +548,17 @@
       <div class="showcase__group">
         <h3 class="showcase__group-label">In context</h3>
         <div class="showcase__row showcase__row--align-center">
-          <span style="font-size: var(--font-size-lg); font-weight: var(--font-weight-semibold); color: var(--color-text-primary);">
+          <span class="showcase__badge-context-label">
             Design Tokens
           </span>
           <ds-badge variant="primary" shape="pill">New</ds-badge>
 
-          <span style="font-size: var(--font-size-md); color: var(--color-text-primary); margin-left: var(--space-4);">
+          <span class="showcase__badge-context-label showcase__badge-context-label--inline">
             ButtonComponent
           </span>
           <ds-badge variant="success" size="sm">stable</ds-badge>
 
-          <span style="font-size: var(--font-size-md); color: var(--color-text-primary); margin-left: var(--space-4);">
+          <span class="showcase__badge-context-label showcase__badge-context-label--inline">
             SelectComponent
           </span>
           <ds-badge variant="warning" size="sm">beta</ds-badge>
@@ -854,7 +856,7 @@ import &#123; NavbarComponent &#125; from 'angular-ds/navbar';</code></pre>
     size="md"
     (closed)="modalOpen.set(false)"
   >
-    <p style="margin-top:0; color: var(--color-text-secondary);">
+    <p class="showcase__modal-text">
       Are you sure you want to continue? This action cannot be undone.
     </p>
     <ds-input

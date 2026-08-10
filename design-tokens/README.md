@@ -28,3 +28,19 @@ Run `npm run tokens:check` to verify that generated output is in sync with `toke
 1. Install [Tokens Studio](https://tokens.studio/) plugin in Figma
 2. Connect the plugin to this repository's `design-tokens/tokens.json`
 3. On token changes, sync to this file and run `npm run tokens:build`
+
+## Relationship to the component library
+
+This directory and `projects/angular-ds/src/lib/tokens/_primitives.scss` are two
+independently maintained files that must describe the same primitive color values —
+`tokens.json` exists for Figma/Tokens Studio round-tripping, while `_primitives.scss`
+is what the library actually ships and renders. There is currently no automated check
+that keeps their color values in sync (only `npm run tokens:check` guards `tokens.json`
+against its own `build/` output). If you change a primitive color in one file, mirror it
+in the other by hand, or add a script that diffs the two before this drifts again.
+
+Note also that the semantic layer's naming diverges between the two files (e.g. this
+file's `semantic.surface.base` maps to `neutral.50`, while the library's
+`--color-surface-base` maps to `neutral-0`/white) — reconciling that mapping is a
+design decision, not just a value fix, and should be confirmed with design before
+either side is changed.

@@ -1,0 +1,68 @@
+:host {
+  display: block;
+  --skip-link-bg:     var(--color-surface-base);
+  --skip-link-text:   var(--color-text-brand);
+  --skip-link-radius: var(--radius-md);
+}
+
+// ─── Skip link ─────────────────────────────────────────────────────────────────
+// Visually hidden by default; snaps into view on keyboard focus so sighted
+// keyboard users can jump straight to the main content landmark.
+.ds-skip-link {
+  position: fixed;
+  top: var(--space-2);
+  left: var(--space-2);
+  z-index: var(--z-toast);
+
+  display: inline-flex;
+  align-items: center;
+  background: var(--skip-link-bg);
+  color: var(--skip-link-text);
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+  border-radius: var(--skip-link-radius);
+  box-shadow: var(--elevation-4);
+  outline: none;
+  transition: transform var(--motion-duration-fast) var(--motion-easing-ease-out);
+
+  // Screen-reader-only positioning until focused (same recipe as ds-sr-only)
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+
+  &:focus {
+    width: auto;
+    height: auto;
+    padding: var(--space-2-5) var(--space-4);
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+
+  &:focus-visible {
+    box-shadow:
+      var(--elevation-4),
+      0 0 0 var(--focus-ring-offset) var(--skip-link-bg),
+      0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--focus-ring-color);
+  }
+}
+
+// ─── Dark mode adjustments ───────────────────────────────────────────────────
+[data-theme="dark"] {
+  .ds-skip-link {
+    --skip-link-bg:   var(--color-surface-base);
+    --skip-link-text: var(--color-text-brand);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-skip-link { transition: none; }
+}

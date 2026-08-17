@@ -1,3 +1,5 @@
+@use '../../tokens/breakpoints' as tokens;
+
 :host { display: inline-flex; }
 
 .ds-tooltip-host {
@@ -24,7 +26,10 @@
   box-shadow: var(--shadow-md, 0 4px 12px rgb(0 0 0 / 0.15));
   pointer-events: none;
   opacity: 0;
-  transition: opacity 150ms ease 100ms, transform 150ms ease 100ms;
+  // Note: the 100ms show delay doesn't correspond to any --motion-duration-*
+  // tier (those are transition durations, not delays) — left as a raw value.
+  transition: opacity var(--motion-duration-fast) var(--motion-easing-ease) 100ms,
+              transform var(--motion-duration-fast) var(--motion-easing-ease) 100ms;
   white-space: normal;
 
   // ─── Arrow ────────────────────────────────────────────────────────────────
@@ -122,7 +127,7 @@
 
 // ─── Responsive ──────────────────────────────────────────────────────────────
 
-@media (max-width: 640px) {
+@media (max-width: tokens.$breakpoint-sm) {
   .ds-tooltip__bubble {
     // prevent tooltip from overflowing viewport edges on small screens
     max-width: min(14rem, calc(100vw - 2rem));

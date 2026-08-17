@@ -111,7 +111,7 @@
 // Smooth all elements that use semantic color tokens when theme changes
 *, *::before, *::after {
   transition-property: background-color, border-color, color, box-shadow, fill, stroke;
-  transition-duration: 350ms;
+  transition-duration: var(--motion-duration-slow);
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 

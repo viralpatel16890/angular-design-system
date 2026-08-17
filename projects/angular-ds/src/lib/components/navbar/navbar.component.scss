@@ -1,3 +1,5 @@
+@use '../../tokens/breakpoints' as tokens;
+
 :host {
   display: block;
   --navbar-height:     3.5rem;
@@ -194,7 +196,7 @@
 }
 
 // ─── Responsive ───────────────────────────────────────────────────────────────
-@media (max-width: 768px) {
+@media (max-width: tokens.$breakpoint-md) {
   .ds-navbar__nav     { display: none; }
   .ds-navbar__actions { display: none; }
   .ds-navbar__burger  { display: flex; }

@@ -1,3 +1,5 @@
+@use '../../tokens/breakpoints' as tokens;
+
 :host {
   --modal-width:    32rem;
   --modal-radius:   var(--radius-xl);
@@ -133,7 +135,7 @@
 }
 
 // ─── Mobile ──────────────────────────────────────────────────────────────────
-@media (max-width: 640px) {
+@media (max-width: tokens.$breakpoint-sm) {
   .ds-modal:not(.ds-modal--full) {
     --modal-width: 100%;
     --modal-radius: var(--radius-xl) var(--radius-xl) 0 0;

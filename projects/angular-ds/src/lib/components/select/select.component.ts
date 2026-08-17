@@ -40,6 +40,7 @@ export class SelectComponent implements ControlValueAccessor {
   readonly uid      = `ds-select-${++nextId}`;
   readonly listboxId= `${this.uid}-listbox`;
   readonly helperId = `${this.uid}-helper`;
+  readonly errorId  = `${this.uid}-error`;
 
   isOpen         = signal(false);
   activeIndex    = signal(-1);
@@ -71,6 +72,13 @@ export class SelectComponent implements ControlValueAccessor {
     if (ctrl.errors['required']) return 'This field is required.';
     if (ctrl.errors['pattern'])  return 'Invalid format.';
     return 'Invalid value.';
+  });
+
+  describedBy = computed(() => {
+    const ids: string[] = [];
+    if (this.helperText()) ids.push(this.helperId);
+    if (this.hasError())   ids.push(this.errorId);
+    return ids.length ? ids.join(' ') : null;
   });
 
   selectedLabel = computed(() => {

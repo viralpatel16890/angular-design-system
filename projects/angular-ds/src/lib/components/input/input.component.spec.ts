@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { InputComponent } from './input.component';
+import { FormErrorComponent } from '../form-error/form-error.component';
 
 describe('InputComponent', () => {
   let fixture: ComponentFixture<InputComponent>;
@@ -143,5 +144,36 @@ describe('InputComponent', () => {
   it('should generate a unique uid per instance', () => {
     const fixture2 = TestBed.createComponent(InputComponent);
     expect(fixture2.componentInstance.uid).not.toBe(component.uid);
+  });
+
+  it('should derive errorId from the uid', () => {
+    expect(component.errorId).toBe(`${component.uid}-error`);
+  });
+
+  it('should not set aria-describedby when there is no helper text or error', () => {
+    const input = fixture.debugElement.query(By.css('input')).nativeElement;
+    expect(input.getAttribute('aria-describedby')).toBeNull();
+  });
+
+  it('should link aria-describedby to the error id when the field is in an error state', () => {
+    fixture.componentRef.setInput('status', 'error');
+    fixture.componentRef.setInput('errorMessage', 'This field is required.');
+    fixture.detectChanges();
+    const input = fixture.debugElement.query(By.css('input')).nativeElement;
+    expect(input.getAttribute('aria-describedby')).toBe(component.errorId);
+  });
+
+  it('should combine helper and error ids in aria-describedby when both are present', () => {
+    fixture.componentRef.setInput('helperText', 'Use your work email');
+    fixture.componentRef.setInput('status', 'error');
+    fixture.componentRef.setInput('errorMessage', 'This field is required.');
+    fixture.detectChanges();
+    const input = fixture.debugElement.query(By.css('input')).nativeElement;
+    expect(input.getAttribute('aria-describedby')).toBe(`${component.helperId} ${component.errorId}`);
+  });
+
+  it('should pass errorId down to ds-form-error as its id', () => {
+    const formError = fixture.debugElement.query(By.directive(FormErrorComponent));
+    expect((formError.componentInstance as FormErrorComponent).id()).toBe(component.errorId);
   });
 });

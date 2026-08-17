@@ -40,6 +40,7 @@ export class InputComponent implements ControlValueAccessor {
 
   readonly uid      = `ds-input-${++nextId}`;
   readonly helperId = `${this.uid}-helper`;
+  readonly errorId  = `${this.uid}-error`;
 
   value     = signal('');
   isFocused = signal(false);
@@ -70,6 +71,13 @@ export class InputComponent implements ControlValueAccessor {
     if (ctrl.errors['maxlength']) return `Maximum ${ctrl.errors['maxlength'].requiredLength} characters allowed.`;
     if (ctrl.errors['pattern'])   return 'Invalid format.';
     return 'Invalid value.';
+  });
+
+  describedBy = computed(() => {
+    const ids: string[] = [];
+    if (this.helperText()) ids.push(this.helperId);
+    if (this.hasError())   ids.push(this.errorId);
+    return ids.length ? ids.join(' ') : null;
   });
 
   wrapperClasses = computed(() => [

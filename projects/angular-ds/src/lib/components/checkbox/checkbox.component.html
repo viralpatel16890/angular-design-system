@@ -10,7 +10,7 @@
       [checked]="checked()"
       [disabled]="disabled()"
       [required]="required()"
-      [attr.aria-describedby]="helperText() ? helperId : null"
+      [attr.aria-describedby]="describedBy()"
       [attr.aria-required]="required() ? 'true' : null"
       (change)="onInputChange($event)"
       (blur)="onBlur()"
@@ -47,5 +47,5 @@
     <p class="ds-checkbox__helper" [id]="helperId">{{ helperText() }}</p>
   }
 
-  <ds-form-error [message]="hasError() ? resolvedError() : ''" />
+  <ds-form-error [id]="errorId" [message]="hasError() ? resolvedError() : ''" />
 </div>

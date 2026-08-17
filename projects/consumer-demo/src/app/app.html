@@ -51,6 +51,8 @@
     <section class="ca-section">
       <h2 class="ca-section__title">Execute Trade</h2>
       <div class="ca-trade-form">
+        <ds-form-legend />
+
         @if (tradeError()) {
           <ds-alert variant="danger" [message]="tradeError()" [dismissible]="false" />
         }
@@ -59,6 +61,7 @@
           label="Asset"
           placeholder="Select asset to trade"
           [options]="assetOptions"
+          [required]="true"
           [status]="tradeError() && !tradeAsset() ? 'error' : 'default'"
           [ngModel]="tradeAsset()"
           (ngModelChange)="tradeAsset.set($event)"
@@ -69,6 +72,7 @@
           type="number"
           placeholder="0.00"
           helperText="Available: $24,800.00"
+          [required]="true"
           [status]="tradeError() && tradeAsset() ? 'error' : 'default'"
           [ngModel]="tradeAmount()"
           (ngModelChange)="tradeAmount.set($event)"

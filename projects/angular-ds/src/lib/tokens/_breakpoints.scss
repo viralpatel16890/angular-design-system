@@ -1,0 +1,10 @@
+// Tier 1 — Primitive tokens: breakpoint values as SCSS variables.
+//
+// CSS custom properties (defined in `_primitives.scss`) cannot be used inside
+// `@media` query conditions, so the same pixel values are mirrored here as
+// SCSS variables for component stylesheets to `@use` in media queries.
+// Keep these values in sync with `--breakpoint-sm` / `--breakpoint-md` in
+// `_primitives.scss`.
+
+$breakpoint-sm: 640px;
+$breakpoint-md: 768px;

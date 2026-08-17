@@ -47,7 +47,7 @@
 .ds-progress__fill {
   height: 100%;
   border-radius: var(--progress-radius);
-  transition: width 400ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: width var(--motion-duration-slower) cubic-bezier(0.4, 0, 0.2, 1);
 
   &--default { background: var(--progress-fill-default); }
   &--success { background: var(--progress-fill-success); }

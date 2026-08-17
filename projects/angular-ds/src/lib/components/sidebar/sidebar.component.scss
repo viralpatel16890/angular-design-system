@@ -1,3 +1,5 @@
+@use '../../tokens/breakpoints' as tokens;
+
 :host {
   display: contents;
   --sidebar-width:          15rem;
@@ -40,7 +42,7 @@
 }
 
 // ─── Mobile ───────────────────────────────────────────────────────────────────
-@media (max-width: 768px) {
+@media (max-width: tokens.$breakpoint-md) {
   .ds-sidebar {
     position: fixed;
     left: 0;
@@ -98,7 +100,13 @@
   }
 }
 
-@media (min-width: 769px) {
+// NOTE: intentionally 1px above tokens.$breakpoint-md (768px) rather than
+// using it directly — the mobile media query above is a max-width: 768px
+// query, so this min-width boundary must start at 769px to avoid both
+// rules applying at exactly 768px. Pre-existing off-by-one vs. navbar's own
+// max-width: 768px breakpoint (see report) — preserved as-is, not silently
+// aligned.
+@media (min-width: tokens.$breakpoint-md + 1px) {
   .ds-sidebar__collapse-btn { display: flex; }
 }
 

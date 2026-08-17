@@ -74,6 +74,9 @@ export * from './lib/services/theme.service';
 // Form Error
 export * from './lib/components/form-error/form-error.component';
 
+// Form Legend
+export * from './lib/components/form-legend/form-legend.component';
+
 // Alert
 export * from './lib/components/alert/alert.types';
 export * from './lib/components/alert/alert.component';

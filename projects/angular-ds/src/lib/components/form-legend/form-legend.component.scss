@@ -1,0 +1,19 @@
+:host {
+  display: block;
+}
+
+.ds-form-legend {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-1);
+  margin: 0;
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.ds-form-legend__marker {
+  color: var(--color-danger-default);
+  font-weight: var(--font-weight-medium);
+  line-height: 1;
+}

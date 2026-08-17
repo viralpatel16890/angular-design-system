@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { ButtonComponent } from '../../../angular-ds/src/lib/components/button/button.component';
 import { InputComponent } from '../../../angular-ds/src/lib/components/input/input.component';
 import { SelectComponent } from '../../../angular-ds/src/lib/components/select/select.component';
+import { FormLegendComponent } from '../../../angular-ds/src/lib/components/form-legend/form-legend.component';
 import { AlertComponent } from '../../../angular-ds/src/lib/components/alert/alert.component';
 import { BadgeComponent } from '../../../angular-ds/src/lib/components/badge/badge.component';
 import { BalanceCardComponent } from '../../../angular-ds/src/lib/components/balance-card/balance-card.component';
@@ -25,6 +26,7 @@ import type { TransactionStatus } from '../../../angular-ds/src/lib/components/t
     ButtonComponent,
     InputComponent,
     SelectComponent,
+    FormLegendComponent,
     AlertComponent,
     BadgeComponent,
     BalanceCardComponent,

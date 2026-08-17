@@ -10,6 +10,7 @@ import { MetricCardComponent } from '../../../angular-ds/src/lib/components/metr
 import { TransactionItemComponent } from '../../../angular-ds/src/lib/components/transaction-item/transaction-item.component';
 import { ToastContainerComponent } from '../../../angular-ds/src/lib/components/toast/toast-container.component';
 import { ToastService } from '../../../angular-ds/src/lib/components/toast/toast.service';
+import { SkipLinkComponent } from '../../../angular-ds/src/lib/components/skip-link/skip-link.component';
 import type { SelectOption } from '../../../angular-ds/src/lib/components/select/select.types';
 import type { BalanceCardAccent } from '../../../angular-ds/src/lib/components/balance-card/balance-card.types';
 import type { TransactionStatus } from '../../../angular-ds/src/lib/components/transaction-item/transaction-item.types';
@@ -19,6 +20,7 @@ import type { TransactionStatus } from '../../../angular-ds/src/lib/components/t
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    SkipLinkComponent,
     FormsModule,
     ButtonComponent,
     InputComponent,

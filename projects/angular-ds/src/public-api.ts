@@ -91,3 +91,8 @@ export * from './lib/components/metric-card/metric-card.component';
 // Transaction Item
 export * from './lib/components/transaction-item/transaction-item.types';
 export * from './lib/components/transaction-item/transaction-item.component';
+
+// Menu
+export * from './lib/components/menu/menu.types';
+export * from './lib/components/menu/menu.component';
+export * from './lib/components/menu/menu-item.component';

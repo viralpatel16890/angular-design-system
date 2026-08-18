@@ -1,0 +1,30 @@
+<div class="ds-menu" [id]="uid + '-container'">
+  <button
+    #triggerEl
+    type="button"
+    [class]="triggerClasses()"
+    [disabled]="disabled()"
+    [attr.aria-haspopup]="'menu'"
+    [attr.aria-expanded]="isOpen()"
+    [attr.aria-controls]="isOpen() ? menuId : null"
+    [attr.aria-label]="ariaLabel()"
+    (click)="toggle()"
+    (keydown)="onTriggerKeydown($event)"
+  >
+    <span aria-hidden="true">{{ triggerIcon() }}</span>
+  </button>
+
+  @if (isOpen()) {
+    <ul
+      #panelEl
+      [id]="menuId"
+      [class]="panelClasses()"
+      role="menu"
+      [attr.aria-label]="ariaLabel()"
+      (keydown)="onPanelKeydown($event)"
+      (click)="onPanelClick($event)"
+    >
+      <ng-content />
+    </ul>
+  }
+</div>

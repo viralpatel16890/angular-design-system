@@ -88,16 +88,23 @@
       <h2 class="ca-section__title">Recent Trades</h2>
       <div class="ca-card">
         @for (t of recentTrades; track t.name) {
-          <ds-transaction-item
-            [name]="t.name"
-            [category]="t.category"
-            [date]="t.date"
-            [amount]="t.amount"
-            [type]="t.type"
-            [status]="t.status"
-            [avatar]="t.avatar"
-            [clickable]="false"
-          />
+          <div class="ca-trade-row">
+            <ds-transaction-item
+              class="ca-trade-row__item"
+              [name]="t.name"
+              [category]="t.category"
+              [date]="t.date"
+              [amount]="t.amount"
+              [type]="t.type"
+              [status]="t.status"
+              [avatar]="t.avatar"
+              [clickable]="false"
+            />
+            <ds-menu class="ca-trade-row__menu" [ariaLabel]="'Actions for ' + t.name">
+              <ds-menu-item (selected)="viewTradeDetails(t)">View details</ds-menu-item>
+              <ds-menu-item (selected)="repeatTrade(t)">Repeat trade</ds-menu-item>
+            </ds-menu>
+          </div>
         }
       </div>
     </section>

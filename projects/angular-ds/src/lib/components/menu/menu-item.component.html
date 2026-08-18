@@ -1,0 +1,15 @@
+<li role="none" class="ds-menu-item-host">
+  <button
+    type="button"
+    role="menuitem"
+    class="ds-menu-item"
+    [class.ds-menu-item--danger]="variant() === 'danger'"
+    [class.ds-menu-item--disabled]="disabled()"
+    [disabled]="disabled()"
+    [attr.aria-disabled]="disabled() ? 'true' : null"
+    tabindex="-1"
+    (click)="onClick()"
+  >
+    <ng-content />
+  </button>
+</li>

@@ -135,6 +135,19 @@
   overflow: hidden;
 }
 
+// ─── Trade row (transaction item + per-row kebab menu) ────────────────────
+.ca-trade-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding-right: var(--space-3);
+}
+
+.ca-trade-row__item {
+  flex: 1;
+  min-width: 0;
+}
+
 // ─── Responsive ────────────────────────────────────────────────────────────
 @media (max-width: 1024px) {
   .ca-grid--4 { grid-template-columns: repeat(2, 1fr); }

@@ -10,6 +10,8 @@ import { MetricCardComponent } from '../../../angular-ds/src/lib/components/metr
 import { TransactionItemComponent } from '../../../angular-ds/src/lib/components/transaction-item/transaction-item.component';
 import { ToastContainerComponent } from '../../../angular-ds/src/lib/components/toast/toast-container.component';
 import { ToastService } from '../../../angular-ds/src/lib/components/toast/toast.service';
+import { SkeletonComponent } from '../../../angular-ds/src/lib/components/skeleton/skeleton.component';
+import { EmptyStateComponent } from '../../../angular-ds/src/lib/components/empty-state/empty-state.component';
 import type { SelectOption } from '../../../angular-ds/src/lib/components/select/select.types';
 import type { BalanceCardAccent } from '../../../angular-ds/src/lib/components/balance-card/balance-card.types';
 import type { TransactionStatus } from '../../../angular-ds/src/lib/components/transaction-item/transaction-item.types';
@@ -29,6 +31,8 @@ import type { TransactionStatus } from '../../../angular-ds/src/lib/components/t
     MetricCardComponent,
     TransactionItemComponent,
     ToastContainerComponent,
+    SkeletonComponent,
+    EmptyStateComponent,
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss',
@@ -36,9 +40,14 @@ import type { TransactionStatus } from '../../../angular-ds/src/lib/components/t
 export class App implements OnInit {
   private toast = inject(ToastService);
 
+  /** Portfolio Overview briefly shows ds-skeleton placeholders while balances "load" on first paint. */
+  portfolioLoading = signal(true);
+
   ngOnInit() {
     const saved = localStorage.getItem('ds-theme');
     if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+
+    setTimeout(() => this.portfolioLoading.set(false), 900);
   }
 
   tradeAmount = signal('');
@@ -67,7 +76,7 @@ export class App implements OnInit {
     { label: 'Active Positions', value: 7, change: -1.0, icon: '⚡', prefix: '', suffix: '' },
   ];
 
-  recentTrades: Array<{
+  private readonly recentTradesSeed: Array<{
     name: string;
     category: string;
     date: string;
@@ -82,6 +91,9 @@ export class App implements OnInit {
     { name: 'MATIC Trade', category: 'Market Buy', date: 'Yesterday', amount: 420.0, type: 'debit', status: 'processing', avatar: '⬡' },
     { name: 'Portfolio Rebalance', category: 'Automated', date: '2 days ago', amount: 8900.0, type: 'credit', status: 'failed', avatar: '⚖' },
   ];
+
+  /** Drives the ds-empty-state demo below — cleared/restored via the Recent Trades section toggle. */
+  recentTrades = signal(this.recentTradesSeed);
 
   canExecute = computed(() => !!this.tradeAmount() && !!this.tradeAsset() && !this.tradeLoading());
 
@@ -120,5 +132,13 @@ export class App implements OnInit {
     this.tradeAmount.set('');
     this.tradeAsset.set('');
     this.tradeError.set('');
+  }
+
+  clearRecentTrades() {
+    this.recentTrades.set([]);
+  }
+
+  restoreRecentTrades() {
+    this.recentTrades.set(this.recentTradesSeed);
   }
 }

@@ -1,0 +1,49 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.ds-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: var(--space-1);
+  padding: var(--space-12) var(--space-6);
+  color: var(--color-text-secondary);
+}
+
+.ds-empty-state__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-3);
+  color: var(--color-text-tertiary);
+  font-size: var(--font-size-4xl);
+  line-height: 1;
+
+  // Collapse cleanly when the consumer doesn't project an icon/illustration.
+  &:empty { display: none; }
+}
+
+.ds-empty-state__title {
+  margin: 0;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}
+
+.ds-empty-state__description {
+  margin: 0;
+  max-width: 32rem;
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-secondary);
+}
+
+.ds-empty-state__action {
+  margin-top: var(--space-4);
+
+  &:empty { display: none; }
+}

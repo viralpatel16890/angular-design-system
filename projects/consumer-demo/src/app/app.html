@@ -31,8 +31,21 @@
     <section class="ca-section">
       <h2 class="ca-section__title">Portfolio Overview</h2>
       <div class="ca-grid ca-grid--3">
-        @for (b of balances; track b.label) {
-          <ds-balance-card [label]="b.label" [amount]="b.amount" [trend]="b.trend" [icon]="b.icon" [accent]="b.accent" />
+        @if (portfolioLoading()) {
+          @for (i of [0, 1, 2]; track i) {
+            <div class="ca-balance-skeleton" aria-hidden="true">
+              <div class="ca-balance-skeleton__header">
+                <ds-skeleton variant="text" width="45%" />
+                <ds-skeleton variant="circle" width="1.5rem" height="1.5rem" />
+              </div>
+              <ds-skeleton variant="text" width="70%" height="2.25rem" />
+              <ds-skeleton variant="text" width="35%" />
+            </div>
+          }
+        } @else {
+          @for (b of balances; track b.label) {
+            <ds-balance-card [label]="b.label" [amount]="b.amount" [trend]="b.trend" [icon]="b.icon" [accent]="b.accent" />
+          }
         }
       </div>
     </section>
@@ -85,19 +98,31 @@
 
     <!-- Recent trades -->
     <section class="ca-section">
-      <h2 class="ca-section__title">Recent Trades</h2>
+      <div class="ca-section__header">
+        <h2 class="ca-section__title">Recent Trades</h2>
+        @if (recentTrades().length > 0) {
+          <ds-button variant="ghost" size="sm" (pressed)="clearRecentTrades()">Clear (demo)</ds-button>
+        }
+      </div>
       <div class="ca-card">
-        @for (t of recentTrades; track t.name) {
-          <ds-transaction-item
-            [name]="t.name"
-            [category]="t.category"
-            [date]="t.date"
-            [amount]="t.amount"
-            [type]="t.type"
-            [status]="t.status"
-            [avatar]="t.avatar"
-            [clickable]="false"
-          />
+        @if (recentTrades().length === 0) {
+          <ds-empty-state title="No recent trades" description="Trades you place will show up here.">
+            <span icon>📭</span>
+            <ds-button action variant="primary" size="sm" (pressed)="restoreRecentTrades()">Add a trade</ds-button>
+          </ds-empty-state>
+        } @else {
+          @for (t of recentTrades(); track t.name) {
+            <ds-transaction-item
+              [name]="t.name"
+              [category]="t.category"
+              [date]="t.date"
+              [amount]="t.amount"
+              [type]="t.type"
+              [status]="t.status"
+              [avatar]="t.avatar"
+              [clickable]="false"
+            />
+          }
         }
       </div>
     </section>

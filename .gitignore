@@ -39,6 +39,13 @@ testem.log
 /typings
 __screenshots__/
 
+# Playwright — generated locally by `npm run e2e`; visual-regression
+# baselines are never committed in this repo (see e2e/*-snapshots/).
+/test-results/
+/playwright-report/
+*-snapshots/
+playwright.local.config.ts
+
 # System files
 .DS_Store
 Thumbs.db

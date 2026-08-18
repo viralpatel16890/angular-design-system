@@ -113,3 +113,7 @@ export * from './lib/components/skeleton/skeleton.component';
 
 // Empty State
 export * from './lib/components/empty-state/empty-state.component';
+
+// Pagination
+export * from './lib/components/pagination/pagination.types';
+export * from './lib/components/pagination/pagination.component';

@@ -116,7 +116,7 @@
             <ds-button action variant="primary" size="sm" (pressed)="restoreRecentTrades()">Add a trade</ds-button>
           </ds-empty-state>
         } @else {
-          @for (t of recentTrades(); track t.name) {
+          @for (t of pagedTrades(); track t.name) {
             <ds-transaction-item
               [name]="t.name"
               [category]="t.category"
@@ -130,6 +130,15 @@
           }
         }
       </div>
+      @if (recentTrades().length > 0) {
+        <div class="ca-pagination">
+          <ds-pagination
+            [currentPage]="tradesCurrentPage()"
+            [totalPages]="tradesTotalPages()"
+            (pageChange)="onTradesPageChange($event)"
+          />
+        </div>
+      }
     </section>
 
   </main>

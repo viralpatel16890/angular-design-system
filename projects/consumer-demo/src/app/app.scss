@@ -161,6 +161,13 @@
   overflow: hidden;
 }
 
+// ─── Pagination footer for the trades list ─────────────────────────────────
+.ca-pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-4);
+}
+
 // ─── Responsive ────────────────────────────────────────────────────────────
 @media (max-width: 1024px) {
   .ca-grid--4 { grid-template-columns: repeat(2, 1fr); }

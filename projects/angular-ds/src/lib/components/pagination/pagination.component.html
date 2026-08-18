@@ -1,0 +1,46 @@
+<nav [class]="navClasses()" [attr.aria-label]="ariaLabel()">
+  <button
+    type="button"
+    class="ds-pagination__nav ds-pagination__nav--prev"
+    aria-label="Previous page"
+    [disabled]="disabled() || isFirst()"
+    (click)="prev()"
+  >
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+
+  <ul class="ds-pagination__list">
+    @for (item of items(); track trackItem($index, item)) {
+      <li>
+        @if (item.type === 'page') {
+          <button
+            type="button"
+            [class]="itemClasses(item)"
+            [attr.aria-current]="item.page === clampedPage() ? 'page' : null"
+            [attr.aria-label]="'Page ' + item.page"
+            [disabled]="disabled()"
+            (click)="goTo(item.page)"
+          >
+            {{ item.page }}
+          </button>
+        } @else {
+          <span class="ds-pagination__ellipsis" aria-hidden="true">&hellip;</span>
+        }
+      </li>
+    }
+  </ul>
+
+  <button
+    type="button"
+    class="ds-pagination__nav ds-pagination__nav--next"
+    aria-label="Next page"
+    [disabled]="disabled() || isLast()"
+    (click)="next()"
+  >
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+      <path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</nav>

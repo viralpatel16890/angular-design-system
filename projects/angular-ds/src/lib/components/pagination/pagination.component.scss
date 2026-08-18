@@ -1,0 +1,124 @@
+:host {
+  display: block;
+
+  --pagination-gap:            0.25rem;
+  --pagination-text:           var(--color-text-secondary);
+  --pagination-text-active:    var(--color-on-interactive);
+  --pagination-bg-active:      var(--color-interactive-default);
+  --pagination-bg-hover:       var(--color-surface-muted);
+  --pagination-border:         var(--color-border-default);
+  --pagination-radius:         var(--radius-md);
+  --pagination-font-sm:        var(--font-size-xs);
+  --pagination-font-md:        var(--font-size-sm);
+  --pagination-font-lg:        var(--font-size-md);
+}
+
+.ds-pagination {
+  display: flex;
+  align-items: center;
+  gap: var(--pagination-gap);
+}
+
+.ds-pagination__list {
+  display: flex;
+  align-items: center;
+  gap: var(--pagination-gap);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+// ─── Shared button look for nav + numbered items ──────────────────────────────
+
+.ds-pagination__nav,
+.ds-pagination__item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2rem;
+  height: 2rem;
+  padding: 0 0.5rem;
+  border: 1px solid transparent;
+  border-radius: var(--pagination-radius);
+  background: transparent;
+  color: var(--pagination-text);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: background var(--motion-duration-normal) var(--motion-easing-ease),
+              color var(--motion-duration-normal) var(--motion-easing-ease),
+              border-color var(--motion-duration-normal) var(--motion-easing-ease);
+
+  &:hover:not(:disabled):not(.ds-pagination__item--active) {
+    background: var(--pagination-bg-hover);
+    color: var(--color-text-primary);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 var(--focus-ring-offset) var(--color-surface-base),
+      0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--focus-ring-color);
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+.ds-pagination__nav {
+  border-color: var(--pagination-border);
+}
+
+.ds-pagination__item--active {
+  background: var(--pagination-bg-active);
+  color: var(--pagination-text-active);
+}
+
+.ds-pagination__ellipsis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2rem;
+  height: 2rem;
+  color: var(--color-text-tertiary);
+  user-select: none;
+}
+
+// ─── Sizes ─────────────────────────────────────────────────────────────────────
+
+.ds-pagination--sm {
+  .ds-pagination__nav,
+  .ds-pagination__item,
+  .ds-pagination__ellipsis {
+    min-width: 1.75rem;
+    height: 1.75rem;
+    font-size: var(--pagination-font-sm);
+  }
+}
+
+.ds-pagination--md {
+  .ds-pagination__nav,
+  .ds-pagination__item,
+  .ds-pagination__ellipsis {
+    font-size: var(--pagination-font-md);
+  }
+}
+
+.ds-pagination--lg {
+  .ds-pagination__nav,
+  .ds-pagination__item,
+  .ds-pagination__ellipsis {
+    min-width: 2.25rem;
+    height: 2.25rem;
+    font-size: var(--pagination-font-lg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-pagination__nav,
+  .ds-pagination__item {
+    transition: none;
+  }
+}

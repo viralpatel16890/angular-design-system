@@ -22,6 +22,7 @@
     "build:lib": "ng build angular-ds && node scripts/patch-exports.js",
     "tokens:build": "style-dictionary build --config style-dictionary.config.js",
     "tokens:check": "style-dictionary build --config style-dictionary.config.js && git diff --exit-code design-tokens/build/",
+    "tokens:contrast": "node scripts/check-contrast.js",
     "prepare": "husky"
   },
   "private": true,

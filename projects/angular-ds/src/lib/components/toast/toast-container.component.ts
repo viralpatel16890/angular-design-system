@@ -1,12 +1,13 @@
 import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { LiveRegionDirective } from '../../directives/live-region.directive';
 import { ToastService } from './toast.service';
 import type { ToastPosition } from './toast.types';
 
 @Component({
   selector: 'ds-toast-container',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, LiveRegionDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './toast-container.component.html',
   styleUrl: './toast-container.component.scss',

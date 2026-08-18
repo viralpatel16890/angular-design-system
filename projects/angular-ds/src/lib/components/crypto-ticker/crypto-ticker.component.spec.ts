@@ -27,4 +27,12 @@ describe('CryptoTickerComponent', () => {
     fixture.detectChanges();
     expect(fixture.debugElement.query(By.css('.ds-ticker__price')).nativeElement.textContent).toContain('65,000.00');
   });
+
+  it('should mark the price/change region as an aria-live polite region', () => {
+    fixture.detectChanges();
+    const region = fixture.debugElement.query(By.css('.ds-ticker__right')).nativeElement;
+    expect(region.getAttribute('aria-live')).toBe('polite');
+    expect(region.getAttribute('aria-atomic')).toBe('true');
+    expect(region.getAttribute('role')).toBe('status');
+  });
 });

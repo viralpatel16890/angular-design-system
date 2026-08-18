@@ -10,11 +10,12 @@ import {
   signal,
 } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
+import { LiveRegionDirective } from '../../directives/live-region.directive';
 
 @Component({
   selector: 'ds-crypto-ticker',
   standalone: true,
-  imports: [DecimalPipe],
+  imports: [DecimalPipe, LiveRegionDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './crypto-ticker.component.html',
   styleUrl: './crypto-ticker.component.scss',

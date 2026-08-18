@@ -1,0 +1,50 @@
+// ─── Component-level token declarations ──────────────────────────────────────
+// Parent can override these to theme this spinner instance.
+:host {
+  display: inline-flex;
+  color: inherit;
+
+  // No dedicated "spin" duration exists in the motion scale (durations there
+  // model one-shot transitions, not infinite loops), so this stays a local,
+  // overridable component token rather than a bare magic number in the rule.
+  --spinner-duration: 0.75s;
+  --spinner-easing:   var(--motion-easing-linear);
+}
+
+.ds-spinner {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ds-spinner__icon {
+  animation: ds-spinner-spin var(--spinner-duration) var(--spinner-easing) infinite;
+}
+
+// ─── Size tiers (matches ds-button's sm/md/lg scale) ─────────────────────────
+.ds-spinner--sm .ds-spinner__icon { width: 12px; height: 12px; }
+.ds-spinner--md .ds-spinner__icon { width: 16px; height: 16px; }
+.ds-spinner--lg .ds-spinner__icon { width: 20px; height: 20px; }
+
+@keyframes ds-spinner-spin {
+  to { transform: rotate(360deg); }
+}
+
+// Screen-reader-only utility (mirrors the ds-sr-only convention used by
+// other components that render their own accessible-name text node).
+.ds-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-spinner__icon { animation: none; }
+}

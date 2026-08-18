@@ -1,5 +1,9 @@
 // Angular Design System — Public API
 
+// Spinner
+export * from './lib/components/spinner/spinner.types';
+export * from './lib/components/spinner/spinner.component';
+
 // Button
 export * from './lib/components/button/button.types';
 export * from './lib/components/button/button.component';

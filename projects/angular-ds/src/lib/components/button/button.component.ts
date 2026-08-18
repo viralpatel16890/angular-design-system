@@ -6,12 +6,13 @@ import {
   output,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { SpinnerComponent } from '../spinner/spinner.component';
 import type { ButtonVariant, ButtonSize, ButtonType } from './button.types';
 
 @Component({
   selector: 'ds-button',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, SpinnerComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './button.component.html',
   styleUrl: './button.component.scss',

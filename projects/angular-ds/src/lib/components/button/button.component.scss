@@ -141,21 +141,16 @@
 }
 
 // ─── Spinner ─────────────────────────────────────────────────────────────────
+// The spin animation itself now lives in ds-spinner; this just keeps the
+// spinner from shrinking inside the button's flex layout.
 .ds-btn__spinner {
-  display: inline-flex;
-  align-items: center;
   flex-shrink: 0;
-  animation: ds-spin 0.75s linear infinite;
 }
 
 .ds-btn__content {
   display: inline-flex;
   align-items: center;
   gap: var(--btn-gap);
-}
-
-@keyframes ds-spin {
-  to { transform: rotate(360deg); }
 }
 
 // Screen-reader-only utility
@@ -176,5 +171,5 @@
     transition: none;
     &:active:not(:disabled) { transform: none; }
   }
-  .ds-btn__spinner { animation: none; }
+  // ds-spinner disables its own spin animation under reduced motion.
 }

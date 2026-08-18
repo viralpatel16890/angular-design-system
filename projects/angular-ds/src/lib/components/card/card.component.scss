@@ -65,9 +65,48 @@
   &--p-sm   { --card-padding: var(--space-4); }
   &--p-md   { --card-padding: var(--space-6); }
   &--p-lg   { --card-padding: var(--space-8); }
+
+  // ─── Loading state ─────────────────────────────────────────────────────────
+  // Projected content stays mounted (and visible, dimmed) underneath the
+  // overlay rather than being removed — same precedent as ds-button, which
+  // keeps its label in the DOM and only hides it from assistive tech.
+  &--loading {
+    .ds-card__content {
+      opacity: 0.48;
+      pointer-events: none;
+      user-select: none;
+    }
+  }
+}
+
+.ds-card__content {
+  transition: opacity var(--motion-duration-fast) var(--motion-easing-ease-out);
+}
+
+.ds-card__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--card-bg) 65%, transparent);
+}
+
+// Screen-reader-only utility
+.ds-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .ds-card { transition: none; }
   .ds-card--interactive:hover { transform: none; }
+  .ds-card__content { transition: none; }
 }

@@ -1,1 +1,3 @@
-export type AlertVariant = 'info' | 'success' | 'warning' | 'danger';
+import type { FeedbackVariant } from '../../types/feedback-variant';
+
+export type AlertVariant = FeedbackVariant;

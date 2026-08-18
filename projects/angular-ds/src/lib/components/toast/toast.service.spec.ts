@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { ToastService } from './toast.service';
 
 describe('ToastService', () => {
@@ -65,9 +66,21 @@ describe('ToastService', () => {
     expect(service.toasts()[0].variant).toBe('warning');
   });
 
-  it('should add an error toast via .error()', () => {
+  it('should add a danger-variant toast via .error()', () => {
     service.error('Something went wrong');
-    expect(service.toasts()[0].variant).toBe('error');
+    expect(service.toasts()[0].variant).toBe('danger');
+  });
+
+  it('should announce danger-variant toasts assertively for screen readers', () => {
+    const announceSpy = vi.spyOn(TestBed.inject(LiveAnnouncer), 'announce');
+    service.error('Something went wrong');
+    expect(announceSpy).toHaveBeenCalledWith('Something went wrong', 'assertive');
+  });
+
+  it('should announce non-danger toasts politely for screen readers', () => {
+    const announceSpy = vi.spyOn(TestBed.inject(LiveAnnouncer), 'announce');
+    service.info('All good');
+    expect(announceSpy).toHaveBeenCalledWith('All good', 'polite');
   });
 
   it('should store optional title when provided', () => {

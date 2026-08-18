@@ -4,6 +4,9 @@
 export * from './lib/components/spinner/spinner.types';
 export * from './lib/components/spinner/spinner.component';
 
+// Shared Types
+export * from './lib/types/feedback-variant';
+
 // Button
 export * from './lib/components/button/button.types';
 export * from './lib/components/button/button.component';

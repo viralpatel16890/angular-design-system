@@ -13,6 +13,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { FormErrorComponent } from '../form-error/form-error.component';
+import { getValidationErrorMessage } from '../../utils/validation-messages';
 import type { SelectSize, SelectStatus, SelectOption } from './select.types';
 
 let nextId = 0;
@@ -68,10 +69,7 @@ export class SelectComponent implements ControlValueAccessor {
 
   resolvedError = computed(() => {
     const ctrl = this.ngControl?.control;
-    if (!ctrl || !ctrl.errors) return '';
-    if (ctrl.errors['required']) return 'This field is required.';
-    if (ctrl.errors['pattern'])  return 'Invalid format.';
-    return 'Invalid value.';
+    return getValidationErrorMessage(ctrl?.errors, ['required', 'pattern']) ?? '';
   });
 
   describedBy = computed(() => {

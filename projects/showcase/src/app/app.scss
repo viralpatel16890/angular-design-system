@@ -130,13 +130,6 @@
   letter-spacing: var(--letter-spacing-wide);
 }
 
-// ─── Stack ─────────────────────────────────────────────────────────────────
-.showcase__stack {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-8, 2rem);
-}
-
 // ─── Inline label ──────────────────────────────────────────────────────────
 .showcase__label {
   font-size: var(--font-size-sm);

@@ -117,3 +117,8 @@ export * from './lib/components/empty-state/empty-state.component';
 // Pagination
 export * from './lib/components/pagination/pagination.types';
 export * from './lib/components/pagination/pagination.component';
+
+// Menu
+export * from './lib/components/menu/menu.types';
+export * from './lib/components/menu/menu.component';
+export * from './lib/components/menu/menu-item.component';

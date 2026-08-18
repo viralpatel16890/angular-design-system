@@ -9,6 +9,8 @@ import { BadgeComponent } from '../../../angular-ds/src/lib/components/badge/bad
 import { BalanceCardComponent } from '../../../angular-ds/src/lib/components/balance-card/balance-card.component';
 import { MetricCardComponent } from '../../../angular-ds/src/lib/components/metric-card/metric-card.component';
 import { TransactionItemComponent } from '../../../angular-ds/src/lib/components/transaction-item/transaction-item.component';
+import { MenuComponent } from '../../../angular-ds/src/lib/components/menu/menu.component';
+import { MenuItemComponent } from '../../../angular-ds/src/lib/components/menu/menu-item.component';
 import { ToastContainerComponent } from '../../../angular-ds/src/lib/components/toast/toast-container.component';
 import { ToastService } from '../../../angular-ds/src/lib/components/toast/toast.service';
 import { SkipLinkComponent } from '../../../angular-ds/src/lib/components/skip-link/skip-link.component';
@@ -37,6 +39,8 @@ import type { TransactionStatus } from '../../../angular-ds/src/lib/components/t
     BalanceCardComponent,
     MetricCardComponent,
     TransactionItemComponent,
+    MenuComponent,
+    MenuItemComponent,
     ToastContainerComponent,
     ConfirmDialogComponent,
     SkeletonComponent,
@@ -192,5 +196,15 @@ export class App implements OnInit {
   restoreRecentTrades() {
     this.recentTrades.set(this.recentTradesSeed);
     this.tradesCurrentPage.set(1);
+  }
+
+  viewTradeDetails(trade: { name: string }) {
+    this.toast.info(`Showing details for "${trade.name}"`, { title: 'Trade Details' });
+  }
+
+  repeatTrade(trade: { name: string; amount: number }) {
+    this.toast.success(`Repeated "${trade.name}" for $${trade.amount.toLocaleString()}`, {
+      title: 'Trade Repeated',
+    });
   }
 }

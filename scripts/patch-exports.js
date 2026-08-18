@@ -12,7 +12,7 @@ const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8'));
 
 const components = [
   'accordion', 'avatar', 'badge', 'button', 'card', 'checkbox',
-  'form-error', 'input', 'modal', 'navbar', 'progress', 'select',
+  'confirm-dialog', 'form-error', 'input', 'modal', 'navbar', 'progress', 'select',
   'sidebar', 'tabs', 'toast', 'toggle', 'tooltip', 'theme',
   'alert', 'balance-card', 'crypto-ticker', 'metric-card', 'transaction-item',
 ];

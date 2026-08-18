@@ -1,0 +1,13 @@
+<ds-modal
+  [open]="isOpen()"
+  size="sm"
+  [title]="title()"
+  (closed)="onModalClosed()"
+>
+  <p class="ds-confirm-dialog__message">{{ message() }}</p>
+
+  <div slot="footer" class="ds-confirm-dialog__footer">
+    <ds-button variant="ghost" (pressed)="onCancel()">{{ cancelLabel() }}</ds-button>
+    <ds-button [variant]="confirmButtonVariant()" (pressed)="onConfirm()">{{ confirmLabel() }}</ds-button>
+  </div>
+</ds-modal>

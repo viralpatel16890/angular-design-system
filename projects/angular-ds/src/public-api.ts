@@ -122,3 +122,6 @@ export * from './lib/components/pagination/pagination.component';
 export * from './lib/components/menu/menu.types';
 export * from './lib/components/menu/menu.component';
 export * from './lib/components/menu/menu-item.component';
+
+// Live Region
+export * from './lib/directives/live-region.directive';

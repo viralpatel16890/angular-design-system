@@ -33,5 +33,6 @@ describe('CryptoTickerComponent', () => {
     const region = fixture.debugElement.query(By.css('.ds-ticker__right')).nativeElement;
     expect(region.getAttribute('aria-live')).toBe('polite');
     expect(region.getAttribute('aria-atomic')).toBe('true');
+    expect(region.getAttribute('role')).toBe('status');
   });
 });

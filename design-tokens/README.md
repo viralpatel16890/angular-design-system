@@ -6,6 +6,10 @@ This directory contains the single source-of-truth token definitions for the Ang
 
 - `tokens.json` — W3C Design Token Community Group format (used by Tokens Studio for Figma)
 - `build/` — Generated output files (DO NOT edit manually)
+- [`CONTRAST.md`](./CONTRAST.md) — WCAG contrast ratios for every semantic
+  text/foreground-on-background token pair actually used by components, in
+  both the light and dark themes, including known AA failures flagged for
+  a human decision
 
 ## Build
 

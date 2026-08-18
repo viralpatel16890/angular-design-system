@@ -269,6 +269,8 @@ Override any token at `:root` or any ancestor selector:
 
 24 components in total: 19 general-purpose components plus 5 fintech-domain components.
 
+> **Full API reference:** the tables below cover the highlights — for every component's complete inputs, outputs, overridable CSS custom properties, and a usage snippet, see [`docs/COMPONENTS.md`](./docs/COMPONENTS.md).
+
 ### General-purpose components
 
 | Component | Selector | Description | Key Inputs | Key Outputs |

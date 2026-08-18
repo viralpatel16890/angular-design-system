@@ -46,7 +46,7 @@
   &--info {
     border-color: var(--color-info-muted);
     .ds-toast__icon { color: var(--color-info-default); }
-    .ds-toast__title { color: var(--color-info-default); }
+    .ds-toast__title { color: var(--color-text-info); }
   }
   &--success {
     border-color: var(--color-green-200);

@@ -2,7 +2,7 @@
   display: block;
   --alert-bg:     var(--color-info-subtle);
   --alert-border: var(--color-info-default);
-  --alert-fg:     var(--color-info-default);
+  --alert-fg:     var(--color-text-info);
 }
 
 .ds-alert {
@@ -48,7 +48,9 @@
 }
 
 .ds-alert__message {
-  opacity: 0.9;
+  // No opacity de-emphasis here: it silently erodes the already-tight AA
+  // contrast of --alert-fg against --alert-bg. Rely on font-weight for the
+  // title/message visual hierarchy instead.
 }
 
 .ds-alert__close {

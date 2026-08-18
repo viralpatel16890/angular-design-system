@@ -272,7 +272,8 @@
   width: 2rem;
   height: 2rem;
   border-radius: var(--radius-full);
-  background: var(--color-violet-500);
+  // violet-600, not -500: white text on -500 only reaches 4.23:1, short of AA's 4.5:1
+  background: var(--color-violet-600);
   color: white;
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);

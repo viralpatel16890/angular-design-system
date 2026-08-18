@@ -1,6 +1,6 @@
 <div class="ds-select-field" [id]="uid + '-field'">
   @if (label()) {
-    <label class="ds-select-label" [for]="uid" [class.ds-select-label--required]="required()">
+    <label class="ds-select-label" [id]="uid + '-label'" [for]="uid" [class.ds-select-label--required]="required()">
       {{ label() }}
     </label>
   }

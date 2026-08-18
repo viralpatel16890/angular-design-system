@@ -73,6 +73,6 @@
   font-weight: var(--font-weight-semibold);
   font-family: var(--font-family-mono);
 
-  &.up   { color: var(--color-success-default); }
-  &.down { color: var(--color-danger-default); }
+  &.up   { color: var(--color-text-success); }
+  &.down { color: var(--color-text-danger); }
 }

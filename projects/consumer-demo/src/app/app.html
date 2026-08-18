@@ -87,7 +87,7 @@
     <section class="ca-section">
       <h2 class="ca-section__title">Recent Trades</h2>
       <div class="ca-card">
-        @for (t of recentTrades; track t.name) {
+        @for (t of pagedTrades(); track t.name) {
           <ds-transaction-item
             [name]="t.name"
             [category]="t.category"
@@ -99,6 +99,13 @@
             [clickable]="false"
           />
         }
+      </div>
+      <div class="ca-pagination">
+        <ds-pagination
+          [currentPage]="tradesCurrentPage()"
+          [totalPages]="tradesTotalPages()"
+          (pageChange)="onTradesPageChange($event)"
+        />
       </div>
     </section>
 

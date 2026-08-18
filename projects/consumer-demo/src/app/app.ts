@@ -10,6 +10,7 @@ import { MetricCardComponent } from '../../../angular-ds/src/lib/components/metr
 import { TransactionItemComponent } from '../../../angular-ds/src/lib/components/transaction-item/transaction-item.component';
 import { ToastContainerComponent } from '../../../angular-ds/src/lib/components/toast/toast-container.component';
 import { ToastService } from '../../../angular-ds/src/lib/components/toast/toast.service';
+import { PaginationComponent } from '../../../angular-ds/src/lib/components/pagination/pagination.component';
 import type { SelectOption } from '../../../angular-ds/src/lib/components/select/select.types';
 import type { BalanceCardAccent } from '../../../angular-ds/src/lib/components/balance-card/balance-card.types';
 import type { TransactionStatus } from '../../../angular-ds/src/lib/components/transaction-item/transaction-item.types';
@@ -29,6 +30,7 @@ import type { TransactionStatus } from '../../../angular-ds/src/lib/components/t
     MetricCardComponent,
     TransactionItemComponent,
     ToastContainerComponent,
+    PaginationComponent,
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss',
@@ -81,7 +83,32 @@ export class App implements OnInit {
     { name: 'SOL Limit Order', category: 'Limit Buy', date: 'Yesterday', amount: 1500.0, type: 'debit', status: 'pending', avatar: '◎' },
     { name: 'MATIC Trade', category: 'Market Buy', date: 'Yesterday', amount: 420.0, type: 'debit', status: 'processing', avatar: '⬡' },
     { name: 'Portfolio Rebalance', category: 'Automated', date: '2 days ago', amount: 8900.0, type: 'credit', status: 'failed', avatar: '⚖' },
+    { name: 'ADA Purchase', category: 'Buy Order', date: '2 days ago', amount: 640.0, type: 'debit', status: 'success', avatar: '₳' },
+    { name: 'DOT Stake Reward', category: 'Staking', date: '3 days ago', amount: 92.5, type: 'credit', status: 'success', avatar: '●' },
+    { name: 'AVAX Sell', category: 'Sell Order', date: '3 days ago', amount: 2150.0, type: 'credit', status: 'success', avatar: '▲' },
+    { name: 'LINK Limit Order', category: 'Limit Buy', date: '4 days ago', amount: 780.0, type: 'debit', status: 'pending', avatar: '⬢' },
+    { name: 'DOGE Trade', category: 'Market Buy', date: '4 days ago', amount: 150.0, type: 'debit', status: 'success', avatar: 'Ð' },
+    { name: 'XRP Sell', category: 'Sell Order', date: '5 days ago', amount: 990.0, type: 'credit', status: 'failed', avatar: '✕' },
+    { name: 'UNI Swap', category: 'Automated', date: '5 days ago', amount: 310.0, type: 'debit', status: 'success', avatar: '🦄' },
+    { name: 'ATOM Purchase', category: 'Buy Order', date: '6 days ago', amount: 525.0, type: 'debit', status: 'processing', avatar: '⚛' },
+    { name: 'LTC Sell', category: 'Sell Order', date: '1 week ago', amount: 1330.0, type: 'credit', status: 'success', avatar: 'Ł' },
   ];
+
+  tradesPageSize = 5;
+  tradesCurrentPage = signal(1);
+
+  tradesTotalPages = computed(() =>
+    Math.max(Math.ceil(this.recentTrades.length / this.tradesPageSize), 1),
+  );
+
+  pagedTrades = computed(() => {
+    const start = (this.tradesCurrentPage() - 1) * this.tradesPageSize;
+    return this.recentTrades.slice(start, start + this.tradesPageSize);
+  });
+
+  onTradesPageChange(page: number) {
+    this.tradesCurrentPage.set(page);
+  }
 
   canExecute = computed(() => !!this.tradeAmount() && !!this.tradeAsset() && !this.tradeLoading());
 

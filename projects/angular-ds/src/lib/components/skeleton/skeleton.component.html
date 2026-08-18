@@ -1,0 +1,20 @@
+@if (isMultiline()) {
+  <div class="ds-skeleton-group" role="status" [attr.aria-label]="ariaLabel()">
+    @for (i of lineIndexes(); track i) {
+      <span
+        class="ds-skeleton ds-skeleton--text"
+        aria-hidden="true"
+        [style.width]="isLastLine(i) ? lastLineWidth() : (width() || null)"
+        [style.height]="height() || null"
+      ></span>
+    }
+  </div>
+} @else {
+  <span
+    [class]="classes()"
+    role="status"
+    [attr.aria-label]="ariaLabel()"
+    [style.width]="width() || null"
+    [style.height]="height() || null"
+  ></span>
+}

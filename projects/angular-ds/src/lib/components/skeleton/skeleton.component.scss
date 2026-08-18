@@ -1,0 +1,64 @@
+:host {
+  display: inline-block;
+  width: 100%;
+
+  // Shimmer duration is derived from the existing motion scale (the largest
+  // primitive duration, stretched) rather than a new one-off value.
+  --skeleton-duration: calc(var(--motion-duration-slower) * 4);
+  --skeleton-easing:   var(--motion-easing-ease);
+  --skeleton-bg:       var(--color-surface-muted);
+  --skeleton-highlight: var(--color-surface-subtle);
+}
+
+.ds-skeleton-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: 100%;
+}
+
+.ds-skeleton {
+  display: block;
+  overflow: hidden;
+  background-color: var(--skeleton-bg);
+  background-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--skeleton-highlight) 50%,
+    transparent 100%
+  );
+  background-repeat: no-repeat;
+  background-size: 200% 100%;
+  animation: ds-skeleton-shimmer var(--skeleton-duration) var(--skeleton-easing) infinite;
+
+  &--text {
+    width: 100%;
+    height: 0.875em;
+    border-radius: var(--radius-sm);
+  }
+
+  &--circle {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: var(--radius-full);
+    flex-shrink: 0;
+  }
+
+  &--rect {
+    width: 100%;
+    height: 6rem;
+    border-radius: var(--radius-md);
+  }
+}
+
+@keyframes ds-skeleton-shimmer {
+  from { background-position: 200% 0; }
+  to   { background-position: -200% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-skeleton {
+    animation: none;
+    background-image: none;
+  }
+}

@@ -1,5 +1,8 @@
 // Angular Design System — Public API
 
+// Shared Types
+export * from './lib/types/feedback-variant';
+
 // Button
 export * from './lib/components/button/button.types';
 export * from './lib/components/button/button.component';

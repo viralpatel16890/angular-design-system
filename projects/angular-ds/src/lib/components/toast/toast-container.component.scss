@@ -58,7 +58,7 @@
     .ds-toast__icon { color: var(--color-warning-default); }
     .ds-toast__title { color: var(--color-text-warning); }
   }
-  &--error {
+  &--danger {
     border-color: var(--color-red-200);
     .ds-toast__icon { color: var(--color-danger-default); }
     .ds-toast__title { color: var(--color-text-danger); }
@@ -136,7 +136,7 @@
     &--info    { border-color: var(--color-info-muted); .ds-toast__title { color: var(--color-info-default); } }
     &--success { border-color: var(--color-green-800);  .ds-toast__title { color: var(--color-green-300);  } }
     &--warning { border-color: var(--color-amber-800);  .ds-toast__title { color: var(--color-amber-300);  } }
-    &--error   { border-color: var(--color-red-800);    .ds-toast__title { color: var(--color-red-300);    } }
+    &--danger  { border-color: var(--color-red-800);    .ds-toast__title { color: var(--color-red-300);    } }
   }
 }
 

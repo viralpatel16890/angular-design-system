@@ -36,6 +36,11 @@ export * from './lib/components/toast/toast.types';
 export * from './lib/components/toast/toast.service';
 export * from './lib/components/toast/toast-container.component';
 
+// Confirm Dialog
+export * from './lib/components/confirm-dialog/confirm-dialog.types';
+export * from './lib/components/confirm-dialog/confirm-dialog.service';
+export * from './lib/components/confirm-dialog/confirm-dialog.component';
+
 // Navbar
 export * from './lib/components/navbar/navbar.types';
 export * from './lib/components/navbar/navbar.component';

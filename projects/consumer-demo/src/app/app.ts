@@ -12,6 +12,8 @@ import { TransactionItemComponent } from '../../../angular-ds/src/lib/components
 import { ToastContainerComponent } from '../../../angular-ds/src/lib/components/toast/toast-container.component';
 import { ToastService } from '../../../angular-ds/src/lib/components/toast/toast.service';
 import { SkipLinkComponent } from '../../../angular-ds/src/lib/components/skip-link/skip-link.component';
+import { ConfirmDialogComponent } from '../../../angular-ds/src/lib/components/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogService } from '../../../angular-ds/src/lib/components/confirm-dialog/confirm-dialog.service';
 import type { SelectOption } from '../../../angular-ds/src/lib/components/select/select.types';
 import type { BalanceCardAccent } from '../../../angular-ds/src/lib/components/balance-card/balance-card.types';
 import type { TransactionStatus } from '../../../angular-ds/src/lib/components/transaction-item/transaction-item.types';
@@ -33,12 +35,14 @@ import type { TransactionStatus } from '../../../angular-ds/src/lib/components/t
     MetricCardComponent,
     TransactionItemComponent,
     ToastContainerComponent,
+    ConfirmDialogComponent,
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
 export class App implements OnInit {
   private toast = inject(ToastService);
+  private confirmDialog = inject(ConfirmDialogService);
 
   ngOnInit() {
     const saved = localStorage.getItem('ds-theme');
@@ -120,7 +124,22 @@ export class App implements OnInit {
     }, 1200);
   }
 
-  clearTrade() {
+  async clearTrade() {
+    // Nothing entered yet — nothing destructive to confirm.
+    if (!this.tradeAmount() && !this.tradeAsset()) {
+      this.tradeError.set('');
+      return;
+    }
+
+    const confirmed = await this.confirmDialog.confirm({
+      title: 'Discard trade details?',
+      message: 'The asset and amount you entered will be cleared and cannot be recovered.',
+      confirmLabel: 'Discard',
+      cancelLabel: 'Keep editing',
+      variant: 'danger',
+    });
+    if (!confirmed) return;
+
     this.tradeAmount.set('');
     this.tradeAsset.set('');
     this.tradeError.set('');

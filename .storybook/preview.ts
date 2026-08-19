@@ -1,5 +1,10 @@
 import type { Preview } from '@storybook/angular';
-import '../projects/showcase/src/styles.scss';
+
+// Global styles are already loaded through the `showcase` Angular build
+// target's `styles` option (see angular.json), which the
+// `@storybook/angular` webpack builder picks up via its `browserTarget`.
+// A duplicate side-effect `import` here isn't run through the same
+// style-loader pipeline and fails TypeScript's module resolution.
 
 const preview: Preview = {
   parameters: {
@@ -23,7 +28,6 @@ const preview: Preview = {
       toolbar: {
         icon: 'circlehollow',
         items: ['light', 'dark'],
-        showName: true,
       },
     },
   },

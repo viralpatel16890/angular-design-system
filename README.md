@@ -38,7 +38,7 @@ Angular Design System is purpose-built for enterprise scale. Its three-tier toke
 | Playwright | 1.52.x |
 | commitlint | 21.x |
 
-> **Note:** Storybook 10 has an unresolved peer-dependency conflict between Angular 22 and TypeScript 6. `.npmrc` sets `legacy-peer-deps=true` as a workaround for `npm install`, but `npm run storybook` / `npm run build-storybook` are not guaranteed to run cleanly until upstream compatibility lands — see [What's Implemented → Storybook](#1-storybook).
+> **Note:** `npm install` no longer needs `legacy-peer-deps` — see [What's Implemented → Storybook](#1-storybook) for the fix and the one remaining npm-version caveat.
 
 Install the Angular CLI globally if you haven't already:
 
@@ -570,8 +570,8 @@ SSL, CDN, and previews for every push are handled by Vercel automatically; no Do
 | Unit tests | `npm test` | Runs `ng test --watch=false` (Angular's unit-test builder) across `angular-ds`, `showcase`, and `consumer-demo` — 238 tests |
 | Test watch | `npm run test:watch` | `ng test` in interactive watch mode |
 | Test coverage | `npm run test:coverage` | Coverage report with 70% threshold |
-| Storybook | `npm run storybook` | Launches Storybook on `localhost:6006` (peer-dependency caveat above) |
-| Build Storybook | `npm run build-storybook` | Static Storybook build (peer-dependency caveat above) |
+| Storybook | `npm run storybook` | Launches Storybook on `localhost:6006` via `ng run showcase:storybook` |
+| Build Storybook | `npm run build-storybook` | Static Storybook build via `ng run showcase:build-storybook` |
 | E2E tests | `npm run e2e` | Playwright visual regression + a11y tests |
 | Update snapshots | `npm run e2e:update-snapshots` | Regenerate Playwright baselines |
 | Lint styles | `npm run lint:styles` | Stylelint with DS token-tier plugin |
@@ -584,7 +584,15 @@ SSL, CDN, and previews for every push are handled by Vercel automatically; no Do
 This workspace ships the following engineering improvements end-to-end:
 
 ### 1. Storybook
-`@storybook/angular` **10** configured with `addon-a11y` (essentials and interactions are now bundled into core in Storybook 10). Every component has a `.stories.ts` with multiple stories, arg controls, and a light/dark theme switcher in the toolbar. Run with `npm run storybook`. **Known issue:** there is an unresolved peer-dependency conflict between Angular 22 and TypeScript 6 in Storybook 10's dependency tree; `.npmrc` sets `legacy-peer-deps=true` to get `npm install` through, but `npm run storybook` / `npm run build-storybook` are not verified to run cleanly on top of that workaround — treat Storybook support as best-effort until upstream compatibility lands.
+`@storybook/angular` **10** configured with `addon-a11y` (essentials and interactions are now bundled into core in Storybook 10). 11 of 24 components have a `.stories.ts` with multiple stories, arg controls, and a light/dark theme switcher in the toolbar. Both `npm run storybook` and `npm run build-storybook` are verified working end-to-end (238 unit tests still pass, the Showcase build is unaffected, and all 11 existing stories render in the static build output).
+
+**What the peer-dependency conflict actually was.** It was never Angular 22 vs. TypeScript 6 directly — `@storybook/angular@10.5.x`'s own `peerDependencies` already allow both (`@angular/core: ">=18.0.0 < 23.0.0"`, `typescript: "^4.9.0 || ^5.0.0 || ^6.0.0"`). The real conflict is transitive: `@storybook/angular` also peer-depends on `@angular-devkit/build-angular` (the classic webpack-based Angular builder) in the same `>=18 < 23` range. Every `@angular-devkit/build-angular` release `>=22.0.0` is marked `deprecated` upstream in favor of `@angular/build` (the esbuild/Vite builder this workspace already uses), and npm's peer-resolution algorithm deliberately avoids deprecated versions when auto-satisfying an unpinned peer range. So instead of picking `22.1.4` (which exists, is unused-but-compatible, and satisfies everything), npm fell back to the last *non-deprecated* release, `21.2.21` — which itself hard-requires `@angular/compiler-cli@^21.0.0`, colliding with this workspace's Angular 22 packages. Reproduce it yourself with `npm install --no-legacy-peer-deps` against the previous `package.json`.
+
+**The fix.** `package.json` now pins that otherwise-unused peer via `"overrides": { "@angular-devkit/build-angular": "22.1.2" }`, which is Angular-22-compatible and satisfies `@storybook/angular`'s peer check without ever being imported by our own build (we still build everything through `@angular/build`). With that override, `npm install` resolves cleanly and `legacy-peer-deps=true` has been removed from `.npmrc`.
+
+**One remaining npm-version caveat.** npm 10.9.x (bundled with Node 22.22.3, and what this repo's `packageManager` field pins) has an unrelated `@npmcli/arborist` crash (`Cannot read properties of null (reading 'edgesOut')`) when doing a *fully fresh* dependency resolution — i.e. `npm install` from a clean checkout with no `package-lock.json` and no `node_modules` — against this dependency graph's size/shape. It does **not** affect `npm ci` (what CI uses) or an incremental `npm install` on top of the committed lockfile, both of which were verified clean under npm 10.9.8. If you ever need to regenerate `package-lock.json` from scratch, do it with npm ≥ 11 (`npx npm@11 install`), then commit the result — subsequent `npm ci`/`npm install` on npm 10.x will consume that lockfile fine.
+
+**The other real breakage that was blocking `build-storybook`, now fixed:** Storybook 10 dropped support for driving `@storybook/angular`'s webpack framework from the plain `storybook build` / `storybook dev` CLI (`SB_FRAMEWORK_ANGULAR_0001`) — it now requires being invoked through a dedicated Angular CLI builder target. `angular.json` now defines `storybook` / `build-storybook` targets on the `showcase` project (`@storybook/angular:start-storybook` / `:build-storybook`, pointed at `showcase:build` for styles/assets, `compodoc: false` since the default Compodoc integration pulls an ancient incompatible `compodoc@0.0.41` package via `npx`), `package.json`'s `storybook`/`build-storybook` scripts now run `ng run showcase:storybook` / `ng run showcase:build-storybook`, and a dedicated `.storybook/tsconfig.json` includes both the `showcase` and `angular-ds` sources so the Angular AOT compiler can see the `.stories.ts` files (which live under `projects/angular-ds/src`, outside `showcase`'s own `tsconfig.app.json`). `.storybook/preview.ts` also had a stale duplicate global-style import and a `toolbar.showName` option removed from Storybook 10's `ToolbarConfig` type.
 
 ### 2. Unit Tests (Angular CLI Unit-Test Builder)
 Full spec suite across all three projects — `angular-ds` (24 components), `showcase`, and `consumer-demo` — **238 tests total, all passing**, covering: signal input reflection, ControlValueAccessor (`writeValue` / `onChange` / `onTouched`), computed class output, ARIA attributes, and keyboard behaviour. `npm run test` runs `ng test --watch=false`, which uses `@angular/build:unit-test` (configured per-project in `angular.json`, Vitest-backed) rather than invoking Vitest directly — this replaced a previously broken raw-Vitest setup that didn't correctly exercise the workspace. 70% coverage thresholds and HTML + LCOV reporters via `npm run test:coverage`.

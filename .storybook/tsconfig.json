@@ -1,0 +1,23 @@
+/* TypeScript program used by Storybook's Angular webpack builder.
+ * It needs to see both the showcase app entry (referenced via the
+ * `browserTarget` in angular.json, for styles/assets) and the
+ * angular-ds library sources, since `.stories.ts` files live inside
+ * projects/angular-ds/src but are not part of showcase's own
+ * tsconfig.app.json "include".
+ */
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../out-tsc/storybook",
+    "types": []
+  },
+  "include": [
+    "../projects/showcase/src/**/*.ts",
+    "../projects/angular-ds/src/**/*.ts",
+    "./*.ts"
+  ],
+  "exclude": [
+    "../projects/showcase/src/**/*.spec.ts",
+    "../projects/angular-ds/src/**/*.spec.ts"
+  ]
+}

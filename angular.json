@@ -95,6 +95,26 @@
         },
         "test": {
           "builder": "@angular/build:unit-test"
+        },
+        "storybook": {
+          "builder": "@storybook/angular:start-storybook",
+          "options": {
+            "browserTarget": "showcase:build",
+            "tsConfig": ".storybook/tsconfig.json",
+            "port": 6006,
+            "configDir": ".storybook",
+            "compodoc": false
+          }
+        },
+        "build-storybook": {
+          "builder": "@storybook/angular:build-storybook",
+          "options": {
+            "browserTarget": "showcase:build",
+            "tsConfig": ".storybook/tsconfig.json",
+            "configDir": ".storybook",
+            "outputDir": "storybook-static",
+            "compodoc": false
+          }
         }
       }
     },

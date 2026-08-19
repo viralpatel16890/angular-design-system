@@ -11,6 +11,9 @@
 npm-debug.log
 yarn-error.log
 
+# Claude Code agent worktrees
+/.claude/worktrees/
+
 # IDEs and editors
 .idea/
 .project
@@ -42,3 +45,10 @@ __screenshots__/
 # System files
 .DS_Store
 Thumbs.db
+
+# Playwright — generated locally by `npm run e2e`; visual-regression
+# baselines are never committed in this repo (see e2e/*-snapshots/).
+/test-results/
+/playwright-report/
+*-snapshots/
+playwright.local.config.ts

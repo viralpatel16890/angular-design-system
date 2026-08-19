@@ -3,6 +3,7 @@
   "outputDirectory": "dist/showcase/browser",
   "rewrites": [
     { "source": "/consumer/(.*)", "destination": "/consumer/index.html" },
+    { "source": "/storybook/(.*)", "destination": "/storybook/index.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }

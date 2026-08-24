@@ -1,4 +1,6 @@
 <div class="showcase">
+  <ds-skip-link />
+
   <!-- Header -->
   <header class="showcase__header">
     <div class="showcase__header-inner">
@@ -21,7 +23,7 @@
     </div>
   </header>
 
-  <main class="showcase__main">
+  <main id="main-content" class="showcase__main" tabindex="-1">
 
     <!-- ─── Navbar ──────────────────────────────────────────────────── -->
     <section class="showcase__section">
@@ -831,6 +833,11 @@ import &#123; NavbarComponent &#125; from 'angular-ds/navbar';</code></pre>
                 <td><code>ds-toast-container</code>, <code>ToastService</code></td>
                 <td>Confirmation toast after a trade executes</td>
                 <td>Global</td>
+              </tr>
+              <tr>
+                <td><code>ds-confirm-dialog</code>, <code>ConfirmDialogService</code></td>
+                <td>Danger-variant confirmation before discarding entered trade details</td>
+                <td>Execute Trade — Clear button / Global</td>
               </tr>
             </tbody>
           </table>

@@ -24,7 +24,7 @@ export class ToastService {
 
     // Announce to screen readers
     const prefix = toast.title ? `${toast.title}: ` : '';
-    const politeness = toast.variant === 'error' ? 'assertive' : 'polite';
+    const politeness = toast.variant === 'danger' ? 'assertive' : 'polite';
     this.liveAnnouncer.announce(`${prefix}${message}`, politeness);
 
     if (toast.duration > 0) {
@@ -37,7 +37,7 @@ export class ToastService {
   info   (message: string, opts?: Omit<ToastOptions, 'variant'>) { return this.show(message, { ...opts, variant: 'info'    }); }
   success(message: string, opts?: Omit<ToastOptions, 'variant'>) { return this.show(message, { ...opts, variant: 'success' }); }
   warning(message: string, opts?: Omit<ToastOptions, 'variant'>) { return this.show(message, { ...opts, variant: 'warning' }); }
-  error  (message: string, opts?: Omit<ToastOptions, 'variant'>) { return this.show(message, { ...opts, variant: 'error'   }); }
+  error  (message: string, opts?: Omit<ToastOptions, 'variant'>) { return this.show(message, { ...opts, variant: 'danger'  }); }
 
   dismiss(id: string): void {
     this._toasts.update(list =>

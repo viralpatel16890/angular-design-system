@@ -22,7 +22,7 @@
       [required]="required()"
       [autocomplete]="autocomplete()"
       [value]="value()"
-      [attr.aria-describedby]="helperText() ? helperId : null"
+      [attr.aria-describedby]="describedBy()"
       [attr.aria-invalid]="hasError() ? 'true' : null"
       [attr.aria-required]="required() ? 'true' : null"
     (input)="onInput($event)"
@@ -45,5 +45,5 @@
     </p>
   }
 
-  <ds-form-error [message]="hasError() ? resolvedError() : ''" />
+  <ds-form-error [id]="errorId" [message]="hasError() ? resolvedError() : ''" />
 </div>

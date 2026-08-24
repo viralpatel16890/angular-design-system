@@ -103,6 +103,54 @@ describe('CardComponent', () => {
     expect(cls).toContain('ds-card--interactive');
     expect(cls).toContain('ds-card--full-height');
   });
+
+  it('should NOT apply loading class by default', () => {
+    expect(fixture.debugElement.query(By.css('.ds-card--loading'))).toBeNull();
+  });
+
+  it('should NOT set aria-busy by default', () => {
+    const article = fixture.debugElement.query(By.css('article'));
+    expect(article.nativeElement.getAttribute('aria-busy')).toBeNull();
+  });
+
+  it('should apply loading class and aria-busy when loading is true', () => {
+    fixture.componentRef.setInput('loading', true);
+    fixture.detectChanges();
+    const article = fixture.debugElement.query(By.css('article'));
+    expect(article.nativeElement.classList.contains('ds-card--loading')).toBe(true);
+    expect(article.nativeElement.getAttribute('aria-busy')).toBe('true');
+  });
+
+  it('should render a ds-spinner overlay when loading is true', () => {
+    fixture.componentRef.setInput('loading', true);
+    fixture.detectChanges();
+    expect(fixture.debugElement.query(By.css('.ds-card__overlay ds-spinner'))).toBeTruthy();
+  });
+
+  it('should NOT render the overlay when loading is false', () => {
+    expect(fixture.debugElement.query(By.css('.ds-card__overlay'))).toBeNull();
+  });
+
+  it('should hide projected content from assistive tech while loading', () => {
+    fixture.componentRef.setInput('loading', true);
+    fixture.detectChanges();
+    const content = fixture.debugElement.query(By.css('.ds-card__content'));
+    expect(content.nativeElement.getAttribute('aria-hidden')).toBe('true');
+  });
+
+  it('should keep projected content mounted (not aria-hidden) when not loading', () => {
+    const content = fixture.debugElement.query(By.css('.ds-card__content'));
+    expect(content.nativeElement.getAttribute('aria-hidden')).toBeNull();
+  });
+
+  it('should still render projected content underneath while loading', () => {
+    fixture.componentRef.setInput('padding', 'sm');
+    fixture.detectChanges();
+    fixture.componentRef.setInput('loading', true);
+    fixture.detectChanges();
+    const content = fixture.debugElement.query(By.css('.ds-card__content'));
+    expect(content).toBeTruthy();
+  });
 });
 
 describe('CardBodyComponent', () => {

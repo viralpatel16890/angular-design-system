@@ -19,9 +19,9 @@
   --color-on-interactive:       var(--color-neutral-0);
 
   // ─── Feedback ────────────────────────────────────────────────────────────────
-  --color-danger-default:       var(--color-red-500);
-  --color-danger-hover:         var(--color-red-600);
-  --color-danger-active:        var(--color-red-700);
+  --color-danger-default:       var(--color-red-600);
+  --color-danger-hover:         var(--color-red-700);
+  --color-danger-active:        var(--color-red-800);
   --color-danger-subtle:        var(--color-red-50);
   --color-danger-muted:         var(--color-red-100);
   --color-on-danger:            var(--color-neutral-0);
@@ -44,13 +44,17 @@
   // ─── Text ────────────────────────────────────────────────────────────────────
   --color-text-primary:         var(--color-neutral-900);
   --color-text-secondary:       var(--color-neutral-600);
-  --color-text-tertiary:        var(--color-neutral-400);
+  --color-text-tertiary:        var(--color-neutral-500);
   --color-text-disabled:        var(--color-neutral-300);
   --color-text-inverse:         var(--color-neutral-0);
   --color-text-brand:           var(--color-indigo-700);
-  --color-text-danger:          var(--color-red-600);
+  // NOTE: text-danger is red-700, not red-600 (which matches --color-danger-default) —
+  // red-600 only clears 4.5:1 against a plain white/neutral-50 surface, not against the
+  // red-50/red-100 tinted surfaces (alerts, muted badges) this token is used on top of.
+  --color-text-danger:          var(--color-red-700);
   --color-text-success:         var(--color-green-700);
   --color-text-warning:         var(--color-amber-700);
+  --color-text-info:            var(--color-cyan-700);
   --color-text-link:            var(--color-indigo-700);
   --color-text-link-hover:      var(--color-indigo-800);
 
@@ -111,7 +115,7 @@
 // Smooth all elements that use semantic color tokens when theme changes
 *, *::before, *::after {
   transition-property: background-color, border-color, color, box-shadow, fill, stroke;
-  transition-duration: 350ms;
+  transition-duration: var(--motion-duration-slow);
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 

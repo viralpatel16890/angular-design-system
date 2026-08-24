@@ -10,6 +10,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NgControl, ReactiveFormsModule } from '@angular/forms';
 import { FormErrorComponent } from '../form-error/form-error.component';
+import { getValidationErrorMessage } from '../../utils/validation-messages';
 import type { InputSize, InputStatus, InputType } from './input.types';
 
 let nextId = 0;
@@ -40,6 +41,7 @@ export class InputComponent implements ControlValueAccessor {
 
   readonly uid      = `ds-input-${++nextId}`;
   readonly helperId = `${this.uid}-helper`;
+  readonly errorId  = `${this.uid}-error`;
 
   value     = signal('');
   isFocused = signal(false);
@@ -63,13 +65,14 @@ export class InputComponent implements ControlValueAccessor {
   resolvedError = computed(() => {
     if (this.errorMessage()) return this.errorMessage();
     const ctrl = this.ngControl?.control;
-    if (!ctrl || !ctrl.errors) return '';
-    if (ctrl.errors['required'])  return 'This field is required.';
-    if (ctrl.errors['email'])     return 'Enter a valid email address.';
-    if (ctrl.errors['minlength']) return `Minimum ${ctrl.errors['minlength'].requiredLength} characters required.`;
-    if (ctrl.errors['maxlength']) return `Maximum ${ctrl.errors['maxlength'].requiredLength} characters allowed.`;
-    if (ctrl.errors['pattern'])   return 'Invalid format.';
-    return 'Invalid value.';
+    return getValidationErrorMessage(ctrl?.errors) ?? '';
+  });
+
+  describedBy = computed(() => {
+    const ids: string[] = [];
+    if (this.helperText()) ids.push(this.helperId);
+    if (this.hasError())   ids.push(this.errorId);
+    return ids.length ? ids.join(' ') : null;
   });
 
   wrapperClasses = computed(() => [

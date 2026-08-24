@@ -1,3 +1,5 @@
+@use '../../tokens/breakpoints' as tokens;
+
 :host {
   display: block;
 
@@ -54,7 +56,8 @@
   border: none;
   cursor: pointer;
   white-space: nowrap;
-  transition: color 200ms ease, background 200ms ease;
+  transition: color var(--motion-duration-normal) var(--motion-easing-ease),
+              background var(--motion-duration-normal) var(--motion-easing-ease);
   border-radius: var(--radius-sm);
   outline: none;
 
@@ -71,7 +74,7 @@
       inset-inline: 0;
       height: 2px;
       background: transparent;
-      transition: background 200ms ease;
+      transition: background var(--motion-duration-normal) var(--motion-easing-ease);
     }
 
     &.ds-tabs__tab--active {
@@ -135,7 +138,7 @@
 
 // ─── Responsive ──────────────────────────────────────────────────────────────
 
-@media (max-width: 640px) {
+@media (max-width: tokens.$breakpoint-sm) {
   .ds-tabs__list {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;

@@ -1,5 +1,12 @@
 // Angular Design System — Public API
 
+// Spinner
+export * from './lib/components/spinner/spinner.types';
+export * from './lib/components/spinner/spinner.component';
+
+// Shared Types
+export * from './lib/types/feedback-variant';
+
 // Button
 export * from './lib/components/button/button.types';
 export * from './lib/components/button/button.component';
@@ -31,6 +38,11 @@ export * from './lib/components/select/select.component';
 export * from './lib/components/toast/toast.types';
 export * from './lib/components/toast/toast.service';
 export * from './lib/components/toast/toast-container.component';
+
+// Confirm Dialog
+export * from './lib/components/confirm-dialog/confirm-dialog.types';
+export * from './lib/components/confirm-dialog/confirm-dialog.service';
+export * from './lib/components/confirm-dialog/confirm-dialog.component';
 
 // Navbar
 export * from './lib/components/navbar/navbar.types';
@@ -74,6 +86,9 @@ export * from './lib/services/theme.service';
 // Form Error
 export * from './lib/components/form-error/form-error.component';
 
+// Form Legend
+export * from './lib/components/form-legend/form-legend.component';
+
 // Alert
 export * from './lib/components/alert/alert.types';
 export * from './lib/components/alert/alert.component';
@@ -91,3 +106,25 @@ export * from './lib/components/metric-card/metric-card.component';
 // Transaction Item
 export * from './lib/components/transaction-item/transaction-item.types';
 export * from './lib/components/transaction-item/transaction-item.component';
+
+// Skip Link
+export * from './lib/components/skip-link/skip-link.component';
+
+// Skeleton
+export * from './lib/components/skeleton/skeleton.types';
+export * from './lib/components/skeleton/skeleton.component';
+
+// Empty State
+export * from './lib/components/empty-state/empty-state.component';
+
+// Pagination
+export * from './lib/components/pagination/pagination.types';
+export * from './lib/components/pagination/pagination.component';
+
+// Menu
+export * from './lib/components/menu/menu.types';
+export * from './lib/components/menu/menu.component';
+export * from './lib/components/menu/menu-item.component';
+
+// Live Region
+export * from './lib/directives/live-region.directive';

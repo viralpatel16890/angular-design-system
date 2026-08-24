@@ -1,18 +1,16 @@
 <div
   class="ds-toast-container"
   [class]="'ds-toast-container ds-toast-container--' + position()"
-  role="region"
   aria-label="Notifications"
-  aria-live="polite"
-  aria-atomic="false"
+  dsLiveRegion="polite"
+  dsLiveRegionRole="region"
+  [dsLiveRegionAtomic]="false"
 >
   @for (toast of toasts(); track trackById($index, toast)) {
     <div
       class="ds-toast"
       [class]="'ds-toast ds-toast--' + toast.variant + (toast.removing ? ' ds-toast--removing' : '')"
-      role="alert"
-      aria-live="assertive"
-      aria-atomic="true"
+      dsLiveRegion="assertive"
     >
       <!-- Icon -->
       <span class="ds-toast__icon" aria-hidden="true">

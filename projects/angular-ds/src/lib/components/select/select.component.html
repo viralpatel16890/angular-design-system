@@ -1,6 +1,6 @@
 <div class="ds-select-field" [id]="uid + '-field'">
   @if (label()) {
-    <label class="ds-select-label" [for]="uid" [class.ds-select-label--required]="required()">
+    <label class="ds-select-label" [id]="uid + '-label'" [for]="uid" [class.ds-select-label--required]="required()">
       {{ label() }}
     </label>
   }
@@ -18,7 +18,7 @@
       [attr.aria-haspopup]="'listbox'"
       [attr.aria-controls]="listboxId"
       [attr.aria-labelledby]="label() ? uid + '-label ' + uid : uid"
-      [attr.aria-describedby]="helperText() ? helperId : null"
+      [attr.aria-describedby]="describedBy()"
       [attr.aria-required]="required() ? 'true' : null"
       [attr.aria-invalid]="hasError() ? 'true' : null"
       (click)="toggle()"
@@ -87,5 +87,5 @@
     </p>
   }
 
-  <ds-form-error [message]="hasError() ? resolvedError() : ''" />
+  <ds-form-error [id]="errorId" [message]="hasError() ? resolvedError() : ''" />
 </div>

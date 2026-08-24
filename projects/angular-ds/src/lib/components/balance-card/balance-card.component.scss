@@ -11,9 +11,12 @@
   min-width: 220px;
 }
 
-.ds-balance--cyan   { --balance-accent: var(--color-brand-accent); }
+// Accent values are deliberately darker than the raw -500 brand/primitive
+// swatches: this text renders directly on --color-surface-subtle and needs
+// to clear 4.5:1 on its own, not just look right as a decorative fill.
+.ds-balance--cyan   { --balance-accent: var(--color-cyan-700); }
 .ds-balance--violet { --balance-accent: var(--color-violet-500); }
-.ds-balance--amber  { --balance-accent: var(--color-amber-500); }
+.ds-balance--amber  { --balance-accent: var(--color-amber-700); }
 
 .ds-balance__header {
   display: flex;
@@ -69,8 +72,8 @@
   font-weight: var(--font-weight-bold);
   font-family: var(--font-family-mono);
 
-  &--up   { color: var(--color-success-default); }
-  &--down { color: var(--color-danger-default); }
+  &--up   { color: var(--color-text-success); }
+  &--down { color: var(--color-text-danger); }
 }
 
 .ds-balance__period {

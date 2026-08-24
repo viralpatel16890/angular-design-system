@@ -24,8 +24,8 @@
   border-radius: var(--radius-full);
   font-family: var(--font-family-mono);
 
-  &.up   { color: var(--color-success-default); background: var(--color-success-subtle); }
-  &.down { color: var(--color-danger-default);  background: var(--color-danger-subtle); }
+  &.up   { color: var(--color-text-success); background: var(--color-success-subtle); }
+  &.down { color: var(--color-text-danger);  background: var(--color-danger-subtle); }
 }
 
 .ds-metric__value {

@@ -6,7 +6,7 @@
       <span class="ds-ticker__name">{{ name() }}</span>
     </div>
   </div>
-  <div class="ds-ticker__right">
+  <div class="ds-ticker__right" dsLiveRegion="polite">
     <span class="ds-ticker__price" [class.ds-ticker__price--flash]="isFlashing()">
       {{ formattedPrice() }}
     </span>

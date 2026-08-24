@@ -1,7 +1,19 @@
-<article [class]="classes()" [attr.tabindex]="interactive() ? '0' : null">
-  <ng-content select="ds-card-header, [ds-card-header]" />
-  <ng-content select="ds-card-body, [ds-card-body]" />
-  <ng-content select="ds-card-footer, [ds-card-footer]" />
-  <!-- Fallback for unsegmented content -->
-  <ng-content />
+<article
+  [class]="classes()"
+  [attr.tabindex]="interactive() ? '0' : null"
+  [attr.aria-busy]="loading() ? 'true' : null"
+>
+  <div class="ds-card__content" [attr.aria-hidden]="loading() ? 'true' : null">
+    <ng-content select="ds-card-header, [ds-card-header]" />
+    <ng-content select="ds-card-body, [ds-card-body]" />
+    <ng-content select="ds-card-footer, [ds-card-footer]" />
+    <!-- Fallback for unsegmented content -->
+    <ng-content />
+  </div>
+  @if (loading()) {
+    <div class="ds-card__overlay">
+      <ds-spinner size="lg" />
+      <span class="ds-sr-only">Loading…</span>
+    </div>
+  }
 </article>

@@ -192,4 +192,12 @@
   --z-overlay: 300;
   --z-modal:   400;
   --z-toast:   500;
+
+  // ─── Breakpoints ────────────────────────────────────────────────────────────
+  // Reference values only — CSS custom properties cannot be used inside
+  // @media query conditions. Components that need these in a media query
+  // must use the SCSS variables in `_breakpoints.scss` instead, which mirror
+  // these same values.
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
 }

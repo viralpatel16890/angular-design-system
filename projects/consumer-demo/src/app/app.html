@@ -1,4 +1,5 @@
 <div class="ca-root">
+  <ds-skip-link />
 
   <!-- Header -->
   <header class="ca-header">
@@ -17,7 +18,7 @@
     </div>
   </header>
 
-  <main class="ca-main">
+  <main id="main-content" class="ca-main" tabindex="-1">
 
     <!-- Library credit banner -->
     <ds-alert
@@ -31,8 +32,21 @@
     <section class="ca-section">
       <h2 class="ca-section__title">Portfolio Overview</h2>
       <div class="ca-grid ca-grid--3">
-        @for (b of balances; track b.label) {
-          <ds-balance-card [label]="b.label" [amount]="b.amount" [trend]="b.trend" [icon]="b.icon" [accent]="b.accent" />
+        @if (portfolioLoading()) {
+          @for (i of [0, 1, 2]; track i) {
+            <div class="ca-balance-skeleton" aria-hidden="true">
+              <div class="ca-balance-skeleton__header">
+                <ds-skeleton variant="text" width="45%" />
+                <ds-skeleton variant="circle" width="1.5rem" height="1.5rem" />
+              </div>
+              <ds-skeleton variant="text" width="70%" height="2.25rem" />
+              <ds-skeleton variant="text" width="35%" />
+            </div>
+          }
+        } @else {
+          @for (b of balances; track b.label) {
+            <ds-balance-card [label]="b.label" [amount]="b.amount" [trend]="b.trend" [icon]="b.icon" [accent]="b.accent" />
+          }
         }
       </div>
     </section>
@@ -51,6 +65,8 @@
     <section class="ca-section">
       <h2 class="ca-section__title">Execute Trade</h2>
       <div class="ca-trade-form">
+        <ds-form-legend />
+
         @if (tradeError()) {
           <ds-alert variant="danger" [message]="tradeError()" [dismissible]="false" />
         }
@@ -59,6 +75,7 @@
           label="Asset"
           placeholder="Select asset to trade"
           [options]="assetOptions"
+          [required]="true"
           [status]="tradeError() && !tradeAsset() ? 'error' : 'default'"
           [ngModel]="tradeAsset()"
           (ngModelChange)="tradeAsset.set($event)"
@@ -69,6 +86,7 @@
           type="number"
           placeholder="0.00"
           helperText="Available: $24,800.00"
+          [required]="true"
           [status]="tradeError() && tradeAsset() ? 'error' : 'default'"
           [ngModel]="tradeAmount()"
           (ngModelChange)="tradeAmount.set($event)"
@@ -85,25 +103,54 @@
 
     <!-- Recent trades -->
     <section class="ca-section">
-      <h2 class="ca-section__title">Recent Trades</h2>
-      <div class="ca-card">
-        @for (t of recentTrades; track t.name) {
-          <ds-transaction-item
-            [name]="t.name"
-            [category]="t.category"
-            [date]="t.date"
-            [amount]="t.amount"
-            [type]="t.type"
-            [status]="t.status"
-            [avatar]="t.avatar"
-            [clickable]="false"
-          />
+      <div class="ca-section__header">
+        <h2 class="ca-section__title">Recent Trades</h2>
+        @if (recentTrades().length > 0) {
+          <ds-button variant="ghost" size="sm" (pressed)="clearRecentTrades()">Clear (demo)</ds-button>
         }
       </div>
+      <div class="ca-card">
+        @if (recentTrades().length === 0) {
+          <ds-empty-state title="No recent trades" description="Trades you place will show up here.">
+            <span icon>📭</span>
+            <ds-button action variant="primary" size="sm" (pressed)="restoreRecentTrades()">Add a trade</ds-button>
+          </ds-empty-state>
+        } @else {
+          @for (t of pagedTrades(); track t.name) {
+            <div class="ca-trade-row">
+              <ds-transaction-item
+                class="ca-trade-row__item"
+                [name]="t.name"
+                [category]="t.category"
+                [date]="t.date"
+                [amount]="t.amount"
+                [type]="t.type"
+                [status]="t.status"
+                [avatar]="t.avatar"
+                [clickable]="false"
+              />
+              <ds-menu class="ca-trade-row__menu" [ariaLabel]="'Actions for ' + t.name">
+                <ds-menu-item (selected)="viewTradeDetails(t)">View details</ds-menu-item>
+                <ds-menu-item (selected)="repeatTrade(t)">Repeat trade</ds-menu-item>
+              </ds-menu>
+            </div>
+          }
+        }
+      </div>
+      @if (recentTrades().length > 0) {
+        <div class="ca-pagination">
+          <ds-pagination
+            [currentPage]="tradesCurrentPage()"
+            [totalPages]="tradesTotalPages()"
+            (pageChange)="onTradesPageChange($event)"
+          />
+        </div>
+      }
     </section>
 
   </main>
 
   <ds-toast-container position="top-right" />
+  <ds-confirm-dialog />
 
 </div>

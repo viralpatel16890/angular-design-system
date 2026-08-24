@@ -77,6 +77,8 @@
   --radius-lg: 12px;
   --radius-xl: 16px;
   --radius-full: 9999px;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
   --font-family-sans: 'Inter', system-ui, -apple-system, sans-serif;
   --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;

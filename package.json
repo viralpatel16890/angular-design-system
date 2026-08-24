@@ -12,6 +12,7 @@
     "test:coverage": "ng test --watch=false --coverage",
     "e2e": "playwright test",
     "e2e:ui": "playwright test --ui",
+    "test:a11y": "playwright test e2e/axe-a11y.spec.ts",
     "e2e:update-snapshots": "playwright test --update-snapshots",
     "playwright:install": "playwright install chromium",
     "storybook": "storybook dev -p 6006",
@@ -21,6 +22,7 @@
     "build:lib": "ng build angular-ds && node scripts/patch-exports.js",
     "tokens:build": "style-dictionary build --config style-dictionary.config.js",
     "tokens:check": "style-dictionary build --config style-dictionary.config.js && git diff --exit-code design-tokens/build/",
+    "tokens:contrast": "node scripts/check-contrast.js",
     "prepare": "husky"
   },
   "private": true,
@@ -43,6 +45,7 @@
     "@angular/build": "^22.0.3",
     "@angular/cli": "^22.0.3",
     "@angular/compiler-cli": "^22.0.2",
+    "@axe-core/playwright": "^4.13.0",
     "@commitlint/cli": "^21.0.0",
     "@commitlint/config-conventional": "^21.0.0",
     "@playwright/test": "^1.52.0",

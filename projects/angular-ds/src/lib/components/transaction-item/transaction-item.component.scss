@@ -72,6 +72,6 @@
   font-weight: var(--font-weight-bold);
   font-family: var(--font-family-mono);
 
-  &--credit { color: var(--color-success-default); }
+  &--credit { color: var(--color-text-success); }
   &--debit  { color: var(--color-text-primary); }
 }

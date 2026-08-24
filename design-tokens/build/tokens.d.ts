@@ -76,6 +76,8 @@ export const RadiusMd: string;
 export const RadiusLg: string;
 export const RadiusXl: string;
 export const RadiusFull: string;
+export const BreakpointSm: string;
+export const BreakpointMd: string;
 export const FontFamilySans: string;
 export const FontSizeXs: string;
 export const FontSizeSm: string;

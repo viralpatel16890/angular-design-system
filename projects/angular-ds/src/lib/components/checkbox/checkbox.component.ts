@@ -13,6 +13,7 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { FormErrorComponent } from '../form-error/form-error.component';
+import { getValidationErrorMessage } from '../../utils/validation-messages';
 import type { CheckboxSize, CheckboxLabelPosition } from './checkbox.types';
 
 let nextId = 0;
@@ -39,6 +40,7 @@ export class CheckboxComponent implements ControlValueAccessor, OnInit, AfterVie
 
   readonly uid      = `ds-checkbox-${++nextId}`;
   readonly helperId = `${this.uid}-helper`;
+  readonly errorId  = `${this.uid}-error`;
 
   checked = signal(false);
   inputRef = viewChild<ElementRef<HTMLInputElement>>('inputEl');
@@ -62,10 +64,14 @@ export class CheckboxComponent implements ControlValueAccessor, OnInit, AfterVie
 
   resolvedError = computed(() => {
     const ctrl = this.ngControl?.control;
-    if (!ctrl || !ctrl.errors) return '';
-    if (ctrl.errors['required']) return 'This field is required.';
-    if (ctrl.errors['pattern'])  return 'Invalid format.';
-    return 'Invalid value.';
+    return getValidationErrorMessage(ctrl?.errors, ['required', 'pattern']) ?? '';
+  });
+
+  describedBy = computed(() => {
+    const ids: string[] = [];
+    if (this.helperText()) ids.push(this.helperId);
+    if (this.hasError())   ids.push(this.errorId);
+    return ids.length ? ids.join(' ') : null;
   });
 
   hostClasses = computed(() => [

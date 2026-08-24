@@ -26,6 +26,7 @@ import { BalanceCardComponent } from '../../../angular-ds/src/lib/components/bal
 import { CryptoTickerComponent } from '../../../angular-ds/src/lib/components/crypto-ticker/crypto-ticker.component';
 import { MetricCardComponent } from '../../../angular-ds/src/lib/components/metric-card/metric-card.component';
 import { TransactionItemComponent } from '../../../angular-ds/src/lib/components/transaction-item/transaction-item.component';
+import { SkipLinkComponent } from '../../../angular-ds/src/lib/components/skip-link/skip-link.component';
 import type { SelectOption } from '../../../angular-ds/src/lib/components/select/select.types';
 import type { NavItem } from '../../../angular-ds/src/lib/components/navbar/navbar.types';
 import type { SidebarGroup, SidebarItem } from '../../../angular-ds/src/lib/components/sidebar/sidebar.types';
@@ -49,6 +50,8 @@ const ICON = {
   selector: 'app-root',
   standalone: true,
   imports: [
+    // Accessibility
+    SkipLinkComponent,
     // Navigation
     NavbarComponent,
     SidebarComponent,

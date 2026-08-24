@@ -1,4 +1,6 @@
-export type ToastVariant = 'info' | 'success' | 'warning' | 'error';
+import type { FeedbackVariant } from '../../types/feedback-variant';
+
+export type ToastVariant = FeedbackVariant;
 export type ToastPosition = 'top-right' | 'top-left' | 'top-center' | 'bottom-right' | 'bottom-left' | 'bottom-center';
 
 export interface Toast {

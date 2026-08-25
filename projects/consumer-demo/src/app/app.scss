@@ -115,7 +115,6 @@
 }
 
 .ca-grid--3 { grid-template-columns: repeat(3, 1fr); }
-.ca-grid--4 { grid-template-columns: repeat(4, 1fr); }
 
 // ─── Portfolio Overview loading placeholder (ds-skeleton demo) ─────────────
 .ca-balance-skeleton {
@@ -182,10 +181,6 @@
 }
 
 // ─── Responsive ────────────────────────────────────────────────────────────
-@media (max-width: 1024px) {
-  .ca-grid--4 { grid-template-columns: repeat(2, 1fr); }
-}
-
 @media (max-width: 768px) {
   .ca-header {
     padding: var(--space-3) var(--space-4);
@@ -204,8 +199,7 @@
     gap: var(--space-6);
   }
 
-  .ca-grid--3,
-  .ca-grid--4 { grid-template-columns: 1fr; }
+  .ca-grid--3 { grid-template-columns: 1fr; }
 
   .ca-trade-form { padding: var(--space-4); }
   .ca-trade-actions { flex-direction: column; }

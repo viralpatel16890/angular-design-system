@@ -13,7 +13,7 @@
 
 ## Summary
 
-The **Angular Design System** (published as `angular-ds`) is a standalone Angular 22 component library that provides **24 polished UI components** backed by a three-tier CSS custom-property token system — 19 general-purpose UI components plus 5 fintech-domain components (`ds-alert`, `ds-balance-card`, `ds-crypto-ticker`, `ds-metric-card`, `ds-transaction-item`) for building trading, banking, and portfolio interfaces. All component selectors use the `ds-` prefix (e.g. `<ds-button>`, `<ds-tabs>`, `<ds-balance-card>`). It is built for Angular application teams who want a consistent, dark-mode-capable, and token-driven UI layer without the overhead of integrating a third-party design system. Every component is a standalone Angular component (no NgModule required), supports `ControlValueAccessor` where appropriate, and ships with zero runtime dependencies beyond Angular itself. Two companion apps prove the library out: the **Showcase**, which demonstrates every component in a live, interactive gallery, and **TradeDesk** (`consumer-demo`), a realistic trading-desk UI built entirely on `angular-ds` components — both run locally and deploy together.
+The **Angular Design System** (published as `angular-ds`) is a standalone Angular 22 component library that provides **24 polished UI components** backed by a three-tier CSS custom-property token system — 20 general-purpose UI components plus 4 fintech-domain components (`ds-alert`, `ds-crypto-ticker`, `ds-stat-card`, `ds-transaction-item`) for building trading, banking, and portfolio interfaces. All component selectors use the `ds-` prefix (e.g. `<ds-button>`, `<ds-tabs>`, `<ds-stat-card>`). It is built for Angular application teams who want a consistent, dark-mode-capable, and token-driven UI layer without the overhead of integrating a third-party design system. Every component is a standalone Angular component (no NgModule required), supports `ControlValueAccessor` where appropriate, and ships with zero runtime dependencies beyond Angular itself. Two companion apps prove the library out: the **Showcase**, which demonstrates every component in a live, interactive gallery, and **TradeDesk** (`consumer-demo`), a realistic trading-desk UI built entirely on `angular-ds` components — both run locally and deploy together.
 
 ---
 
@@ -267,7 +267,7 @@ Override any token at `:root` or any ancestor selector:
 
 ## Component Library
 
-24 components in total: 19 general-purpose components plus 5 fintech-domain components.
+24 components in total: 20 general-purpose components plus 4 fintech-domain components.
 
 > **Full API reference:** the tables below cover the highlights — for every component's complete inputs, outputs, overridable CSS custom properties, and a usage snippet, see [`docs/COMPONENTS.md`](./docs/COMPONENTS.md).
 
@@ -302,8 +302,7 @@ Domain-specific components originally built for the TradeDesk consumer app, then
 | Component | Selector | Description | Key Inputs | Key Outputs |
 |---|---|---|---|---|
 | **Alert** | `<ds-alert>` | Dismissible inline alert with `info`/`success`/`warning`/`danger` variants and an icon per variant | `variant`, `title`, `message`, `dismissible` | `(dismissed)` |
-| **Balance Card** | `<ds-balance-card>` | KPI-style card for an account or portfolio balance, with a trend indicator and accent colour | `label`, `amount`, `currency`, `trend`, `icon`, `accent`, `period` | — |
-| **Metric Card** | `<ds-metric-card>` | Compact KPI card for a single metric with a change indicator, optional prefix/suffix | `label`, `value`, `change`, `icon`, `prefix`, `suffix` | — |
+| **Stat Card** | `<ds-stat-card>` | KPI card for a labeled value with an optional trend indicator; covers both currency amounts (`prefix`, `decimals`) and compact K/M-abbreviated counts (`compact`) through one shared formatting mechanism | `label`, `value`, `trend`, `compact`, `decimals`, `prefix`, `suffix`, `icon`, `accent`, `caption` | — |
 | **Crypto Ticker** | `<ds-crypto-ticker>` | Live-style price ticker row for a crypto asset, with a 24h change indicator | `symbol`, `name`, `price`, `change24h`, `logo` | — |
 | **Transaction Item** | `<ds-transaction-item>` | Single row in a transaction/trade history list — avatar, category, date, amount, debit/credit type, and status badge | `name`, `category`, `date`, `amount`, `type`, `status`, `avatar`, `clickable`, `ariaLabel` | `(itemClicked)` |
 
@@ -499,7 +498,7 @@ ng serve showcase
 npm start
 ```
 
-Navigate to [http://localhost:4200](http://localhost:4200). The Showcase demonstrates all 24 components (including the 5 fintech-domain components) with live controls, dark/light mode toggling with View Transitions animation, form bindings with `ngModel`, toast notifications, modal dialogs, navbar, and sidebar navigation. The header also carries quick-access **Demo** (jumps to the TradeDesk consumer app at `/consumer/`) and **Consume library** (jumps to the in-page "Consuming the Design System" section) links next to the theme toggle.
+Navigate to [http://localhost:4200](http://localhost:4200). The Showcase demonstrates all 24 components (including the 4 fintech-domain components) with live controls, dark/light mode toggling with View Transitions animation, form bindings with `ngModel`, toast notifications, modal dialogs, navbar, and sidebar navigation. The header also carries quick-access **Demo** (jumps to the TradeDesk consumer app at `/consumer/`) and **Consume library** (jumps to the in-page "Consuming the Design System" section) links next to the theme toggle.
 
 **Build the Showcase as a static site:**
 
@@ -518,11 +517,14 @@ TradeDesk wires up:
 
 | Component(s) | Used for |
 |---|---|
-| `ds-balance-card`, `ds-metric-card` | Portfolio value and performance KPIs |
+| `ds-stat-card` | Portfolio value and performance KPIs, in one merged Portfolio Overview grid |
+| `ds-radio-group`, `ds-radio` | A Buy/Sell order-type selector that drives the execute button's label and color, and the confirm-dialog message, live |
 | `ds-select`, `ds-input`, `ds-button` | A trade form with two-way `ngModel` binding and a loading state |
+| `ds-checkbox` | A "remember this asset" toggle that persists the selected asset across visits |
 | `ds-alert` | Inline validation feedback when a trade fails to validate |
 | `ds-transaction-item`, `ds-badge` | A transaction/trade history list with a status badge per row |
 | `ds-toast-container`, `ToastService` | A confirmation toast after a trade executes |
+| `ds-confirm-dialog`, `ConfirmDialogService` | A danger-variant confirmation before discarding entered order details |
 
 ```bash
 # Serve TradeDesk with hot reload
@@ -590,7 +592,7 @@ This workspace ships the following engineering improvements end-to-end:
 `@storybook/angular` **10** configured with `addon-a11y` (essentials and interactions are now bundled into core in Storybook 10). Every component has a `.stories.ts` with multiple stories, arg controls, and a light/dark theme switcher in the toolbar. Run with `npm run storybook`. **Known issue:** there is an unresolved peer-dependency conflict between Angular 22 and TypeScript 6 in Storybook 10's dependency tree; `.npmrc` sets `legacy-peer-deps=true` to get `npm install` through, but `npm run storybook` / `npm run build-storybook` are not verified to run cleanly on top of that workaround — treat Storybook support as best-effort until upstream compatibility lands.
 
 ### 2. Unit Tests (Angular CLI Unit-Test Builder)
-Full spec suite across all three projects — `angular-ds` (24 components), `showcase`, and `consumer-demo` — **238 tests total, all passing**, covering: signal input reflection, ControlValueAccessor (`writeValue` / `onChange` / `onTouched`), computed class output, ARIA attributes, and keyboard behaviour. `npm run test` runs `ng test --watch=false`, which uses `@angular/build:unit-test` (configured per-project in `angular.json`, Vitest-backed) rather than invoking Vitest directly — this replaced a previously broken raw-Vitest setup that didn't correctly exercise the workspace. 70% coverage thresholds and HTML + LCOV reporters via `npm run test:coverage`.
+Full spec suite across all three projects — `angular-ds` (24 components), `showcase`, and `consumer-demo` — covering: signal input reflection, ControlValueAccessor (`writeValue` / `onChange` / `onTouched`), computed class output, ARIA attributes, and keyboard behaviour. `npm run test` runs `ng test --watch=false`, which uses `@angular/build:unit-test` (configured per-project in `angular.json`, Vitest-backed) rather than invoking Vitest directly — this replaced a previously broken raw-Vitest setup that didn't correctly exercise the workspace. 70% coverage thresholds and HTML + LCOV reporters via `npm run test:coverage`.
 
 ### 3. Angular CDK Accessibility
 - **ModalComponent** — `FocusTrapFactory` from `@angular/cdk/a11y` creates a focus trap when the dialog opens and destroys it on close. Tab cycles only within the open modal.

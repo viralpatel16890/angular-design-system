@@ -1,0 +1,54 @@
+:host {
+  display: block;
+}
+
+// ─── Fieldset reset + field layout ───────────────────────────────────────────
+.ds-radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+
+  &--disabled {
+    opacity: 0.5;
+  }
+}
+
+// ─── Legend ──────────────────────────────────────────────────────────────────
+.ds-radio-group__legend {
+  padding: 0;
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+
+  &--required::after {
+    content: ' *';
+    color: var(--color-danger-default);
+    margin-left: var(--space-0-5);
+  }
+}
+
+// ─── Options container ───────────────────────────────────────────────────────
+.ds-radio-group__options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2-5);
+
+  .ds-radio-group--horizontal & {
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-gap: var(--space-5);
+    row-gap: var(--space-2-5);
+  }
+}
+
+// ─── Helper text ─────────────────────────────────────────────────────────────
+.ds-radio-group__helper {
+  margin: 0;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}

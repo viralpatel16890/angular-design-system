@@ -1,0 +1,106 @@
+:host {
+  display: block;
+  --radio-size:          1.125rem; // 18px — matches --cb-size on ds-checkbox
+  --radio-border:        var(--color-border-strong);
+  --radio-bg:            var(--color-surface-base);
+  --radio-checked-border:var(--color-brand-primary);
+  --radio-dot:           var(--color-brand-primary);
+  --radio-transition:    border-color var(--motion-duration-fast) var(--motion-easing-ease-out),
+                         box-shadow   var(--motion-duration-fast) var(--motion-easing-ease-out);
+  --radio-dot-transition: transform var(--motion-duration-fast) var(--motion-easing-ease-out);
+}
+
+// ─── Wrapper / label row ─────────────────────────────────────────────────────
+// Mirrors .ds-checkbox-wrapper — same gap/size scale so a radio and a
+// checkbox read as the same family when placed side by side.
+.ds-radio-wrapper {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--space-2-5);
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+
+  &--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  // Size variants
+  &--sm { --radio-size: 0.875rem; gap: var(--space-2); }
+  &--md { --radio-size: 1.125rem; }
+  &--lg { --radio-size: 1.375rem; gap: var(--space-3); }
+}
+
+// ─── Hidden native input ─────────────────────────────────────────────────────
+.ds-radio__input {
+  position: absolute;
+  opacity: 0;
+  width: var(--radio-size);
+  height: var(--radio-size);
+  margin: 0;
+  cursor: pointer;
+
+  // Focus ring forwarded to the visual ring (next sibling)
+  &:focus-visible ~ .ds-radio__ring {
+    box-shadow:
+      0 0 0 var(--focus-ring-offset) var(--color-surface-base),
+      0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--focus-ring-color);
+  }
+}
+
+// ─── Visual ring ─────────────────────────────────────────────────────────────
+.ds-radio__ring {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--radio-size);
+  height: var(--radio-size);
+  flex-shrink: 0;
+  background: var(--radio-bg);
+  border: var(--border-2) solid var(--radio-border);
+  border-radius: var(--radius-full);
+  transition: var(--radio-transition);
+  order: -1; // visually before label even though input is first in DOM
+  margin-top: 1px;
+
+  &--checked {
+    border-color: var(--radio-checked-border);
+  }
+
+  &--checked .ds-radio__dot {
+    transform: scale(1);
+  }
+}
+
+// ─── Inner dot ───────────────────────────────────────────────────────────────
+.ds-radio__dot {
+  width: 50%;
+  height: 50%;
+  border-radius: var(--radius-full);
+  background: var(--radio-dot);
+  transform: scale(0);
+  transition: var(--radio-dot-transition);
+}
+
+// ─── Label text ──────────────────────────────────────────────────────────────
+.ds-radio__label {
+  font-family: var(--font-family-sans);
+  color: var(--color-text-primary);
+  line-height: var(--line-height-normal);
+
+  .ds-radio-wrapper--sm & { font-size: var(--font-size-sm); }
+  .ds-radio-wrapper--md & { font-size: var(--font-size-md); }
+  .ds-radio-wrapper--lg & { font-size: var(--font-size-lg); }
+}
+
+// Hover — darken ring border, matching ds-checkbox's hover treatment
+.ds-radio-wrapper:hover:not(.ds-radio-wrapper--disabled) .ds-radio__ring:not(.ds-radio__ring--checked) {
+  border-color: var(--color-brand-primary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-radio__ring { transition: none; }
+  .ds-radio__dot  { transition: none; }
+}

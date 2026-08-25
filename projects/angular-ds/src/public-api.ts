@@ -60,6 +60,11 @@ export * from './lib/components/checkbox/checkbox.component';
 export * from './lib/components/toggle/toggle.types';
 export * from './lib/components/toggle/toggle.component';
 
+// Radio Group
+export * from './lib/components/radio-group/radio-group.types';
+export * from './lib/components/radio-group/radio-group.component';
+export * from './lib/components/radio/radio.component';
+
 // Tabs
 export * from './lib/components/tabs/tabs.types';
 export * from './lib/components/tabs/tabs.component';
@@ -93,15 +98,12 @@ export * from './lib/components/form-legend/form-legend.component';
 export * from './lib/components/alert/alert.types';
 export * from './lib/components/alert/alert.component';
 
-// Balance Card
-export * from './lib/components/balance-card/balance-card.types';
-export * from './lib/components/balance-card/balance-card.component';
+// Stat Card
+export * from './lib/components/stat-card/stat-card.types';
+export * from './lib/components/stat-card/stat-card.component';
 
 // Crypto Ticker
 export * from './lib/components/crypto-ticker/crypto-ticker.component';
-
-// Metric Card
-export * from './lib/components/metric-card/metric-card.component';
 
 // Transaction Item
 export * from './lib/components/transaction-item/transaction-item.types';

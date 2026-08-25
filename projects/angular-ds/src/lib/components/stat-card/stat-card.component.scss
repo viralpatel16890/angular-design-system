@@ -1,0 +1,102 @@
+:host {
+  display: block;
+  --stat-accent: var(--color-text-primary);
+}
+
+.ds-stat {
+  background: var(--color-surface-subtle);
+  border: var(--border-1) solid var(--color-border-default);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  min-width: 220px;
+  cursor: default;
+}
+
+// Accent values are deliberately darker than the raw -500 brand/primitive
+// swatches: this text renders directly on --color-surface-subtle and needs
+// to clear 4.5:1 on its own, not just look right as a decorative fill.
+// `neutral` (the default) keeps the value in the same primary text color
+// used everywhere else in the library rather than tinting it.
+.ds-stat--neutral { --stat-accent: var(--color-text-primary); }
+.ds-stat--cyan    { --stat-accent: var(--color-cyan-700); }
+.ds-stat--violet  { --stat-accent: var(--color-violet-500); }
+.ds-stat--amber   { --stat-accent: var(--color-amber-700); }
+
+.ds-stat__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+}
+
+.ds-stat__label {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.ds-stat__icon {
+  font-size: var(--font-size-xl);
+}
+
+.ds-stat__value {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-0-5);
+  margin-bottom: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.ds-stat__affix {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-secondary);
+  font-family: var(--font-family-mono);
+}
+
+// Single typography scale for the "big number", resolving the previous
+// 4xl (balance-card) vs 3xl (metric-card) split in favor of 3xl: cards live
+// in dense, multi-column dashboard grids where 4xl (36px) crowds against the
+// icon/badge in the header and wraps awkwardly for longer currency values,
+// while 3xl (30px) is still the library's "display" tier (bold, tight
+// line-height and letter-spacing per tokens/_typography.scss) and is the
+// scale that already worked comfortably alongside affixes and a header icon.
+.ds-stat__number {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  font-family: var(--font-family-mono);
+  letter-spacing: var(--letter-spacing-tight);
+  line-height: 1;
+  color: var(--stat-accent);
+  transition: color var(--motion-duration-slow) var(--motion-easing-ease-out);
+}
+
+.ds-stat__footer {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.ds-stat__trend {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  font-family: var(--font-family-mono);
+  transition: color var(--motion-duration-slow) var(--motion-easing-ease-out);
+
+  &--up   { color: var(--color-text-success); }
+  &--down { color: var(--color-text-danger); }
+}
+
+.ds-stat__caption {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-stat__number,
+  .ds-stat__trend {
+    transition: none;
+  }
+}

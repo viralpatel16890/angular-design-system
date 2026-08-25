@@ -696,17 +696,17 @@
       <div class="showcase__group">
         <h3 class="showcase__group-label">Balance card</h3>
         <div class="showcase__card-grid">
-          <ds-balance-card label="Total Balance" [amount]="24680.55" [trend]="4.2" accent="cyan" />
-          <ds-balance-card label="Investments" [amount]="9120.10" [trend]="-1.8" accent="violet" icon="📈" />
-          <ds-balance-card label="Savings" [amount]="15400" [trend]="2.1" accent="amber" icon="🏦" />
+          <ds-stat-card label="Total Balance" [value]="24680.55" prefix="$" [trend]="4.2" accent="cyan" />
+          <ds-stat-card label="Investments" [value]="9120.10" prefix="$" [trend]="-1.8" accent="violet" icon="📈" />
+          <ds-stat-card label="Savings" [value]="15400" prefix="$" [trend]="2.1" accent="amber" icon="🏦" />
         </div>
       </div>
 
       <div class="showcase__group">
-        <h3 class="showcase__group-label">Metric card</h3>
+        <h3 class="showcase__group-label">Stat card (compact)</h3>
         <div class="showcase__card-grid">
-          <ds-metric-card label="Monthly Revenue" [value]="128400" [change]="6.4" icon="💰" prefix="$" />
-          <ds-metric-card label="Active Users" [value]="8240" [change]="-2.1" icon="👥" />
+          <ds-stat-card label="Monthly Revenue" [value]="128400" prefix="$" [trend]="6.4" icon="💰" [compact]="true" />
+          <ds-stat-card label="Active Users" [value]="8240" [trend]="-2.1" icon="👥" [compact]="true" />
         </div>
       </div>
 
@@ -810,7 +810,7 @@ import &#123; NavbarComponent &#125; from 'angular-ds/navbar';</code></pre>
             </thead>
             <tbody>
               <tr>
-                <td><code>ds-balance-card</code>, <code>ds-metric-card</code></td>
+                <td><code>ds-stat-card</code></td>
                 <td>Portfolio value and performance KPIs</td>
                 <td>Portfolio Overview / Performance</td>
               </tr>

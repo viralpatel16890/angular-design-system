@@ -22,9 +22,8 @@ import { AvatarComponent } from '../../../angular-ds/src/lib/components/avatar/a
 import { TooltipComponent } from '../../../angular-ds/src/lib/components/tooltip/tooltip.component';
 import { ProgressComponent } from '../../../angular-ds/src/lib/components/progress/progress.component';
 import { AlertComponent } from '../../../angular-ds/src/lib/components/alert/alert.component';
-import { BalanceCardComponent } from '../../../angular-ds/src/lib/components/balance-card/balance-card.component';
+import { StatCardComponent } from '../../../angular-ds/src/lib/components/stat-card/stat-card.component';
 import { CryptoTickerComponent } from '../../../angular-ds/src/lib/components/crypto-ticker/crypto-ticker.component';
-import { MetricCardComponent } from '../../../angular-ds/src/lib/components/metric-card/metric-card.component';
 import { TransactionItemComponent } from '../../../angular-ds/src/lib/components/transaction-item/transaction-item.component';
 import { SkipLinkComponent } from '../../../angular-ds/src/lib/components/skip-link/skip-link.component';
 import type { SelectOption } from '../../../angular-ds/src/lib/components/select/select.types';
@@ -75,9 +74,8 @@ const ICON = {
     TooltipComponent,
     ProgressComponent,
     AlertComponent,
-    BalanceCardComponent,
+    StatCardComponent,
     CryptoTickerComponent,
-    MetricCardComponent,
     TransactionItemComponent,
     // Utility / shared
     ModalComponent,

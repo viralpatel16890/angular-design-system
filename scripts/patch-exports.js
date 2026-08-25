@@ -15,6 +15,7 @@ const components = [
   'confirm-dialog', 'form-error', 'input', 'modal', 'navbar', 'progress', 'select',
   'sidebar', 'tabs', 'toast', 'toggle', 'tooltip', 'theme',
   'alert', 'crypto-ticker', 'stat-card', 'transaction-item',
+  'radio', 'radio-group',
 ];
 
 for (const c of components) {

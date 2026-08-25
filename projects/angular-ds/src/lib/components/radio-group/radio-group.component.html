@@ -1,0 +1,22 @@
+<fieldset
+  [class]="groupClasses()"
+  [disabled]="disabled()"
+  [attr.aria-describedby]="describedBy()"
+  [attr.aria-required]="required() ? 'true' : null"
+>
+  @if (label()) {
+    <legend class="ds-radio-group__legend" [class.ds-radio-group__legend--required]="required()">
+      {{ label() }}
+    </legend>
+  }
+
+  <div class="ds-radio-group__options">
+    <ng-content />
+  </div>
+
+  @if (helperText()) {
+    <p class="ds-radio-group__helper" [id]="helperId">{{ helperText() }}</p>
+  }
+
+  <ds-form-error [id]="errorId" [message]="hasError() ? resolvedError() : ''" />
+</fieldset>

@@ -60,6 +60,11 @@ export * from './lib/components/checkbox/checkbox.component';
 export * from './lib/components/toggle/toggle.types';
 export * from './lib/components/toggle/toggle.component';
 
+// Radio Group
+export * from './lib/components/radio-group/radio-group.types';
+export * from './lib/components/radio-group/radio-group.component';
+export * from './lib/components/radio/radio.component';
+
 // Tabs
 export * from './lib/components/tabs/tabs.types';
 export * from './lib/components/tabs/tabs.component';

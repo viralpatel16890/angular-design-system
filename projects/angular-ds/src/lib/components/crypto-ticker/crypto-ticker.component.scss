@@ -22,7 +22,7 @@
   flex-shrink: 0;
   border-radius: var(--radius-md);
   background: var(--color-surface-muted);
-  border: var(--border-1) solid var(--color-border-strong);
+  border: var(--border-1) solid var(--color-border-default);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -40,7 +40,7 @@
 
 .ds-ticker__symbol {
   font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-semibold);
   color: var(--color-text-primary);
   letter-spacing: 0.05em;
   font-family: var(--font-family-mono);

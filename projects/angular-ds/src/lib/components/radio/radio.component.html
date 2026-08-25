@@ -1,0 +1,31 @@
+<label [class]="hostClasses()" [for]="uid">
+
+  <!-- Native input first in DOM — focus ring targets it, dot styled via sibling selector -->
+  <input
+    class="ds-radio__input"
+    type="radio"
+    [id]="uid"
+    [name]="groupName()"
+    [value]="value()"
+    [checked]="checked()"
+    [disabled]="isDisabled()"
+    (change)="onInputChange()"
+    (blur)="onBlur()"
+  />
+
+  <!-- Visual ring + dot — state driven by the checked signal -->
+  <span
+    class="ds-radio__ring"
+    [class.ds-radio__ring--checked]="checked()"
+    aria-hidden="true"
+  >
+    <span class="ds-radio__dot"></span>
+  </span>
+
+  <!-- Label text -->
+  @if (label()) {
+    <span class="ds-radio__label">{{ label() }}</span>
+  } @else {
+    <ng-content />
+  }
+</label>

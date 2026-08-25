@@ -28,12 +28,12 @@
       [dismissible]="false"
     />
 
-    <!-- Portfolio overview -->
+    <!-- Portfolio overview (balances + performance, one grid of ds-stat-card) -->
     <section class="ca-section">
       <h2 class="ca-section__title">Portfolio Overview</h2>
       <div class="ca-grid ca-grid--3">
         @if (portfolioLoading()) {
-          @for (i of [0, 1, 2]; track i) {
+          @for (i of [0, 1, 2, 3, 4]; track i) {
             <div class="ca-balance-skeleton" aria-hidden="true">
               <div class="ca-balance-skeleton__header">
                 <ds-skeleton variant="text" width="45%" />
@@ -44,19 +44,18 @@
             </div>
           }
         } @else {
-          @for (b of balances; track b.label) {
-            <ds-balance-card [label]="b.label" [amount]="b.amount" [trend]="b.trend" [icon]="b.icon" [accent]="b.accent" />
+          @for (s of statCards; track s.label) {
+            <ds-stat-card
+              [label]="s.label"
+              [value]="s.value"
+              [trend]="s.trend"
+              [icon]="s.icon"
+              [accent]="s.accent"
+              [prefix]="s.prefix ?? ''"
+              [suffix]="s.suffix ?? ''"
+              [compact]="s.compact ?? false"
+            />
           }
-        }
-      </div>
-    </section>
-
-    <!-- KPI metrics -->
-    <section class="ca-section">
-      <h2 class="ca-section__title">Performance</h2>
-      <div class="ca-grid ca-grid--4">
-        @for (m of metrics; track m.label) {
-          <ds-metric-card [label]="m.label" [value]="m.value" [change]="m.change" [icon]="m.icon" [prefix]="m.prefix" [suffix]="m.suffix" />
         }
       </div>
     </section>
@@ -70,6 +69,11 @@
         @if (tradeError()) {
           <ds-alert variant="danger" [message]="tradeError()" [dismissible]="false" />
         }
+
+        <ds-radio-group label="Order Type" orientation="horizontal" [(ngModel)]="orderSide">
+          <ds-radio value="buy" label="Buy" />
+          <ds-radio value="sell" label="Sell" />
+        </ds-radio-group>
 
         <ds-select
           label="Asset"
@@ -92,9 +96,21 @@
           (ngModelChange)="tradeAmount.set($event)"
         />
 
+        <ds-checkbox
+          label="Remember this asset for next time"
+          helperText="We'll pre-select it the next time you open TradeDesk."
+          [(ngModel)]="rememberAsset"
+        />
+
         <div class="ca-trade-actions">
-          <ds-button variant="primary" size="lg" [loading]="tradeLoading()" [disabled]="!canExecute()" (pressed)="validateAndExecute()">
-            {{ tradeLoading() ? 'Executing…' : 'Execute Trade' }}
+          <ds-button
+            [variant]="orderSide() === 'buy' ? 'primary' : 'danger'"
+            size="lg"
+            [loading]="tradeLoading()"
+            [disabled]="!canExecute()"
+            (pressed)="validateAndExecute()"
+          >
+            {{ executeLabel() }}
           </ds-button>
           <ds-button variant="ghost" size="lg" (pressed)="clearTrade()">Clear</ds-button>
         </div>

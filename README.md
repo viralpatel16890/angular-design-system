@@ -517,11 +517,14 @@ TradeDesk wires up:
 
 | Component(s) | Used for |
 |---|---|
-| `ds-balance-card`, `ds-metric-card` | Portfolio value and performance KPIs |
+| `ds-stat-card` | Portfolio value and performance KPIs, in one merged Portfolio Overview grid |
+| `ds-radio-group`, `ds-radio` | A Buy/Sell order-type selector that drives the execute button's label and color, and the confirm-dialog message, live |
 | `ds-select`, `ds-input`, `ds-button` | A trade form with two-way `ngModel` binding and a loading state |
+| `ds-checkbox` | A "remember this asset" toggle that persists the selected asset across visits |
 | `ds-alert` | Inline validation feedback when a trade fails to validate |
 | `ds-transaction-item`, `ds-badge` | A transaction/trade history list with a status badge per row |
 | `ds-toast-container`, `ToastService` | A confirmation toast after a trade executes |
+| `ds-confirm-dialog`, `ConfirmDialogService` | A danger-variant confirmation before discarding entered order details |
 
 ```bash
 # Serve TradeDesk with hot reload

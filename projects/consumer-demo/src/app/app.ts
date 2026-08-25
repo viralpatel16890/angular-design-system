@@ -6,8 +6,10 @@ import { SelectComponent } from '../../../angular-ds/src/lib/components/select/s
 import { FormLegendComponent } from '../../../angular-ds/src/lib/components/form-legend/form-legend.component';
 import { AlertComponent } from '../../../angular-ds/src/lib/components/alert/alert.component';
 import { BadgeComponent } from '../../../angular-ds/src/lib/components/badge/badge.component';
-import { BalanceCardComponent } from '../../../angular-ds/src/lib/components/balance-card/balance-card.component';
-import { MetricCardComponent } from '../../../angular-ds/src/lib/components/metric-card/metric-card.component';
+import { StatCardComponent } from '../../../angular-ds/src/lib/components/stat-card/stat-card.component';
+import { RadioGroupComponent } from '../../../angular-ds/src/lib/components/radio-group/radio-group.component';
+import { RadioComponent } from '../../../angular-ds/src/lib/components/radio/radio.component';
+import { CheckboxComponent } from '../../../angular-ds/src/lib/components/checkbox/checkbox.component';
 import { TransactionItemComponent } from '../../../angular-ds/src/lib/components/transaction-item/transaction-item.component';
 import { MenuComponent } from '../../../angular-ds/src/lib/components/menu/menu.component';
 import { MenuItemComponent } from '../../../angular-ds/src/lib/components/menu/menu-item.component';
@@ -20,8 +22,13 @@ import { SkeletonComponent } from '../../../angular-ds/src/lib/components/skelet
 import { EmptyStateComponent } from '../../../angular-ds/src/lib/components/empty-state/empty-state.component';
 import { PaginationComponent } from '../../../angular-ds/src/lib/components/pagination/pagination.component';
 import type { SelectOption } from '../../../angular-ds/src/lib/components/select/select.types';
-import type { BalanceCardAccent } from '../../../angular-ds/src/lib/components/balance-card/balance-card.types';
+import type { StatCardAccent } from '../../../angular-ds/src/lib/components/stat-card/stat-card.types';
 import type { TransactionStatus } from '../../../angular-ds/src/lib/components/transaction-item/transaction-item.types';
+
+/** localStorage key for the "remember this asset" checkbox demo. */
+const REMEMBERED_ASSET_KEY = 'ds-remembered-asset';
+
+type OrderSide = 'buy' | 'sell';
 
 @Component({
   selector: 'app-root',
@@ -36,8 +43,10 @@ import type { TransactionStatus } from '../../../angular-ds/src/lib/components/t
     FormLegendComponent,
     AlertComponent,
     BadgeComponent,
-    BalanceCardComponent,
-    MetricCardComponent,
+    StatCardComponent,
+    RadioGroupComponent,
+    RadioComponent,
+    CheckboxComponent,
     TransactionItemComponent,
     MenuComponent,
     MenuItemComponent,
@@ -61,6 +70,14 @@ export class App implements OnInit {
     const saved = localStorage.getItem('ds-theme');
     if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
 
+    // "Remember this asset" checkbox demo: if a prior visit left an asset
+    // remembered, pre-select it and pre-check the box so the effect is visible.
+    const rememberedAsset = localStorage.getItem(REMEMBERED_ASSET_KEY);
+    if (rememberedAsset) {
+      this.tradeAsset.set(rememberedAsset);
+      this.rememberAsset.set(true);
+    }
+
     setTimeout(() => this.portfolioLoading.set(false), 900);
   }
 
@@ -68,6 +85,12 @@ export class App implements OnInit {
   tradeAsset = signal('');
   tradeLoading = signal(false);
   tradeError = signal('');
+
+  /** Buy/Sell order type — drives the execute button's label/color and the clear-form confirm message. */
+  orderSide = signal<OrderSide>('buy');
+
+  /** "Remember this asset for next time" — persists the traded asset across visits via localStorage. */
+  rememberAsset = signal(false);
 
   assetOptions: SelectOption[] = [
     { value: 'btc', label: 'Bitcoin (BTC)' },
@@ -77,17 +100,29 @@ export class App implements OnInit {
     { value: 'usdc', label: 'USD Coin (USDC)', disabled: true },
   ];
 
-  balances: Array<{ label: string; amount: number; trend: number; icon: string; accent: BalanceCardAccent }> = [
-    { label: 'Portfolio Value', amount: 184320.56, trend: 12.4, icon: '💼', accent: 'cyan' },
-    { label: 'Available Cash', amount: 24800.0, trend: -3.1, icon: '💵', accent: 'violet' },
-    { label: 'Total Gains', amount: 41290.88, trend: 24.8, icon: '🏆', accent: 'amber' },
-  ];
-
-  metrics = [
-    { label: 'Total Trades', value: 1284, change: 8.2, icon: '📊', prefix: '', suffix: '' },
-    { label: 'Win Rate', value: 68, change: 3.5, icon: '🎯', prefix: '', suffix: '%' },
-    { label: 'Avg Return', value: 2400, change: 12.1, icon: '📈', prefix: '$', suffix: '' },
-    { label: 'Active Positions', value: 7, change: -1.0, icon: '⚡', prefix: '', suffix: '' },
+  /**
+   * Portfolio Overview + Performance used to be two separate sections, each a
+   * grid of the same "label + big number + trend" shape (balance-card and
+   * metric-card respectively) — now that both are ds-stat-card, showing them
+   * as two headed sections was just the same shape twice. Merged into one
+   * section and trimmed from 7 cards to 5, keeping one compact-formatted
+   * example (Total Trades, K-abbreviated) to still demonstrate that prop.
+   */
+  statCards: Array<{
+    label: string;
+    value: number;
+    trend: number;
+    icon: string;
+    accent: StatCardAccent;
+    prefix?: string;
+    suffix?: string;
+    compact?: boolean;
+  }> = [
+    { label: 'Portfolio Value', value: 184320.56, trend: 12.4, icon: '💼', accent: 'cyan', prefix: '$' },
+    { label: 'Available Cash', value: 24800.0, trend: -3.1, icon: '💵', accent: 'violet', prefix: '$' },
+    { label: 'Total Gains', value: 41290.88, trend: 24.8, icon: '🏆', accent: 'amber', prefix: '$' },
+    { label: 'Total Trades', value: 1284, trend: 8.2, icon: '📊', accent: 'neutral', compact: true },
+    { label: 'Win Rate', value: 68, trend: 3.5, icon: '🎯', accent: 'neutral', suffix: '%', compact: true },
   ];
 
   private readonly recentTradesSeed: Array<{
@@ -136,6 +171,13 @@ export class App implements OnInit {
 
   canExecute = computed(() => !!this.tradeAmount() && !!this.tradeAsset() && !this.tradeLoading());
 
+  /** Execute button label reacts live to the Buy/Sell radio group state. */
+  executeLabel = computed(() => {
+    if (this.tradeLoading()) return 'Executing…';
+    const verb = this.orderSide() === 'buy' ? 'Buy' : 'Sell';
+    return this.tradeAsset() ? `${verb} ${this.tradeAsset().toUpperCase()}` : verb;
+  });
+
   goToShowcase() {
     window.location.href = window.location.pathname.startsWith('/consumer') ? '/' : 'http://localhost:4200/';
   }
@@ -151,7 +193,8 @@ export class App implements OnInit {
       this.tradeError.set('Enter a valid trade amount.');
       return;
     }
-    if (amount > 24800) {
+    // Available-cash limit only makes sense on the buy side of the order-type radio group.
+    if (this.orderSide() === 'buy' && amount > 24800) {
       this.tradeError.set('Exceeds available cash ($24,800).');
       return;
     }
@@ -159,9 +202,21 @@ export class App implements OnInit {
     this.tradeLoading.set(true);
     setTimeout(() => {
       this.tradeLoading.set(false);
-      this.toast.success(`${this.tradeAsset().toUpperCase()} order placed for $${amount.toLocaleString()}`, {
-        title: 'Trade Executed',
-      });
+
+      const asset = this.tradeAsset();
+      const verb = this.orderSide() === 'buy' ? 'Buy' : 'Sell';
+
+      if (this.rememberAsset()) {
+        localStorage.setItem(REMEMBERED_ASSET_KEY, asset);
+      } else {
+        localStorage.removeItem(REMEMBERED_ASSET_KEY);
+      }
+      const rememberedNote = this.rememberAsset() ? ` We'll remember ${asset.toUpperCase()} for next time.` : '';
+
+      this.toast.success(
+        `${verb} order placed for $${amount.toLocaleString()} of ${asset.toUpperCase()}.${rememberedNote}`,
+        { title: `${verb} Order Executed` },
+      );
       this.tradeAmount.set('');
       this.tradeAsset.set('');
     }, 1200);
@@ -174,9 +229,10 @@ export class App implements OnInit {
       return;
     }
 
+    const side = this.orderSide();
     const confirmed = await this.confirmDialog.confirm({
-      title: 'Discard trade details?',
-      message: 'The asset and amount you entered will be cleared and cannot be recovered.',
+      title: `Discard ${side} order?`,
+      message: `The ${side} order details you entered will be cleared and cannot be recovered.`,
       confirmLabel: 'Discard',
       cancelLabel: 'Keep editing',
       variant: 'danger',
